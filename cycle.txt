@@ -1,0 +1,6 @@
+1. Analyser
+    2. Conception
+      3. Implémentation
+        4. Test
+          5. Exploitation
+            6. Maintenance
