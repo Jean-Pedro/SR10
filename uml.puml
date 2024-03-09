@@ -30,7 +30,7 @@ class fiche_poste {
 }
 
 class statut_poste{
-  statut : text
+  <primary> statut : text
 }
 
 class type_metier{
