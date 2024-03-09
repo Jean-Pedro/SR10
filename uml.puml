@@ -26,7 +26,11 @@ class etat_offre{
 class fiche_poste {
   intitule : str
   responsable_hierarchique : str
-  
+  rythme_travail : float
+  teletravail : bool
+  salaire_min : float
+  salaire_max : float
+  descirption : text
 }
 
 class statut_poste{
@@ -41,12 +45,7 @@ class lieu_mission{
   num : int
   rue : str
   ville : str
-  code_postal : str
-  rythme_travail : float
-  teletravail : bool
-  salaire_min : float
-  salaire_max : float
-  descirption : text  
+  code_postal : str  
 }
 
 class Utilisateur{
