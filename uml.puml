@@ -30,7 +30,8 @@ class fiche_poste {
   teletravail : bool
   salaire_min : float
   salaire_max : float
-  descirption : text
+  descirption : text  
+  
 }
 
 class statut_poste{
@@ -45,7 +46,8 @@ class lieu_mission{
   num : int
   rue : str
   ville : str
-  code_postal : str  
+  code_postal : str
+
 }
 
 class Utilisateur{
@@ -83,7 +85,7 @@ class Piece_dossier{
 
 
 Organisation "*" --- "1" Type_Organisation
-Organisation "1" --- "1" fiche_poste
+Organisation "1" --- "*" fiche_poste
 Offre_emploi "*" -- "1" etat_offre
 fiche_poste "*" -- "1" statut_poste
 fiche_poste "*" -- "1" type_metier
