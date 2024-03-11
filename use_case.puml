@@ -61,7 +61,7 @@ rectangle use_case_gestion_candidatures{
 (f21) ..> (f22) : extends
 (f21) ..> (f23) : extends
 
-
+:Recruteur: -> :Candidat:
 :Candidat: --> (f1)
 :Candidat: --> (f2)
 :Recruteur: --> (f1)
@@ -75,9 +75,11 @@ rectangle use_case_gestion_candidatures{
 :Administrateur  : --> (f11)
 :Administrateur  : --> (f12)
 :Candidat : --> (f18)
+:Recruteur : -> :Candidat :
 :Recruteur : --> (f15)
 :Recruteur : --> (f16)
 :Recruteur : --> (f17)
+:Recruteur  : -> :Candidat  :
 :Candidat  : --> (f25)
 :Candidat  : --> (f26)
 :Candidat  : --> (f29)
