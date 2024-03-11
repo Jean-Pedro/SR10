@@ -92,7 +92,7 @@ fiche_poste "*" -- "1" type_metier
 fiche_poste "*" -- "1" lieu_mission
 Offre_emploi "*" --- "1" fiche_poste
 Administrateur --> Utilisateur
-Recruteur --> Utilisateur
+Recruteur --> Candidat
 Candidat ---> Utilisateur
 Recruteur "1..*" --- "*" fiche_poste : "Creer >"
 Candidature "1" -- "*" Piece_dossier
