@@ -1,6 +1,5 @@
 Administrateur(#id_Admin : int, email : str, nom : str, prenom : str, num_tel : str, date_creation : datetime, statut : bool, password : str (hash));
-Recruteur(#id_Recruteur => Candidat);
-Candidat(#id_Candidat : int, email : str, nom : str, prenom : str, num_tel : str, date_creation : datetime, statut : bool, password : str (hash));
+Candidat(#id_Candidat : int, email : str, nom : str, prenom : str, num_tel : str, date_creation : datetime, statut : bool, is_recruteur : bool, password : str (hash));
 
 Type_Organisation(#name : str);
 Organisation(#Siren : int, nom : str, siege_social : str, type => Type_Organisation);
