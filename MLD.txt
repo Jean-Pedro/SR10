@@ -1,5 +1,5 @@
 Administrateur(#id_Admin : int, email : str, nom : str, prenom : str, num_tel : str, date_creation : datetime, statut : bool, password : str (hash));
-Recruteur(#id_Recruteur : int, email : str, nom : str, prenom : str, num_tel : str, date_creation : datetime, statut : bool, password : str (hash));
+Recruteur(#id_Recruteur => Candidat);
 Candidat(#id_Candidat : int, email : str, nom : str, prenom : str, num_tel : str, date_creation : datetime, statut : bool, password : str (hash));
 
 Type_Organisation(#name : str);
@@ -19,3 +19,6 @@ Candidature(#id_c : int, date_candidature : datetime, offre => Offre_emploi, can
 Piece_dossier(#id_piece : int, type => Type_piece_dossier, candidature => Candidature);
 
 
+
+
+###### Recruteur(#id_Recruteur : int, email : str, nom : str, prenom : str, num_tel : str, date_creation : datetime, statut : bool, password : str (hash));
