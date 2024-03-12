@@ -6,6 +6,7 @@ rectangle use_case_g_gestion{
 "gestion des candidatures" as (f2)
 "gestion des utilisateurs" as (f3)
 "gestion des organisations" as (f4)
+"gestion des connexions" as (f4.5)
 }
 
 
@@ -28,7 +29,8 @@ rectangle use_case_gestion_utilisateurs{
 
 
 rectangle use_case_gestion_offre{
-"visualisation des offres encore valides et expirées de l'organisation" as (f15)
+"visualisation des offres valides de l'organisation" as (f15)
+  "visualisation des offres expirées de l'organisation" as (f15.5)
 "poster une offre" as (f16)
 "modifier ou supprimer une offre" as (f17)
 "visualiser les offres" as (f18)
@@ -50,16 +52,26 @@ rectangle use_case_gestion_candidatures{
 }
 
 
+rectangle use_case_gestion_connexions{
+"se connecter" as (f30)
+"s'inscrire" as (f31)
+"vérifier que le mot de passe est conforme" as (f32)
+}
+
+
 (f5) ..> (f6) : extends
 (f5) ..> (f7) : extends
+(f9) ..> (f10) : extends
 (f12) ..> (f13) : extends
 (f12) ..> (f14) : extends
+(f15) ..> (f17) : extends
 (f18) ..> (f19) : extends
 (f18) ..> (f20) : extends
 (f26) ..> (f27) : extends
 (f26) ..> (f28) : extends
 (f21) ..> (f22) : extends
 (f21) ..> (f23) : extends
+(f31) ..> (f32) : includes
 
 :Recruteur: -> :Candidat:
 :Candidat: --> (f1)
@@ -68,23 +80,26 @@ rectangle use_case_gestion_candidatures{
 :Recruteur: --> (f2)
 :Administrateur: --> (f3)
 :Administrateur: --> (f4)
+:Utilisateur non connecté: --> (f4.5)
 :Administrateur : --> (f5)
 :Administrateur : --> (f8)
 :Administrateur  : --> (f9)
-:Administrateur  : --> (f10)
 :Administrateur  : --> (f11)
 :Administrateur  : --> (f12)
 :Candidat : --> (f18)
 :Recruteur : -> :Candidat :
 :Recruteur : --> (f15)
+:Recruteur : --> (f15.5)
 :Recruteur : --> (f16)
-:Recruteur : --> (f17)
 :Recruteur  : -> :Candidat  :
 :Candidat  : --> (f25)
 :Candidat  : --> (f26)
 :Candidat  : --> (f29)
 :Recruteur  : --> (f21)
 :Recruteur  : --> (f24)
+:Utilisateur non connecté : --> (f30)
+:Utilisateur non connecté : --> (f31)
+
 
 
 @enduml
