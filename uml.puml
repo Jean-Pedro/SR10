@@ -5,7 +5,6 @@ note "Tous les attributs sont NOT NULL" as note
 class Organisation{
   <primary> Siren : int
   nom : str
-  siege_social : str
 }
 
 class Type_Organisation{
@@ -42,7 +41,7 @@ class type_metier{
   <primary> type : str
 }
 
-class lieu_mission{
+class adresse{
   num : int
   rue : str
   ville : str
@@ -89,7 +88,7 @@ Organisation "1" --- "*" fiche_poste : "Posséder>"
 Offre_emploi "*" -- "1" etat_offre
 fiche_poste "*" -- "1" statut_poste
 fiche_poste "*" -- "1" type_metier
-fiche_poste "*" -- "1" lieu_mission
+fiche_poste "*" -- "1" adresse
 Offre_emploi "*" --- "1" fiche_poste : "Correspondre à >"
 Administrateur --> Utilisateur
 Recruteur --> Candidat
@@ -100,5 +99,7 @@ Piece_dossier "*" -- "1" Type_piece_dossier
 Candidature "*" -- "1" Offre_emploi : "Porter sur >"
 Candidat "1" -- "*" Candidature : "Modifier >"
 Recruteur "*" -- "1" Organisation : "Travailler pour >"
+Organisation "*" -- "1" adresse
+
 
 @enduml
