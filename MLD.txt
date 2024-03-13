@@ -20,4 +20,5 @@ Piece_dossier(#id_piece : int, type => Type_piece_dossier, candidature => Candid
 changer l'hérite dans le MLD
 mettre le type de pièce direct dans la pièce
 use_case
+modifier le MCD (adresse)
 0.1 organisation
