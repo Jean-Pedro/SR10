@@ -5,7 +5,7 @@ Type_Organisation(#name : str);
 Organisation(#Siren : int, nom : str, siege_social => adresse, type => Type_Organisation);
 
 etat_offre(#etat : str);
-Offre_emploi(#num : int, date_validite : datetime, indications : text, etat => etat_offre);
+Offre_emploi(#num : int, date_validite : datetime, indications : text, fiche => fiche_poste, etat => etat_offre);
 
 statut_poste(#statut : str);
 type_metier(#type : str);
@@ -16,3 +16,8 @@ fiche_poste(#id_fiche : int, intitule : str, responsable_hierarchique : str, ryt
 Type_piece_dossier(#type : str);
 Candidature(#id_c : int, date_candidature : datetime, offre => Offre_emploi, candidat => Utilisateur); # avec Utilisateur.type = "Candidat";
 Piece_dossier(#id_piece : int, type => Type_piece_dossier, candidature => Candidature);
+
+changer l'hérite dans le MLD
+mettre le type de pièce direct dans la pièce
+use_case
+0.1 organisation
