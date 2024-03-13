@@ -1,0 +1,100 @@
+CREATE TABLE Type_Organisation (
+    nom VARCHAR(100) PRIMARY KEY
+);
+
+CREATE TABLE Adresse (
+    id_lieu INTEGER AUTO_INCREMENT PRIMARY KEY,
+    num INTEGER,
+    rue VARCHAR(100),
+    ville VARCHAR(100),
+    code_postal VARCHAR(10)
+);
+    
+CREATE TABLE Organisation (
+    siren INTEGER PRIMARY KEY,
+    nom VARCHAR(100),
+    siege_social INTEGER,
+    type VARCHAR(100),
+    FOREIGN KEY (siege_social) REFERENCES Adresse (Adresse.id_lieu),
+    FOREIGN KEY (type) REFERENCES Type_Organisation (Type_Organisation.nom)
+);
+
+CREATE TABLE Etat_Offre (
+    etat VARCHAR(30) PRIMARY KEY
+);
+
+CREATE TABLE Offre_Emploi (
+    num INTEGER PRIMARY KEY,
+    date_validite DATETIME,
+    indications TEXT,
+    etat VARCHAR(30),
+    FOREIGN KEY (etat) REFERENCES Etat_Offre (Etat_Offre.etat)
+);
+
+CREATE TABLE Statut_Poste (
+    statut VARCHAR(30) PRIMARY KEY
+);
+
+CREATE TABLE Type_Metier (
+    type VARCHAR(30) PRIMARY KEY
+);
+
+CREATE TABLE Type_Utilisateur (
+    type VARCHAR(30) PRIMARY KEY
+);
+
+CREATE TABLE Utilisateur (
+    id_utilisateur INTEGER AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(100),
+    nom VARCHAR(30),
+    prenom VARCHAR(30),
+    num_tel VARCHAR(15),
+    date_creation DATETIME,
+    statut BOOLEAN,
+    type VARCHAR(30),
+    password VARCHAR(100),
+    FOREIGN KEY (type) REFERENCES Type_Utilisateur (Type_Utilisateur.type)
+);
+    
+
+CREATE TABLE Fiche_Poste (
+    id_fiche INTEGER AUTO_INCREMENT PRIMARY KEY,
+    intitule VARCHAR(100),
+    resp_hierarchique VARCHAR(100),
+    rythme_travail DECIMAL(2,2),
+    teletravail BOOLEAN,
+    salaire_min FLOAT,
+    salaire_max FLOAT,
+    description TEXT,
+    type VARCHAR(30),
+    statut VARCHAR(30),
+    lieu INTEGER,
+    organisation INTEGER,
+    recruteur INTEGER,
+    FOREIGN KEY (type) REFERENCES Type_Metier (Type_Metier.type),
+    FOREIGN KEY (statut) REFERENCES Statut_Poste (Statut_Poste.statut),
+    FOREIGN KEY (lieu) REFERENCES Adresse (Adresse.id_lieu),
+    FOREIGN KEY (organisation) REFERENCES Organisation (Organisation.siren),
+    FOREIGN KEY (recruteur) REFERENCES Utilisateur (Utilisateur.id_utilisateur)
+);
+
+CREATE TABLE Type_Piece_Dossier (
+    type VARCHAR(100) PRIMARY KEY
+);
+
+CREATE TABLE Candidature (
+    id_c INTEGER AUTO_INCREMENT PRIMARY KEY,
+    date_candidature DATETIME,
+    offre INTEGER,
+    candidat INTEGER,
+    FOREIGN KEY (offre) REFERENCES Offre_Emploi (Offre_Emploi.num),
+    FOREIGN KEY (candidat) REFERENCES Utilisateur (Utilisateur.id_utilisateur)
+);
+
+CREATE TABLE Piece_Dossier (
+    id_piece INTEGER AUTO_INCREMENT PRIMARY KEY,
+    type VARCHAR(100),
+    candidature INTEGER,
+    FOREIGN KEY (type) REFERENCES Type_Piece_Dossier (Type_Piece_Dossier.type),
+    FOREIGN KEY (candidature) REFERENCES Candidature (Candidature.id_c)
+);
