@@ -1,0 +1,24 @@
+Type_Utilisateur(#type : str);
+Utilisateur(#id_Utilisateur : int, email : str, nom : str, prenom : str, num_tel : str, date_creation : datetime, statut : bool, type => Type_Utilisateur, password : str (hash));
+
+Type_Organisation(#name : str);
+Organisation(#Siren : int, nom : str, siege_social => adresse, type => Type_Organisation);
+
+etat_offre(#etat : str);
+Offre_emploi(#num : int, date_validite : datetime, indications : text, fiche => fiche_poste, etat => etat_offre);
+
+statut_poste(#statut : str);
+type_metier(#type : str);
+adresse(#id_lieu : int, num : int rue : str, ville : str, code_postal : str);
+fiche_poste(#id_fiche : int, intitule : str, responsable_hierarchique : str, rythme_travail : float, teletravail : bool, salaire_min : float, salaire_max : float, descirption : text,
+		type => type_metier, statut => statut_poste, lieu => adresse, organisation => Organisation, recruteur => Utilisateur); # avec Utilisateur.type = "Recruteur";
+
+Type_piece_dossier(#type : str);
+Candidature(#id_c : int, date_candidature : datetime, offre => Offre_emploi, candidat => Utilisateur); # avec Utilisateur.type = "Candidat";
+Piece_dossier(#id_piece : int, type => Type_piece_dossier, candidature => Candidature);
+
+changer l'hérite dans le MLD
+mettre le type de pièce direct dans la pièce
+use_case
+modifier le MCD (adresse)
+0.1 organisation

@@ -1,0 +1,105 @@
+@startuml
+
+note "Tous les attributs sont NOT NULL" as note
+
+class Organisation{
+  <primary> Siren : int
+  nom : str
+}
+
+class Type_Organisation{
+  <primary> name : str
+}
+
+class Offre_emploi {
+  <primary> num : int
+  date_validite : datetime
+  indications : text
+}
+
+class etat_offre{
+  <primary> etat : text
+}
+
+
+class fiche_poste {
+  intitule : str
+  responsable_hierarchique : str
+  rythme_travail : float
+  teletravail : bool
+  salaire_min : float
+  salaire_max : float
+  descirption : text  
+  
+}
+
+class statut_poste{
+  <primary> statut : text
+}
+
+class type_metier{
+  <primary> type : str
+}
+
+class adresse{
+  num : int
+  rue : str
+  ville : str
+  code_postal : str
+
+}
+
+class Utilisateur{
+  email : str UNIQUE
+  nom : str
+  prenom : str
+  num_tel : str
+  date_creation : datetime
+  statut : bool
+  password : str (hash)
+}
+
+class Administrateur{
+  
+}
+
+class Recruteur{
+  
+}
+
+class Candidat{
+  
+}
+
+class Candidature{
+  date_candidature : datetime
+}
+
+class Type_piece_dossier{
+  <primary> type : text
+}
+
+class Piece_dossier{
+}
+
+
+Organisation "*" --- "1" Type_Organisation
+Organisation "1" --- "*" fiche_poste : "Posséder>"
+Offre_emploi "*" -- "1" etat_offre
+fiche_poste "*" -- "1" statut_poste
+fiche_poste "*" -- "1" type_metier
+fiche_poste "*" -- "1" adresse
+Offre_emploi "*" --- "1" fiche_poste : "Correspondre à >"
+Administrateur --> Utilisateur
+Recruteur --> Candidat
+Candidat ---> Utilisateur
+Recruteur "1..*" --- "*" fiche_poste : "Creer >"
+Candidature "1" -- "*" Piece_dossier
+Piece_dossier "*" -- "1" Type_piece_dossier
+Candidature "*" -- "1" Offre_emploi : "Porter sur >"
+Candidat "1" -- "*" Candidature : "Modifier >"
+Recruteur "*" -- "1" Organisation : "Travailler pour >"
+Organisation "*" -- "1" adresse
+
+
+@enduml
