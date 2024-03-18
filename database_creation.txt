@@ -1,8 +1,8 @@
-CREATE TABLE Type_Organisation (
+CREATE TABLE IF NOT EXISTS Type_Organisation (
     nom VARCHAR(100) PRIMARY KEY
 );
 
-CREATE TABLE Adresse (
+CREATE TABLE IF NOT EXISTS Adresse (
     id_lieu INTEGER AUTO_INCREMENT PRIMARY KEY,
     num INTEGER,
     rue VARCHAR(100),
@@ -10,7 +10,7 @@ CREATE TABLE Adresse (
     code_postal VARCHAR(10)
 );
     
-CREATE TABLE Organisation (
+CREATE TABLE IF NOT EXISTS Organisation (
     siren INTEGER PRIMARY KEY,
     nom VARCHAR(100),
     siege_social INTEGER,
@@ -19,11 +19,11 @@ CREATE TABLE Organisation (
     FOREIGN KEY (type) REFERENCES Type_Organisation (Type_Organisation.nom)
 );
 
-CREATE TABLE Etat_Offre (
+CREATE TABLE IF NOT EXISTS Etat_Offre (
     etat VARCHAR(30) PRIMARY KEY
 );
 
-CREATE TABLE Offre_Emploi (
+CREATE TABLE IF NOT EXISTS Offre_Emploi (
     num INTEGER PRIMARY KEY,
     date_validite DATETIME,
     indications TEXT,
@@ -31,19 +31,19 @@ CREATE TABLE Offre_Emploi (
     FOREIGN KEY (etat) REFERENCES Etat_Offre (Etat_Offre.etat)
 );
 
-CREATE TABLE Statut_Poste (
+CREATE TABLE IF NOT EXISTS Statut_Poste (
     statut VARCHAR(30) PRIMARY KEY
 );
 
-CREATE TABLE Type_Metier (
+CREATE TABLE IF NOT EXISTS Type_Metier (
     type VARCHAR(30) PRIMARY KEY
 );
 
-CREATE TABLE Type_Utilisateur (
+CREATE TABLE IF NOT EXISTS Type_Utilisateur (
     type VARCHAR(30) PRIMARY KEY
 );
 
-CREATE TABLE Utilisateur (
+CREATE TABLE IF NOT EXISTS Utilisateur (
     id_utilisateur INTEGER AUTO_INCREMENT PRIMARY KEY,
     email VARCHAR(100),
     nom VARCHAR(30),
@@ -57,7 +57,7 @@ CREATE TABLE Utilisateur (
 );
     
 
-CREATE TABLE Fiche_Poste (
+CREATE TABLE IF NOT EXISTS Fiche_Poste (
     id_fiche INTEGER AUTO_INCREMENT PRIMARY KEY,
     intitule VARCHAR(100),
     resp_hierarchique VARCHAR(100),
@@ -78,11 +78,11 @@ CREATE TABLE Fiche_Poste (
     FOREIGN KEY (recruteur) REFERENCES Utilisateur (Utilisateur.id_utilisateur)
 );
 
-CREATE TABLE Type_Piece_Dossier (
+CREATE TABLE IF NOT EXISTS Type_Piece_Dossier (
     type VARCHAR(100) PRIMARY KEY
 );
 
-CREATE TABLE Candidature (
+CREATE TABLE IF NOT EXISTS Candidature (
     id_c INTEGER AUTO_INCREMENT PRIMARY KEY,
     date_candidature DATETIME,
     offre INTEGER,
@@ -91,7 +91,7 @@ CREATE TABLE Candidature (
     FOREIGN KEY (candidat) REFERENCES Utilisateur (Utilisateur.id_utilisateur)
 );
 
-CREATE TABLE Piece_Dossier (
+CREATE TABLE IF NOT EXISTS Piece_Dossier (
     id_piece INTEGER AUTO_INCREMENT PRIMARY KEY,
     type VARCHAR(100),
     candidature INTEGER,
