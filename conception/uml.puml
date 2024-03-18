@@ -75,11 +75,8 @@ class Candidature{
   date_candidature : datetime
 }
 
-class Type_piece_dossier{
-  <primary> type : text
-}
-
 class Piece_dossier{
+  type : str
 }
 
 
@@ -95,7 +92,6 @@ Recruteur --> Candidat
 Candidat ---> Utilisateur
 Recruteur "1..*" --- "*" fiche_poste : "Creer >"
 Candidature "1" -- "*" Piece_dossier
-Piece_dossier "*" -- "1" Type_piece_dossier
 Candidature "*" -- "1" Offre_emploi : "Porter sur >"
 Candidat "1" -- "*" Candidature : "Modifier >"
 Recruteur "*" -- "1" Organisation : "Travailler pour >"
