@@ -1,6 +1,15 @@
 body{
     text-align: center;
+    display: flex;
     background-color: rgb(223, 223, 220);
+}
+
+#column_g{
+    flex: 1;
+}
+
+#column_d{
+    flex: 1;
 }
 
 #formulaire{
@@ -8,7 +17,6 @@ body{
     padding: 10px;
     margin: 50px;
     margin-left: 200px;
-    margin-right: 200px;
     background-color: white;
 }
 

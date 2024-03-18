@@ -1,0 +1,12 @@
+#p-5.bg-primary.text-white.text-center{
+    display: flex;
+    justify-content: center;
+}
+
+#bandeau_m{
+    flex: 1;
+}
+
+#bandeau_d{
+    
+}
