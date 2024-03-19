@@ -4,8 +4,7 @@ body{
     font-family: 'Inter';
 }
 
-#case{
-    display: flex;
+#container{
     padding: 10px;
     background-color: #F9E6E6;
     justify-content: center;
@@ -14,6 +13,19 @@ body{
     margin: 50px;
     margin-left: 200px;
     margin-right : 200px;
+    border-radius: 5px;
+}
+
+#case{
+    display: flex;
+    padding: 10px;
+    background-color: #F9E6E6;
+    justify-content: center;
+    align-items: center;
+}
+
+#titre{
+    flex: none;
 }
 
 #column_g{
@@ -23,12 +35,13 @@ body{
 
 #column_d{
     flex: 1;
+    text-align: left;
+    margin-left: 200px;
 }
 
 #formulaire{
     padding: 10px;
     margin: 50px;
-    margin-left: 200px;
 }
 
 #label_form{
