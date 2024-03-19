@@ -30,7 +30,7 @@
     text-align: right;
 }
 
-#top_bar button{
+button{
     background-color: #474BCA;
     color: white;
     border: none;
@@ -60,6 +60,33 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     margin: 10px;
+    display: flex;
+    align-items: center;
+}
+
+#off_img img{
+    width: 200px;
+    height: auto;
+    flex: 1;
+}
+
+#entreprise{
+    flex: 1;
+    text-align: center;
+}
+
+#desc{
+    flex: 1;
+    text-align: center;
+}
+
+#offer_button{
+    flex: 1;
+    text-align: center;
+}
+
+#offer_button button{
+    vertical-align: center;
 }
 
 #toolbox{
@@ -98,4 +125,20 @@ select{
     border-radius: 5px;
     font-family: 'Inter';
     margin: 10px;
+}
+
+#admin_container{
+    text-align: center;
+}
+
+
+#div_center{
+    margin: 70px;
+    text-align: center;
+    align-items: center;
+}
+
+#div_center button{
+    padding: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
