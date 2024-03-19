@@ -1,0 +1,13 @@
+INSERT INTO Type_Organisation VALUES ("association");
+INSERT INTO Adresse VALUES (NULL, 1, "rue de la papaye", "Compiègne", "60200");
+INSERT INTO Organisation VALUES (27332, "Les restos du coeur", 1, "association");
+INSERT INTO Etat_Offre VALUES ("publiée");
+INSERT INTO Offre_Emploi VALUES (842596, "2024-06-14", "gros cerveau requis", "publiée");
+INSERT INTO Statut_Poste VALUES ("cadre");
+INSERT INTO Type_Metier VALUES ("cybersécurité");
+INSERT INTO Candidat VALUES (NULL, "francoisrene@yahoo.fr", "René", "François", "06-06-06-06-06", "2023-12-24", True, "fhbqzerilgjqzmiogk%F%Z%fzfùzegzgzù");
+INSERT INTO Recruteur VALUES (NULL, "jeanjean@gmail.com", "Jean", "Jean", "07-36-23-02-23", "2020-02-23", True, "%AFfzùzglzùf%FKA%fùzfkKFNAB", 27332);
+INSERT INTO Administrateur VALUES (NULL, "admin@administration.fr", "Simon", "Charles", "01-23-13-04-39", "2012-10-13", True, "lkjhgfdfghj%Qf^zg");
+INSERT INTO Fiche_Poste VALUES (NULL, "ingénieur cybersécurité", "Jean Jean", 35.00, False, 1234.34, 4444.44, "gère la cybersécurité de l'association", "cybersécurité", "cadre", 1, 27332, 1);
+INSERT INTO Candidature VALUES (NULL, "2024-03-19", 842596, 1);
+INSERT INTO Piece_Dossier VALUES (NULL, "CV", 1);
