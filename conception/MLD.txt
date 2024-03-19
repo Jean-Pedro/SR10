@@ -1,10 +1,6 @@
-# Type_Utilisateur(#type : str);
-# Utilisateur(#id_Utilisateur : int, email : str, nom : str, prenom : str, num_tel : str, date_creation : datetime, statut : bool, type => Type_Utilisateur, password : str (hash));
-
 Candidat(#id_Candidat : int, email : str, nom : str, prenom : str, num_tel : str, date_creation : datetime, statut : bool, password : str (hash));
 Recruteur(#id_Recruteur : int, email : str, nom : str, prenom : str, num_tel : str, date_creation : datetime, statut : bool, organisation => Organisation, password : str (hash));
 Administrateur(#id_Administrateur : int, email : str, nom : str, prenom : str, num_tel : str, date_creation : datetime, statut : bool, password : str (hash));
-
 
 Type_Organisation(#name : str);
 Organisation(#Siren : int, nom : str, siege_social => adresse, type => Type_Organisation);
@@ -21,7 +17,3 @@ fiche_poste(#id_fiche : int, intitule : str, responsable_hierarchique : str, ryt
 Type_piece_dossier(#type : str);
 Candidature(#id_c : int, date_candidature : datetime, offre => Offre_emploi, candidat => Utilisateur); # avec Utilisateur.type = "Candidat";
 Piece_dossier(#id_piece : int, type => Type_piece_dossier, candidature => Candidature);
-
-# changer l'hérite dans le MLD
-use_case
-0.1 organisation
