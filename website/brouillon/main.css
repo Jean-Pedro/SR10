@@ -1,0 +1,45 @@
+#test{
+    text-align: center;
+    background-color: #0d6efd;
+    display: flex;
+    padding: 50px;
+}
+
+#bandeau_m{
+    flex: 1;
+}
+
+.offer_img{
+    width: 200px;
+    height: auto;
+}
+
+#offer{
+    border: 2px solid black;
+    margin: 20px;
+    margin-right: 50px;
+    margin-left: 50px;
+    display: flex;
+    padding: 10px;
+    align-items: center;
+}
+
+#photo{
+    text-align: center;
+    flex: 1;
+}
+
+#company{
+    text-align: center;
+    flex: 1;
+}
+
+#desc{
+    text-align: center;
+    flex: 1;
+}
+
+#buttons_cand{
+    text-align: center;
+    flex: 1;
+}
