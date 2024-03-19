@@ -5,28 +5,60 @@
         <link rel="stylesheet" href="../css/main.css">
     </head>
     <body>
-        <div id="top_bar">
-            <div id="home_button">
-                <button id="menu">Menu</button>
-            </div>
-            <div id="account">
-                <button id="cand">Mes candidatures</button>
-                <button id="account">Mon compte</button>
-            </div>
-        </div>
-
-        <div id="container">
-            <div id="offers">
-                <div id="off">
-                    test
+        <div id="page">
+            <div id="top_bar">
+                <div id="home_button">
+                    <button id="menu">Menu</button>
+                </div>
+                <div id="recr">
+                    <button id="recruteur">Devenir recruteur</button>
+                </div>
+                <div id="account">
+                    <button id="cand">Mes candidatures</button>
+                    <button id="account">Mon compte</button>
                 </div>
             </div>
-
-            <div id="search">
-                <div id="box_search">
-                    <p>test</p>
+    
+            <div id="container">
+                <div id="offers">
+                    <div id="label">
+                        <label for="candidat">Espace Candidat</label>
+                    </div>
+                    <div id="off">
+                        test
+                    </div>
                 </div>
+    
+                <div id="box">
+                    <div id="toolbox">
+                        <div id="search">
+                            <div id="label">
+                                <label for="search">Rechercher</label> <br>
+                            </div>
+                            <div id="input_search">
+                                <input type="search" id="search" name="search" placeholder="&nbsp &nbsp Rechercher..." required>
+                            </div>
+                        </div>
+                        <div id="label">
+                                <label for="sort">Trier</label>
+                        </div>
+                        <select name="date" id="date">
+                            <option value="" disabled selected hidden>Date</option>
+                            <option value="recent">Récent</option>
+                            <option value="ancien">Ancien</option>
+                        </select>
 
+                        <select name="date" id="distance">
+                            <option value="" disabled selected hidden>Distance</option>
+                            <option value="recent">Récent</option>
+                            <option value="ancien">Ancien</option>
+                        </select>
+                        <div id="label">
+                            <label for="filter">Filtrer</label>
+                        </div>
+                    </div>
+    
+                </div>
             </div>
         </div>
     </body>

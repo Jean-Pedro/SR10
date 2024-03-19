@@ -2,9 +2,10 @@
     border: black solid 2px;
 */
 
-*{
+#page{
     background-color: #F9E6E6;
     font-family: 'Inter';
+    height: 100%;
 }
 
 #top_bar{
@@ -19,28 +20,17 @@
     flex: 1;
 }
 
+#recr{
+    flex: 1;
+    text-align: center;
+}
+
 #account{
     flex: 1;
     text-align: right;
 }
 
-#home_button button{
-    background-color: #474BCA;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-family: 'Inter';
-    font-size: large;
-    font-weight: bold;
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    margin: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-#account button{
+#top_bar button{
     background-color: #474BCA;
     color: white;
     border: none;
@@ -57,11 +47,11 @@
 }
 
 #offers{
-    flex: 1;
+    flex: 1.1;
 }
 
-#search{
-    flex: 1;
+#box{
+    flex: 0.9;
 }
 
 #off{
@@ -72,6 +62,40 @@
     margin: 10px;
 }
 
-#box_search{
+#toolbox{
     background-color: #474BCA;
+    margin: 100px;
+    padding: 20px;
+    color: white;
+    text-align: center;
+    border-radius: 50px;
+}
+
+#label{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-weight: bold;
+    font-size: xx-large;
+}
+
+#input_search{
+    padding-top: 10px;
+    padding-bottom: 30px;
+}
+
+#input_search input{
+    width: 200px;
+    height: 47px;
+    border: none;
+    border-radius: 5px;
+    font-family: 'Inter';
+}
+
+select{
+    width: 200px;
+    height: 47px;
+    border: none;
+    border-radius: 5px;
+    font-family: 'Inter';
+    margin: 10px;
 }
