@@ -1,11 +1,24 @@
 body{
     text-align: center;
+    background-color: white;
+    font-family: 'Inter';
+}
+
+#case{
     display: flex;
-    background-color: rgb(223, 223, 220);
+    padding: 10px;
+    background-color: #F9E6E6;
+    justify-content: center;
+    align-items: center;
+    height: 85vh;
+    margin: 50px;
+    margin-left: 200px;
+    margin-right : 200px;
 }
 
 #column_g{
     flex: 1;
+    text-align: left;
 }
 
 #column_d{
@@ -13,17 +26,58 @@ body{
 }
 
 #formulaire{
-    border: 2px solid black;
     padding: 10px;
     margin: 50px;
     margin-left: 200px;
-    background-color: white;
 }
 
-#ele{
-    padding: 10px;
+#label_form{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-weight: bold;
+}
+
+#input_form{
+    padding-top: 10px;
+    padding-bottom: 30px;
 }
 
 #button_compte{
     font-size: small;
+}
+
+#formulaire h1{
+    color: #474BCA;
+    font-size: xx-large;
+}
+
+#formulaire p{
+    font-size: large;
+}
+
+#input_form input{
+    background-color: #FFA3BE;
+    width: 545px;
+    height: 47px;
+    border: none;
+    border-radius: 5px;
+    font-family: 'Inter';
+}
+
+#submit{
+    margin-top: 20px;
+    background-color: #474BCA;
+    color: white;
+    width: 545px;
+    height: 47px;
+    border: none;
+    border-radius: 5px;
+    font-family: 'Inter';
+    font-size: large;
+    font-weight: bold;
+}
+
+#inscription{
+    text-align: center;
+    margin-right: 40px;
 }
