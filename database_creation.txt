@@ -94,7 +94,7 @@ CREATE TABLE IF NOT EXISTS Fiche_Poste (
     id_fiche INTEGER AUTO_INCREMENT PRIMARY KEY,
     intitule VARCHAR(100),
     resp_hierarchique VARCHAR(100),
-    rythme_travail DECIMAL(2,2),
+    rythme_travail DECIMAL(4,2),
     teletravail BOOLEAN,
     salaire_min FLOAT,
     salaire_max FLOAT,
