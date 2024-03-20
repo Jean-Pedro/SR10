@@ -59,8 +59,8 @@ rectangle use_case_gestion_connexions{
 }
 
 
-(f5) ..> (f6) : extends
-(f5) ..> (f7) : extends
+(f5) ..> (f6) : include
+(f5) ..> (f7) : include
 (f9) ..> (f10) : extends
 (f12) ..> (f13) : extends
 (f12) ..> (f14) : extends
