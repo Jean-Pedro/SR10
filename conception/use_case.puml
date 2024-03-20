@@ -5,32 +5,21 @@ rectangle use_case_g_gestion{
 "gestion des offres" as (f1)
 "gestion des candidatures" as (f2)
 "gestion des utilisateurs" as (f3)
-"gestion des organisations" as (f4)
 "gestion des connexions" as (f4.5)
 }
 
 
-rectangle use_case_gestion_organisations{
-"visualisation des demandes d'enregistrement d'organisation" as (f5)
-"valider les demandes d'enregistrement d'organisation" as (f6)
-"refuser les demandes d'enregistrement d'organisation" as (f7)
-"visualisation des demandes validées ou refusées" as (f8)
-}
-
-
 rectangle use_case_gestion_utilisateurs{
+"visualisation des demandes validées ou refusées" as (f8)
 "visualisation des comptes" as (f9)
 "modification et suppression des comptes" as (f10)
 "attribution du rôle d'administrateur" as (f11)
-"visualiser les demandes de joindre une organisation en tant que recruteur" as (f12)
-"valider les demandes" as (f13)
-"refuser les demandes" as (f14)
 }
 
 
 rectangle use_case_gestion_offre{
 "visualisation des offres valides de l'organisation" as (f15)
-  "visualisation des offres expirées de l'organisation" as (f15.5)
+"visualisation des offres expirées de l'organisation" as (f15.5)
 "poster une offre" as (f16)
 "modifier ou supprimer une offre" as (f17)
 "visualiser les offres" as (f18)
@@ -40,6 +29,8 @@ rectangle use_case_gestion_offre{
 
 
 rectangle use_case_gestion_candidatures{
+"valider les demandes" as (f6)
+"refuser les demandes" as (f7)
 "visualiser les candidatures à une offre" as (f21)
 "accepter la candidature" as (f22)
 "refuser la candidature" as (f23)
@@ -49,6 +40,7 @@ rectangle use_case_gestion_candidatures{
 "modifier ses candidatures" as (f27)
 "supprimer ses candidatures" as (f28)
 "demander à rejoindre une organisation en tant que recruteur" as (f29)
+"demander à créer une organisation" as (f33)
 }
 
 
@@ -59,19 +51,19 @@ rectangle use_case_gestion_connexions{
 }
 
 
-(f5) ..> (f6) : include
-(f5) ..> (f7) : include
+(f29) ..> (f6) : include
+(f29) ..> (f7) : include
 (f9) ..> (f10) : extends
-(f12) ..> (f13) : extends
-(f12) ..> (f14) : extends
+(f33) ..> (f6) : include
+(f33) ..> (f7) : include
 (f15) ..> (f17) : extends
 (f18) ..> (f19) : extends
 (f18) ..> (f20) : extends
 (f26) ..> (f27) : extends
 (f26) ..> (f28) : extends
-(f21) ..> (f22) : extends
-(f21) ..> (f23) : extends
-(f31) ..> (f32) : includes
+(f21) ..> (f22) : include
+(f21) ..> (f23) : include
+(f31) ..> (f32) : include
 
 :Recruteur: -> :Candidat:
 :Candidat: --> (f1)
@@ -79,13 +71,12 @@ rectangle use_case_gestion_connexions{
 :Recruteur: --> (f1)
 :Recruteur: --> (f2)
 :Administrateur: --> (f3)
-:Administrateur: --> (f4)
 :Utilisateur non connecté: --> (f4.5)
-:Administrateur : --> (f5)
-:Administrateur : --> (f8)
+:Administrateur : --> (f6)
+:Administrateur : --> (f7)
+:Administrateur  : --> (f8)
 :Administrateur  : --> (f9)
 :Administrateur  : --> (f11)
-:Administrateur  : --> (f12)
 :Candidat : --> (f18)
 :Recruteur : -> :Candidat :
 :Recruteur : --> (f15)
@@ -95,6 +86,7 @@ rectangle use_case_gestion_connexions{
 :Candidat  : --> (f25)
 :Candidat  : --> (f26)
 :Candidat  : --> (f29)
+:Candidat  : --> (f33)
 :Recruteur  : --> (f21)
 :Recruteur  : --> (f24)
 :Utilisateur non connecté : --> (f30)
