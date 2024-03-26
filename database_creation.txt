@@ -31,6 +31,7 @@ CREATE TABLE IF NOT EXISTS Organisation (
     nom VARCHAR(100),
     siege_social INTEGER,
     type VARCHAR(100),
+    logo VARCHAR(100),
     FOREIGN KEY (siege_social) REFERENCES Adresse (id_lieu),
     FOREIGN KEY (type) REFERENCES Type_Organisation (nom)
 );
@@ -124,5 +125,6 @@ CREATE TABLE IF NOT EXISTS Piece_Dossier (
     id_piece INTEGER AUTO_INCREMENT PRIMARY KEY,
     type VARCHAR(100),
     candidature INTEGER,
+    fichier VARCHAR(100),
     FOREIGN KEY (candidature) REFERENCES Candidature (id_c)
 );
