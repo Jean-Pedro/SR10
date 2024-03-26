@@ -183,3 +183,8 @@ select{
     pointer-events: none;
     color: #aaa;
 }
+
+.new_org{
+    align-items: center;
+    text-align: center;
+}
