@@ -8,7 +8,7 @@
         <div id="page">
             <div id="top_bar">
                 <div id="home_button">
-                    <button id="menu">Menu</button>
+                    <a href="admin_main.html"><button id="menu">Menu</button></a>
                 </div>
                 <div id="account">
                     <button id="account">Mon compte</button>
@@ -35,6 +35,15 @@
                             <button id="refuser">Refuser</button>
                         </div>
                     </div>
+                    <div class="pagination">
+                        <a href="#" class="prev">&laquo; Previous</a>
+                        <a href="#" class="active">1</a>
+                        <a href="#">2</a>
+                        <a href="#">3</a>
+                        <a href="#">4</a>
+                        <a href="#">5</a>
+                        <a href="#" class="next">Next &raquo;</a>
+                    </div>
                 </div>
     
                 <div id="box">
@@ -54,12 +63,6 @@
                             <option value="" disabled selected hidden>Date</option>
                             <option value="recent">Récent</option>
                             <option value="ancien">Ancien</option>
-                        </select>
-
-                        <select name="date" id="distance">
-                            <option value="" disabled selected hidden>Distance</option>
-                            <option value="recent">X</option>
-                            <option value="ancien">Y</option>
                         </select>
                         <div id="label">
                             <label for="filter">Filtrer</label>

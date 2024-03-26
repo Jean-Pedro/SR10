@@ -96,3 +96,8 @@ body{
     text-align: center;
     margin-right: 40px;
 }
+
+#column_d img{
+    width: 500px;
+    height: auto;
+}
