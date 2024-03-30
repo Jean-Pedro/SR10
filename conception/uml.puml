@@ -80,7 +80,7 @@ class Piece_dossier{
 }
 
 
-Organisation "*" --- "1" Type_Organisation
+Organisation "*" -- "1" Type_Organisation
 Organisation "1" --- "*" fiche_poste : "Posséder>"
 Offre_emploi "*" -- "1" etat_offre
 fiche_poste "*" -- "1" statut_poste
@@ -88,7 +88,7 @@ fiche_poste "*" -- "1" type_metier
 fiche_poste "*" -- "1" adresse
 Offre_emploi "*" --- "1" fiche_poste : "Correspondre à >"
 Administrateur --> Utilisateur
-Recruteur --> Candidat
+Recruteur --> Utilisateur
 Candidat ---> Utilisateur
 Recruteur "1..*" --- "*" fiche_poste : "Creer >"
 Candidature "1" -- "*" Piece_dossier

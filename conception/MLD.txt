@@ -1,6 +1,8 @@
-Candidat(#id_Candidat : int, email : str, nom : str, prenom : str, num_tel : str, date_creation : datetime, statut : bool, password : str (hash));
-Recruteur(#id_Recruteur : int, email : str, nom : str, prenom : str, num_tel : str, date_creation : datetime, statut : bool, organisation => Organisation, password : str (hash));
-Administrateur(#id_Administrateur : int, email : str, nom : str, prenom : str, num_tel : str, date_creation : datetime, statut : bool, password : str (hash));
+Utilisateur(#id_Utilisateur : int, email : str, nom : str, prenom : str, num_tel : str, date_creation : datetime, last_login : datetime, statut : bool, password : str (hash))
+
+Candidat(#id_Candidat : int);
+Recruteur(#id_Recruteur : int, organisation => Organisation);
+Administrateur(#id_Administrateur : int);
 
 Type_Organisation(#name : str);
 Organisation(#Siren : int, nom : str, siege_social => adresse, type => Type_Organisation);
@@ -12,7 +14,7 @@ statut_poste(#statut : str);
 type_metier(#type : str);
 adresse(#id_lieu : int, num : int rue : str, ville : str, code_postal : str);
 fiche_poste(#id_fiche : int, intitule : str, responsable_hierarchique : str, rythme_travail : float, teletravail : bool, salaire_min : float, salaire_max : float, descirption : text,
-		type => type_metier, statut => statut_poste, lieu => adresse, organisation => Organisation, recruteur => Utilisateur);
+		type => type_metier, statut => statut_poste, lieu => adresse, organisation => Organisation, recruteur => Recruteur);
 
 Candidature(#id_c : int, date_candidature : datetime, offre* => Offre_emploi, candidat* => Candidat);
 Piece_dossier(#id_piece : int, type : str, candidature => Candidature);
