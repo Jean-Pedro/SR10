@@ -1,16 +1,17 @@
 DROP TABLE Piece_Dossier;
 DROP TABLE Candidature;
+DROP TABLE Offre_Emploi;
 DROP TABLE Fiche_Poste;
-DROP TABLE Administrateur;
 DROP TABLE Recruteur;
 DROP TABLE Candidat;
-DROP TABLE Type_Metier;
-DROP TABLE Statut_Poste;
-DROP TABLE Offre_Emploi;
-DROP TABLE Etat_Offre;
+DROP TABLE Administrateur;
+DROP TABLE Utilisateur;
 DROP TABLE Organisation;
+DROP TABLE Statut_Poste;
+DROP TABLE Etat_Offre;
 DROP TABLE Adresse;
 DROP TABLE Type_Organisation;
+DROP TABLE Type_Metier;
 
 
 
@@ -40,14 +41,6 @@ CREATE TABLE IF NOT EXISTS Etat_Offre (
     etat VARCHAR(30) PRIMARY KEY
 );
 
-CREATE TABLE IF NOT EXISTS Offre_Emploi (
-    num INTEGER PRIMARY KEY,
-    date_validite DATETIME,
-    indications TEXT,
-    etat VARCHAR(30),
-    FOREIGN KEY (etat) REFERENCES Etat_Offre (etat)
-);
-
 CREATE TABLE IF NOT EXISTS Statut_Poste (
     statut VARCHAR(30) PRIMARY KEY
 );
@@ -56,39 +49,33 @@ CREATE TABLE IF NOT EXISTS Type_Metier (
     type VARCHAR(30) PRIMARY KEY
 );
 
-CREATE TABLE IF NOT EXISTS Candidat (
-    id_candidat INTEGER AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE IF NOT EXISTS Utilisateur (
+    id_utilisateur INTEGER AUTO_INCREMENT PRIMARY KEY,
     email VARCHAR(100),
     nom VARCHAR(30),
     prenom VARCHAR(30),
     num_tel VARCHAR(15),
     date_creation DATETIME,
+    last_login DATETIME,
     statut BOOLEAN,
     password VARCHAR(100)
 );
 
+CREATE TABLE IF NOT EXISTS Candidat (
+    id_candidat INTEGER PRIMARY KEY,
+    FOREIGN KEY (id_candidat) REFERENCES Utilisateur (id_utilisateur)
+);
+
 CREATE TABLE IF NOT EXISTS Recruteur (
-    id_recruteur INTEGER AUTO_INCREMENT PRIMARY KEY,
-    email VARCHAR(100),
-    nom VARCHAR(30),
-    prenom VARCHAR(30),
-    num_tel VARCHAR(15),
-    date_creation DATETIME,
-    statut BOOLEAN,
-    password VARCHAR(100),
+    id_recruteur INTEGER PRIMARY KEY,
     organisation INTEGER,
+    FOREIGN KEY (id_recruteur) REFERENCES Utilisateur (id_utilisateur),
     FOREIGN KEY (organisation) REFERENCES Organisation (siren)
 );
 
 CREATE TABLE IF NOT EXISTS Administrateur (
-    id_administrateur INTEGER AUTO_INCREMENT PRIMARY KEY,
-    email VARCHAR(100),
-    nom VARCHAR(30),
-    prenom VARCHAR(30),
-    num_tel VARCHAR(15),
-    date_creation DATETIME,
-    statut BOOLEAN,
-    password VARCHAR(100)
+    id_administrateur INTEGER PRIMARY KEY,
+    FOREIGN KEY (id_administrateur) REFERENCES Utilisateur (id_utilisateur)
 );    
 
 CREATE TABLE IF NOT EXISTS Fiche_Poste (
@@ -110,6 +97,16 @@ CREATE TABLE IF NOT EXISTS Fiche_Poste (
     FOREIGN KEY (lieu) REFERENCES Adresse (id_lieu),
     FOREIGN KEY (organisation) REFERENCES Organisation (siren),
     FOREIGN KEY (recruteur) REFERENCES Recruteur (id_recruteur)
+);
+
+CREATE TABLE IF NOT EXISTS Offre_Emploi (
+    num INTEGER PRIMARY KEY,
+    date_validite DATETIME,
+    indications TEXT,
+    fiche INTEGER,
+    etat VARCHAR(30),
+    FOREIGN KEY (fiche) REFERENCES Fiche_Poste (id_fiche),
+    FOREIGN KEY (etat) REFERENCES Etat_Offre (etat)
 );
 
 CREATE TABLE IF NOT EXISTS Candidature (
