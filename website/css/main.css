@@ -71,22 +71,22 @@ button{
     flex: 1;
 }
 
-#entreprise{
+.entreprise{
     flex: 1;
     text-align: center;
 }
 
-#desc{
+.desc{
     flex: 1;
     text-align: center;
 }
 
-#offer_button{
+.offer_button{
     flex: 1;
     text-align: center;
 }
 
-#offer_button button{
+.offer_button button{
     vertical-align: center;
 }
 
@@ -187,4 +187,27 @@ select{
 .new_org{
     align-items: center;
     text-align: center;
+}
+
+
+
+
+
+
+
+
+.container_val{
+    text-align: center;
+    align-items: center;
+    padding-left: 100px;
+    padding-right: 100px;
+}
+
+.desc_offre{
+    background-color: #FFA3BE;
+    border-radius: 10px;
+}
+
+.description{
+    padding: 60px;
 }
