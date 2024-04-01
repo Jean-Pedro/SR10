@@ -27,7 +27,7 @@ module.exports = {
         });
     },  
 
-    creat: function (email, nom, prenom, num_tel, password, callback) {
+    create: function (email, nom, prenom, num_tel, password, callback) {
         date = Date.now();
         sql = "INSERT INTO Utilisateur VALUES (NULL, ?, ?, ?, ?, ?, ?, 1, ?)";
         db.query(sql, [email, nom, prenom, num_tel, date, date, password], function(err, result) {
