@@ -1,8 +1,7 @@
 var db = require('./db.js');
 module.exports = {
-    read: function (email, callback) {
-
-        db.query("select * from Organisation where email= ?",email, function(err, results) {
+    read: function (siren, callback) {
+        db.query("select * from Organisation where siren= ?",siren, function(err, results) {
             if (err) throw err;
             callback(results);
         });
@@ -15,20 +14,67 @@ module.exports = {
         });
     },
 
-    areValid: function (email, password, callback) {
-        sql = "SELECT pwd FROM USERS WHERE email = ?";
-        rows = db.query(sql, email, function (err, results) {
-            if (err) throw err;
-            if (rows.length == 1 && rows[0].pwd === password) {
-                callback(true)
+    //à voir
+    create: function (siren, nom, siege_social, type, logo, callback) {
+        //voir comment faire pour le siege social et le type     
+        rows = db.query("INSERT INTO Organisation (siren, nom, siege_social, type, logo) \
+        VALUES(?, ?, ?, ?, ?);", [siren, nom, siege_social, type, logo], function (err, results) {
+            if (err) {
+                callback(err, false);
             } else {
-                callback(false);
+                callback(err, "Organisation ajoutée !");
             }
         });
-    },  
+    },
 
-    creat: function (email, nom, prenom, pwd, type, callback) {
-        //todo
-        return false;
-    }
+
+    updateNom: function (siren, new_nom, callback) {
+        rows = db.query("UPDATE Organisation SET nom = ? WHERE siren =?", [new_nom, siren], function (err, results) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, true);
+            }
+        });
+    },
+
+    updateSiege_social: function (siren, new_siege_social, callback) {
+        rows = db.query("UPDATE Organisation SET siege_social = ? WHERE siren = ?", [new_siege_social, siren], function (err, results) {
+            if (err) {
+                callback(err, false);
+            } else {
+                callback(null, true);
+            }
+        });
+    },
+
+    updateType: function (siren, new_type, callback) {
+        rows = db.query("UPDATE Organisation SET type = ? WHERE siren = ?", [new_type, siren], function (err, results) {
+            if (err) {
+                callback(err, false);
+            } else {
+                callback(null, true);
+            }
+        });
+    },
+
+    updateLogo: function (siren, new_logo, callback) {
+        rows = db.query("UPDATE Organisation SET logo = ? WHERE siren = ?", [new_logo, siren], function (err, results) {
+            if (err) {
+                callback(err, false);
+            } else {
+                callback(null, true);
+            }
+        });
+    },
+
+    delete: function (siren, callback) {
+        db.query("DELETE FROM Organisation WHERE siren = ?", [siren], function (err, results) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, "Organisation supprimée avec succès");
+            } 
+        });
+    },
 }

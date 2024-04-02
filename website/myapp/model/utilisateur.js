@@ -1,3 +1,4 @@
+const bcrypt = require('bcrypt')
 
 var db = require('./db.js');
 module.exports = {
@@ -36,13 +37,11 @@ module.exports = {
     },
 
     create: function (email, nom, prenom, num_tel, password, callback) {
-        console.log("mabite");
         var ladate = new Date();
         var date_creation = ladate.getFullYear() + "-" + (ladate.getMonth() + 1) + "-" + ladate.getDate();        
         this.generateHash(password, function (hash) {
             rows = db.query("INSERT INTO Utilisateur (id_utilisateur, email, nom, prenom, num_tel, date_creation, last_login, statut, password) \
             VALUES(NULL, ?, ?, ?, ?, ?, ?, 1, ?);", [email, nom, prenom, num_tel, date_creation, date_creation, hash], function (err, results) {
-                console.log(results);
                 if (err) {
                     callback(err, false);
                 } else {
@@ -76,9 +75,9 @@ module.exports = {
     updateNom: function (email, new_nom, callback) {
         rows = db.query("UPDATE Utilisateur SET nom = ? WHERE email =?", [new_nom, email], function (err, results) {
             if (err) {
-                callback(err, false);
+                callback(err, null);
             } else {
-                callback(err, true);
+                callback(null, true);
             }
         });
     },
@@ -88,12 +87,32 @@ module.exports = {
             if (err) {
                 callback(err, false);
             } else {
-                callback(err, true);
+                callback(null, true);
+            }
+        });
+    },
+
+    updateTel: function (email, new_tel, callback) {
+        rows = db.query("UPDATE Utilisateur SET num_tel = ? WHERE email = ?", [new_tel, email], function (err, results) {
+            if (err) {
+                callback(err, false);
+            } else {
+                callback(null, true);
             }
         });
     },
 
     delete: function (email, callback) {
+        db.query("UPDATE Utilisateur SET statut = 0 WHERE email = ?", [email], function (err, results) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, "Utilisateur supprimé");
+            } 
+        });
+    },
+
+    /*delete: function (email, callback) {
         db.query("DELETE FROM Utilisateur WHERE email = ?", [email], function (err, results) {
             if (err) {
                 callback(err, null);
@@ -101,7 +120,7 @@ module.exports = {
                 callback(null, "Utilisateur supprimé avec succès");
             } 
         });
-    },
+    },*/
 
 
     TEST_MAIL: function (email_a_tester, callback) {
