@@ -1,0 +1,106 @@
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <title>Créer une Fiche de Poste</title>
+        <link rel="stylesheet" href="../css/connexion2.css">
+    </head>
+    <body>
+        <div id="container_2">
+            <div id="titre">
+                <h1>Créer une Fiche de Poste</h1>
+            </div>
+            
+            <div id="case">
+                <div id="column_g">
+                    <div id="formulaire">
+                        <form action="" method="post">
+                            <select name="orga" id="date">
+                                <option value="" disabled selected hidden>Sélectionner une Organisation</option>
+                                <option value="orga1">Orga1</option>
+                                <option value="orga2">Orga2</option>
+                            </select>
+                            <div id="label_form">
+                                <label for="intitule">Intitulé</label>
+                            </div>
+                            <div id="input_form">
+                                <input type="text" id="intitule" name="intitule" placeholder="Intitulé de la fiche" required>
+                            </div>
+
+                            <div id="label_form">
+                                <label for="resp">Responsable Hiérarchique</label>
+                            </div>
+                            <div id="input_form">
+                                <input type="text" id="resp" name="resp" placeholder="M. xxx" required>
+                            </div>
+
+                            <div id="label_form">
+                                <label for="rythme">Rythme de travail</label>
+                            </div>
+                            <div id="input_form">
+                                <input type="text" id="rythme" name="rythme" placeholder="..h.." required>
+                            </div>
+
+                            <div id="label_form">
+                                <label for="teletravail">Télétravail</label>
+                            </div>
+                            <div id="input_form">
+                                <input type="radio" id="teletravail" name="teletravail" value="oui"> Oui
+                                <input type="radio" id="teletravail" name="teletravail" value="non"> Non
+                            </div>
+
+                            <div id="label_form">
+                                <label for="salaire">Salaire</label>
+                            </div>
+                            <div id="input_form">
+                                <input type="number" id="salaire_min" name="salaire_min" placeholder="Salaire min" required> €
+                                <input type="number" id="salaire_max" name="salaire_max" placeholder="Salaire max" required> €
+                            </div>
+
+                            <div id="label_form">
+                                <label for="desc">Rythme de travail</label>
+                            </div>
+                            <div id="input_form">
+                                <input type="text" id="desc" name="desc" placeholder="Ajoutez une description" required>
+                            </div>
+
+                            <div id="label_form">
+                                <label for="type">Type de Métier</label>
+                            </div>
+                            <div id="input_form">
+                                <input type="text" id="type" name="type" placeholder="ex. cybersécurité, informatique" required>
+                            </div>
+
+                            <div id="label_form">
+                                <label for="statut">Statut</label>
+                            </div>
+                            <div id="input_form">
+                                <input type="text" id="statut" name="statut" placeholder="ex. cybersécurité, informatique" required>
+                            </div>
+
+
+                            <div id="label_form">
+                                <label for="adr">Adresse</label>
+                            </div>
+                            <div id="input_form">
+                                <input type="text" id="num" name="num" placeholder="Numéro" required>
+                            </div>
+                            <div id="input_form">
+                                <input type="text" id="rue" name="rue" placeholder="Rue" required>
+                            </div>
+                            <div id="input_form">
+                                <input type="text" id="ville" name="ville" placeholder="Ville" required>
+                            </div>
+                            <div id="input_form">
+                                <input type="text" id="code_p" name="code_p" placeholder="Code Postal" required>
+                            </div>
+                            <button id="submit" type="submit">Valider</button>
+                        </form>
+                    </div>
+                </div>
+                <div id="column_d">
+                    
+                </div>    
+            </div>
+        </div>
+    </body>
+</html>
