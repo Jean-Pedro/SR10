@@ -1,3 +1,4 @@
+
 var db = require('./db.js');
 module.exports = {
     read: function (email, callback) {
@@ -35,15 +36,18 @@ module.exports = {
     },
 
     create: function (email, nom, prenom, num_tel, password, callback) {
+        console.log("mabite");
         var ladate = new Date();
-        var date_creation = ladate.getFullYear() + "-" + (ladate.getMonth() + 1) + "-" + ladate.getDate();
-        pass.generateHash(password, function (hash) {
+        var date_creation = ladate.getFullYear() + "-" + (ladate.getMonth() + 1) + "-" + ladate.getDate();        
+        this.generateHash(password, function (hash) {
             rows = db.query("INSERT INTO Utilisateur (id_utilisateur, email, nom, prenom, num_tel, date_creation, last_login, statut, password) \
             VALUES(NULL, ?, ?, ?, ?, ?, ?, 1, ?);", [email, nom, prenom, num_tel, date_creation, date_creation, hash], function (err, results) {
+                console.log(results);
                 if (err) {
                     callback(err, false);
                 } else {
-                    callback(err, true);
+                    var id = results.insertId;
+                    callback(err, id);
                 }
             });
         });
