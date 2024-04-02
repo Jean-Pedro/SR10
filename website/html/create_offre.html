@@ -1,0 +1,54 @@
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <title>Créer une Fiche de Poste</title>
+        <link rel="stylesheet" href="../css/connexion2.css">
+    </head>
+    <body>
+        <div id="container_2">
+            <div id="titre">
+                <h1>Créer une Fiche de Poste</h1>
+            </div>
+            
+            <div id="case">
+                <div id="column_g">
+                    <div id="formulaire">
+                        <form action="" method="post">
+                            <select name="orga" id="date">
+                                <option value="" disabled selected hidden>Sélectionner une Fiche de Poste</option>
+                                <option value="fiche1">Fiche1</option>
+                                <option value="fiche2">Fiche2</option>
+                            </select>
+                            <div id="label_form">
+                                <label for="num">Numéro de l'offre</label>
+                            </div>
+                            <div id="input_form">
+                                <input type="number" id="num" name="num" placeholder="ex : 35648" required>
+                            </div>
+
+                            <div id="label_form">
+                                <label for="date">Date de Validité</label>
+                            </div>
+                            <div id="input_form">
+                                <input type="datetime-local" id="date" name="date" required>
+                            </div>
+
+                            <div id="label_form">
+                                <label for="ind">Indications</label>
+                            </div>
+                            <div id="input_form">
+                                <input type="text" id="ind" name="ind" placeholder="type de pièces et nombre, ..." required>
+                            </div>
+
+                            
+                            <button id="submit" type="submit">Valider</button>
+                        </form>
+                    </div>
+                </div>
+                <div id="column_d">
+                    
+                </div>    
+            </div>
+        </div>
+    </body>
+</html>
