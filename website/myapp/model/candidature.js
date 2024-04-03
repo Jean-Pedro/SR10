@@ -1,9 +1,9 @@
 var db = require('./db.js');
 module.exports = {
     read: function (id_c, callback) {
-        db.query("select * from Candidature where id_c= ?", id_c, function(err, results) {
+        db.query("SELECT * from Candidature where id_c= ?", id_c, function(err, results) {
             if (err) throw err;
-            callback(results);
+            callback(null, results);
         });
     },
 
@@ -18,11 +18,11 @@ module.exports = {
     create: function (date_candidature, offre, candidat, callback) {
         //voir comment faire pour les clés étrangères   
         rows = db.query("INSERT INTO Candidature (id_c, date_candidature, offre, candidat) \
-        VALUES(NULL, ?, ?, ?);", [id_c, date_candidature, offre, candidat], function (err, results) {
+        VALUES(NULL, ?, ?, ?);", [date_candidature, offre, candidat], function (err, results) {
             if (err) {
-                callback(err, false);
+                callback(err, null);
             } else {
-                callback(err, "Candidature ajoutée !");
+                callback(null, results);
             }
         });
     },
