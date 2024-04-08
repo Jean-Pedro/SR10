@@ -11,7 +11,7 @@
                     <a href="admin_main.html"><button id="menu">Menu</button></a>
                 </div>
                 <div id="account">
-                    <a href="admin_account.html"><button id="account">Mon compte</button></a>
+                    <a href="/admin_account"><button id="account">Mon compte</button></a>
                 </div>
             </div>
     
@@ -29,7 +29,7 @@
                             <h1><%= user.prenom + ' ' + user.nom%></h1>
                         </div>
                         <div class="desc">
-                            <p>Ingénieur en agroalimentaire</p>
+                            <p><%= user.num_tel%></p>
                         </div>
                         <div class="offer_button">
                             <a href="admin_desc_acc.html"><button id="accepter">Plus de détails</button></a>
@@ -43,7 +43,6 @@
                         <a href="#">3</a>
                         <a href="#">4</a>
                         <a href="#">5</a>
-                        <!--<a href="/usersList?page=<%= page + 1 %>&perPage=<%= perPage %>">Next</a>-->
                         <a href="#" class="next">Next &raquo;</a>
                     </div>
                 </div>
