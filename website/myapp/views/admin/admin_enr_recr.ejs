@@ -1,44 +1,39 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Candidat</title>
-        <link rel="stylesheet" href="../css/main.css">
+        <title>Administrateur</title>
+        <link rel="stylesheet" href="/stylesheets/main.css">
     </head>
     <body>
         <div id="page">
             <div id="top_bar">
                 <div id="home_button">
-                    <a href="candidat_main.html"><button id="menu">Menu</button></a>                
+                    <a href="/admin/admin_main"><button id="menu">Menu</button></a>
                 </div>
                 <div id="account">
-                    <a href="candidat_account.html"><button id="account">Mon compte</button></a>
+                    <a href="/admin/admin_account"><button id="account">Mon compte</button></a>
                 </div>
             </div>
     
             <div id="container">
                 <div id="offers">
                     <div id="label">
-                        <label for="candidat">Mes candidatures</label>
-                    </div>
+                        <label for="candidat">Espace Administrateur - Validation Recruteur</label>
+                    </div>        
                     <div id="off">
                         <div id="off_img">
-                            <img src="../LOGO-META.webp" alt="Logo de l'entreprise">
+                            <img src="../profil.jpeg" alt="Photo de profil">
                         </div>
-                        <div class="entreprise">
-                            <h1>Meta</h1>
-                            <p>Directeur de communication</p>
+                        <div class="entreprise">                                
+                            <h1>Jean Pakdo</h1>
                         </div>
                         <div class="desc">
-                            <p>Compétences en ...</p>
+                            <p>Ingénieur en agroalimentaire</p>
                         </div>
                         <div class="offer_button">
-                            <a href="candidat_modif_cand.html"><button>Modifier</button></a>
-                            <a href="validation_candidat.html"><button>Supprimer</button></a>
-                            
+                            <a href="admin_val_recr.html"><button id="accepter">Plus de détails</button></a>
                         </div>
-                        
                     </div>
-                    
                     <div class="pagination">
                         <a href="#" class="prev">&laquo; Previous</a>
                         <a href="#" class="active">1</a>
@@ -48,7 +43,6 @@
                         <a href="#">5</a>
                         <a href="#" class="next">Next &raquo;</a>
                     </div>
-
                 </div>
     
                 <div id="box">
@@ -68,12 +62,6 @@
                             <option value="" disabled selected hidden>Date</option>
                             <option value="recent">Récent</option>
                             <option value="ancien">Ancien</option>
-                        </select>
-
-                        <select name="date" id="distance">
-                            <option value="" disabled selected hidden>Distance</option>
-                            <option value="recent">X</option>
-                            <option value="ancien">Y</option>
                         </select>
                         <div id="label">
                             <label for="filter">Filtrer</label>

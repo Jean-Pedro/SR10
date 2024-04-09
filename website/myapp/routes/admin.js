@@ -28,7 +28,19 @@ router.get('/', function (req, res, next) {
 
 
 router.get('/admin_account', function (req, res, next) {
-    res.render('admin/admin_account', { title: 'Admin - Account', users: result });
+    res.render('admin/admin_account');
+})
+
+router.get('/admin_main', function (req, res, next) {
+    res.render('admin/admin_main');
+})
+
+router.get('/admin_enr_recr', function (req, res, next) {
+    res.render('admin/admin_enr_recr');
+})
+
+router.get('/admin_enr_orga', function (req, res, next) {
+    res.render('admin/admin_enr_orga');
 })
 
 module.exports = router;
