@@ -17,4 +17,18 @@ router.get('/account', function (req, res, next) {
     }
 );
 
+router.get('/', function (req, res, next) {
+    res.send('respond with a resource');
+    });
+    router.get('/admin_visu_acc', function (req, res, next) {
+    result=userModel.readall(function(result){
+    res.render('admin/admin_visu_acc', { title: 'List des utilisateurs', users: result });
+    });
+    });
+
+
+router.get('/admin_account', function (req, res, next) {
+    res.render('admin/admin_account', { title: 'Admin - Account', users: result });
+})
+
 module.exports = router;
