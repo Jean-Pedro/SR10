@@ -25,24 +25,23 @@
                         <label for="candidat">Espace Recruteur</label>
                     </div>
                     <% offres.forEach((offre)=> { %>
-                    <div id="off">
-                        <div id="off_img">
-                            <img src="../LOGO-META.webp" alt="Logo de l'entreprise">
+                        <div id="off">
+                            <div id="off_img">
+                                <img src="../LOGO-META.webp" alt="Logo de l'entreprise">
+                            </div>
+                            <div class="entreprise">
+                                <h1><%= offre.nom%></h1>
+                                <p><%= offre.siren%></p>
+                            </div>
+                            <div class="desc">
+                                <p><%= offre.type + ' - ' + offre.statut%></p>
+                                <p><%= offre.description%></p>
+                            </div>
+                            
+                            <div class="offer_button">
+                                <button onclick="openOffre(this)">Plus d'infos</button>
+                            </div>
                         </div>
-                        <div class="entreprise">
-                            <h1><%= offre.nom%></h1>
-                            <p><%= offre.type + ' - ' + offre.statut%></p>
-                        </div>
-                        <div class="desc">
-                            <p><%= offre.description%></p>
-                        </div>
-                        
-                        <div class="offer_button">
-                            <a href="recruteur_desc_off.html"><button id="candidater">Plus d'infos</button></a>
-                        </div>
-                        
-                        
-                    </div>
                     <% }) %>
                     <div class="pagination">
                         <a href="#" class="prev">&laquo; Previous</a>
@@ -87,5 +86,16 @@
                 </div>
             </div>
         </div>
+
+        <script>
+            function openOffre(button) {
+                var offreDiv = button.closest('#off');
+                var entrepriseDiv = offreDiv.querySelector('.entreprise');
+                var numeroElement = entrepriseDiv.querySelector('p');
+                var siren = numeroElement.textContent;
+                console.log(`/recruteur/voir-offre/${siren}`);
+                window.location.href = `/recruteur/voir-offre/${siren}`
+            }
+        </script>
     </body>
 </html>

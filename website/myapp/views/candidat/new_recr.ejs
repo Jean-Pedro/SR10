@@ -10,9 +10,6 @@
                 <div id="home_button">
                     <a href="/candidat/candidat_main"><button id="menu">Menu</button></a>
                 </div>
-                <div id="recr">
-                    <a href="/candidat/new_recr"><button id="recruteur">Devenir recruteur</button></a>
-                </div>
                 <div id="account">
                     <a href="/candidat/candidature_c"><button id="cand">Mes candidatures</button></a>
                     <a href="/candidat/candidat_account"><button id="account">Mon compte</button></a>
@@ -22,7 +19,7 @@
             <div id="container">
                 <div id="offers">
                     <div id="label">
-                        <label for="candidat">Espace Candidat</label>
+                        <label for="candidat">Devenir Recruteur</label>
                     </div>
                     <% offres.forEach((offre)=> { %>
                         <div id="off">
@@ -39,7 +36,7 @@
                             </div>
                             
                             <div class="offer_button">
-                                <button onclick="openOffre(this)">Plus d'infos</button>
+                                <button onclick="openOffre(this)">Demander à rejoindre</button>
                             </div>
                         </div>
                     <% }) %>
@@ -84,7 +81,9 @@
                             <label for="filter">Filtrer</label>
                         </div>
                     </div>
-    
+                    <div class="new_org">
+                        <a href="/candidat/create_orga"><button>Ajouter une nouvelle organisation</button></a>
+                    </div>    
                 </div>
             </div>
         </div>
@@ -95,8 +94,8 @@
                 var entrepriseDiv = offreDiv.querySelector('.entreprise');
                 var numeroElement = entrepriseDiv.querySelector('p');
                 var siren = numeroElement.textContent;
-                console.log(`/candidat/voir-offre/${siren}`);
-                window.location.href = `/candidat/voir-offre/${siren}`
+                console.log(`/candidat/rejoindre_orga/${siren}`);
+                window.location.href = `/candidat/rejoindre_orga/${siren}`
             }
         </script>
     </body>
