@@ -33,6 +33,15 @@ router.get('/', function (req, res, next) {
     });
 
 
+  router.get('/search/:text', function (req, res, next) {
+    const text =req.params.text;
+    result = offreModel.allinfosearch(text, function (error, result) {
+      console.log(result);
+      res.render('candidat/candidat_main', { title: 'Candidat - search', offres: result})
+    })
+  })
+
+
 router.get('/voir-offre/:id', function (req, res, next) {
     const id = req.params.id;
     result = offreModel.allinfoID(id, function (error, result) {

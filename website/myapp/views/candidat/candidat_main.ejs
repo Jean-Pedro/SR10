@@ -96,8 +96,26 @@
                 var numeroElement = entrepriseDiv.querySelector('p');
                 var siren = numeroElement.textContent;
                 console.log(`/candidat/voir-offre/${siren}`);
-                window.location.href = `/candidat/voir-offre/${siren}`
-            }
+                window.location.href = `/candidat/voir-offre/${siren}`;
+            };
+
+            let t_search = document.querySelector('input');
+            t_search.addEventListener("keydown", (event) => {
+                if(event.key === "Enter") {
+                    let text = t_search.value;
+                    if(text === ''){
+                        window.location.href = `/candidat/candidat_main`;
+                    }
+                    else {
+                        console.log(text);
+                        window.location.href = `/candidat/search/${text}`;
+                    }
+                }
+            })
+            //console.log(t_search);
+
+
+
         </script>
     </body>
 </html>
