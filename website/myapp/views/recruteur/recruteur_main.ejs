@@ -8,14 +8,14 @@
         <div id="page">
             <div id="top_bar">
                 <div id="home_button">
-                    <a href="recruteur_main.html"><button id="menu">Menu</button></a>
+                    <a href="/recruteur/recruteur_main"><button id="menu">Menu</button></a>
                 </div>
                 <div id="recr">
-                    <a href="recruteur_recr.html"><button id="recruteur">Recruter</button></a>
+                    <a href="/recruteur/recruteur_recr/3"><button id="recruteur">Recruter</button></a>
                 </div>
                 <div id="account">
-                    <a href="candidature_r.html"><button id="cand">Mes candidatures</button></a>
-                    <a href="recruteur_account.html"><button id="account">Mon compte</button></a>
+                    <a href="/recruteur/mes_candidatures"><button id="cand">Mes candidatures</button></a>
+                    <a href="/recruteur/recruteur_account"><button id="account">Mon compte</button></a>
                 </div>
             </div>
     
@@ -31,10 +31,11 @@
                             </div>
                             <div class="entreprise">
                                 <h1><%= offre.nom%></h1>
-                                <p><%= offre.siren%></p>
+                                <p>Siren : <%= offre.siren%></p>
+                                <p>Numéro de fiche de poste : <%= offre.id_fiche %></p>
                             </div>
                             <div class="desc">
-                                <p><%= offre.type + ' - ' + offre.statut%></p>
+                                <p><%= offre.type + ' - ' + offre.intitule%></p>
                                 <p><%= offre.description%></p>
                             </div>
                             
@@ -58,12 +59,19 @@
                     <div id="toolbox">
                         <div id="search">
                             <div id="label">
-                                <label for="search">Rechercher</label> <br>
+                                <label for="post_search">Rechercher par poste</label> <br>
                             </div>
                             <div id="input_search">
-                                <input type="search" id="search" name="search" placeholder="Rechercher..." required>
+                                <input type="text" id="post_search" name="post_search" placeholder="Rechercher..." required>
+                            </div>
+                            <div id="label">
+                                <label for="locate_search">Rechercher par ville</label> <br>
+                            </div>
+                            <div id="input_search">
+                                <input type="text" id="locate_search" name="locate_search" placeholder="Paris, ..." required>
                             </div>
                         </div>
+                        <!--
                         <div id="label">
                                 <label for="sort">Trier</label>
                         </div>
@@ -78,8 +86,12 @@
                             <option value="recent">X</option>
                             <option value="ancien">Y</option>
                         </select>
+                        -->
                         <div id="label">
-                            <label for="filter">Filtrer</label>
+                            <label for="filter">Filtrer par salaire</label>
+                        </div>
+                        <div id="input_search">
+                            <input type="number" id="salaire_min" name="salaire_min" placeholder="Salaire minimum">
                         </div>
                     </div>
     
@@ -90,17 +102,17 @@
         <script>
             function openOffre(button) {
                 var offreDiv = button.closest('#off');
-                var entrepriseDiv = offreDiv.querySelector('.entreprise');
-                var numeroElement = entrepriseDiv.querySelector('p');
-                var siren = numeroElement.textContent;
-                console.log(`/recruteur/voir-offre/${siren}`);
-                window.location.href = `/recruteur/voir-offre/${siren}`
+                var idCandidatureElement = offreDiv.querySelector('.entreprise > p:last-child');
+                var idCandidatureText = idCandidatureElement.textContent.trim();
+                var id_fiche = idCandidatureText.split('Numéro de fiche de poste : ')[1];
+                console.log(`/recruteur/voir-offre/${id_fiche}`);
+                window.location.href = `/recruteur/voir-offre/${id_fiche}`;
             };
 
-            let t_search = document.querySelector('input');
-            t_search.addEventListener("keydown", (event) => {
+            let post_search = document.querySelector('input');
+            post_search.addEventListener("keydown", (event) => {
                 if(event.key === "Enter") {
-                    let text = t_search.value;
+                    let text = post_search.value;
                     if(text === ''){
                         window.location.href = `/recruteur/recruteur_main`;
                     }
@@ -110,6 +122,35 @@
                     }
                 }
             });
+
+            let locate_search = document.querySelector('#locate_search');
+            locate_search.addEventListener("keydown", (event) => {
+                if(event.key === "Enter") {
+                    let text = locate_search.value;
+                    if(text === ''){
+                        window.location.href = `/recruteur/recruteur_main`;
+                    }
+                    else {
+                        console.log(text);
+                        window.location.href = `/recruteur/localisation/${text}`;
+                    }
+                }
+            });
+
+            let salaireMin = document.querySelector('#salaire_min');
+            salaireMin.addEventListener("keydown", (event) => {
+                if(event.key === "Enter") {
+                    let text = salaireMin.value;
+                    if(text === ''){
+                        window.location.href = `/recruteur/recruteur_main`;
+                    }
+                    else {
+                        console.log(text);
+                        window.location.href = `/recruteur/salaire_min/${text}`;
+                    }
+                }
+            });
+
         </script>
     </body>
 </html>

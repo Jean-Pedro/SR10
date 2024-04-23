@@ -50,6 +50,14 @@ router.get('/', function (req, res, next) {
     })
   })
 
+  router.get('/salaire_min/:text', function (req, res, next) {
+    const text =req.params.text;
+    result = offreModel.allinfoSalaire(text, function (error, result) {
+      console.log(result);
+      res.render('candidat/candidat_main', { title: 'Candidat - search', offres: result})
+    })
+  })
+
 
 router.get('/voir-offre/:id', function (req, res, next) {
     const id = req.params.id;
@@ -60,9 +68,9 @@ router.get('/voir-offre/:id', function (req, res, next) {
   });
 
 
-  router.get('/rejoindre_orga/:id', function (req, res, next) {
-    const id = req.params.id;
-    result = offreModel.allinfoID(id, function (error, result) {
+  router.get('/rejoindre_orga/:siren', function (req, res, next) {
+    const siren = req.params.siren;
+    result = offreModel.allinfoSiren(siren, function (error, result) {
     console.log(result)
       res.render('candidat/rejoindre_orga', { title: 'Candidat - rejoindre organisation', offre: result[0] });
     });

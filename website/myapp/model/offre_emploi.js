@@ -15,7 +15,7 @@ module.exports = {
     },
 
     allinfo: function (callback) {
-        db.query("select * from Fiche_Poste JOIN Offre_Emploi on Fiche_Poste.id_fiche = Offre_Emploi.fiche join Organisation on Fiche_Poste.organisation = Organisation.siren", function (err, results) {
+        db.query("select * from Fiche_Poste JOIN Offre_Emploi on Fiche_Poste.id_fiche = Offre_Emploi.fiche join Organisation on Fiche_Poste.organisation = Organisation.siren ORDER BY Offre_Emploi.date_depot DESC", function (err, results) {
             if (err) throw err;
             callback(results);
         });
@@ -23,6 +23,26 @@ module.exports = {
 
     allinfoID: function (id, callback) {
         db.query("select * from Fiche_Poste JOIN Offre_Emploi on Fiche_Poste.id_fiche = Offre_Emploi.fiche join Organisation on Fiche_Poste.organisation = Organisation.siren where Fiche_Poste.id_fiche = ?;",[id], function (err, results) {
+            if (err) {
+                callback(err);
+            } else {
+                callback(null, results);
+            }
+        });
+    },
+
+    allinfoSiren: function (siren, callback) {
+        db.query("select * from Fiche_Poste JOIN Offre_Emploi on Fiche_Poste.id_fiche = Offre_Emploi.fiche join Organisation on Fiche_Poste.organisation = Organisation.siren where Organisation.siren = ?;",[siren], function (err, results) {
+            if (err) {
+                callback(err);
+            } else {
+                callback(null, results);
+            }
+        });
+    },
+
+    allinfoByRecruteur: function (id, callback) {
+        db.query("select * from Fiche_Poste JOIN Offre_Emploi on Fiche_Poste.id_fiche = Offre_Emploi.fiche join Organisation on Fiche_Poste.organisation = Organisation.siren where Fiche_Poste.recruteur = ?;",[id], function (err, results) {
             if (err) {
                 callback(err);
             } else {
@@ -43,6 +63,16 @@ module.exports = {
     
     allinfoLocate: function (search, callback) {
         db.query("select * from Fiche_Poste JOIN Offre_Emploi on Fiche_Poste.id_fiche = Offre_Emploi.fiche join Organisation on Fiche_Poste.organisation = Organisation.siren join Adresse ON Adresse.id_lieu = Organisation.siege_social where Adresse.ville like ?", ['%'+search+'%'], function (err, results) {
+            if (err) {
+                callback(err);
+            } else {
+                callback(null, results);
+            }
+        });
+    },
+
+    allinfoSalaire: function (search, callback) {
+        db.query("select * from Fiche_Poste JOIN Offre_Emploi on Fiche_Poste.id_fiche = Offre_Emploi.fiche join Organisation on Fiche_Poste.organisation = Organisation.siren join Adresse ON Adresse.id_lieu = Organisation.siege_social where Fiche_Poste.salaire_min >= ?", search, function (err, results) {
             if (err) {
                 callback(err);
             } else {

@@ -8,10 +8,10 @@
         <div id="page">
             <div id="top_bar">
                 <div id="home_button">
-                    <a href="/candidat/candidat_main"><button id="menu">Menu</button></a>                
+                    <a href="/recruteur/candidat_main"><button id="menu">Menu</button></a>                
                 </div>
                 <div id="account">
-                    <a href="candidat_account.html"><button id="account">Mon compte</button></a>
+                    <a href="/recruteur/recruteur_account"><button id="account">Mon compte</button></a>
                 </div>
             </div>
     
@@ -94,8 +94,8 @@
                 var idCandidatureElement = offreDiv.querySelector('.entreprise > p:last-child');
                 var idCandidatureText = idCandidatureElement.textContent.trim();
                 var id_c = idCandidatureText.split('ID Candidature : ')[1];
-                console.log(`/candidat/modif-offre/${id_c}`);
-                window.location.href = `/candidat/modif-offre/${id_c}`;
+                console.log(`/recruteur/modif-offre/${id_c}`);
+                window.location.href = `/recruteur/modif-offre/${id_c}`;
             };
         </script>
     </body>
