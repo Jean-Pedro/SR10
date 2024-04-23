@@ -34,7 +34,6 @@
                     </div>
                     <div class="offer_button">
                         <button onclick="candidater(this)">Candidater</button>
-                        <a href="candidat_candidate.html"><button>Candidater</button></a>
                     </div>
                 </div>
             </div>
@@ -42,12 +41,12 @@
 
         <script>
             function candidater(button) {
-                var offreDiv = button.closest('#off');
+                var offreDiv = button.closest('.desc_offre');
                 var idCandidatureElement = offreDiv.querySelector('.entreprise > p:last-child');
                 var idCandidatureText = idCandidatureElement.textContent.trim();
-                var siren = idCandidatureText.split('Numéro de Siren : ')[1];
-                console.log(`/candidat/candidater/${siren}`);
-                window.location.href = `/candidat/candidater/${siren}`;
+                var id_fiche = idCandidatureText.split('Numéro de fiche de poste : ')[1];
+                console.log(`/candidat/candidater/${id_fiche}`);
+                window.location.href = `/candidat/candidater/${id_fiche}`;
             };
         </script>
     </body>

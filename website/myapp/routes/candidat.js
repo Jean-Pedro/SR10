@@ -88,9 +88,9 @@ router.get('/voir-offre/:id', function (req, res, next) {
   router.get('/candidater/:id', function (req, res, next) {
     const id = req.params.id;
     console.log(id)
-    result = candidatureModel.readPieces(id, function (error, result) {
+    result = candidatureModel.readPiecesByFiche(id, function (error, result) {
     console.log(result)
-      res.render('candidat/candidat_modif_cand', { title: 'Candidat - Modification candidature', pieces: result});
+      res.render('candidat/candidat_candidate', { title: 'Candidat - Candidater', pieces: result});
     });
   });
 

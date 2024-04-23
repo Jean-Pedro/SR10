@@ -28,6 +28,24 @@ module.exports = {
         });
     },
 
+    readPiecesByFiche: function (id, callback) {
+        db.query("SELECT Offre_Emploi.indications FROM Fiche_Poste JOIN Offre_Emploi ON Offre_Emploi.fiche = Fiche_Poste.id_fiche where id_fiche = ?", id, function(err, results) {
+            if (err) throw err;
+            if (results.length > 0) {
+                // Obtenez les indications de la première ligne (supposant une seule ligne)
+                const indications = results[0].indications;
+                // Séparez les indications en fonction de la virgule
+                const indicationsArray = indications.split(',').map(indication => indication.trim());
+                // Passez le tableau d'indications au callback
+                callback(null, indicationsArray);
+            } else {
+                // Si aucun résultat n'est renvoyé, passez un tableau vide au callback
+                callback(null, []);
+            }
+        });
+    },
+
+
     readPieces: function (id, callback) {
         db.query("SELECT * FROM Piece_Dossier where candidature = ?", id, function(err, results) {
             if (err) throw err;
