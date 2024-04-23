@@ -41,6 +41,15 @@ module.exports = {
         });
     },
     
+    allinfoLocate: function (search, callback) {
+        db.query("select * from Fiche_Poste JOIN Offre_Emploi on Fiche_Poste.id_fiche = Offre_Emploi.fiche join Organisation on Fiche_Poste.organisation = Organisation.siren join Adresse ON Adresse.id_lieu = Organisation.siege_social where Adresse.ville like ?", ['%'+search+'%'], function (err, results) {
+            if (err) {
+                callback(err);
+            } else {
+                callback(null, results);
+            }
+        });
+    },
 
     //à voir
     create: function (num, date_validite, indications, fiche, etat, callback) {

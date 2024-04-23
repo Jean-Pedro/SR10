@@ -42,6 +42,14 @@ router.get('/', function (req, res, next) {
     })
   })
 
+  router.get('/localisation/:text', function (req, res, next) {
+    const text =req.params.text;
+    result = offreModel.allinfoLocate(text, function (error, result) {
+      console.log(result);
+      res.render('candidat/candidat_main', { title: 'Candidat - search', offres: result})
+    })
+  })
+
 
 router.get('/voir-offre/:id', function (req, res, next) {
     const id = req.params.id;

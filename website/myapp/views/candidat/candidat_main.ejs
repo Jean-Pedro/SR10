@@ -61,10 +61,16 @@
                     <div id="toolbox">
                         <div id="search">
                             <div id="label">
-                                <label for="search">Rechercher</label> <br>
+                                <label for="post_search">Rechercher par poste</label> <br>
                             </div>
                             <div id="input_search">
-                                <input type="search" id="search" name="search" placeholder="Rechercher..." required>
+                                <input type="text" id="post_search" name="post_search" placeholder="Rechercher..." required>
+                            </div>
+                            <div id="label">
+                                <label for="locate_search">Rechercher par localisation</label> <br>
+                            </div>
+                            <div id="input_search">
+                                <input type="text" id="locate_search" name="locate_search" placeholder="Paris, ..." required>
                             </div>
                         </div>
                         <div id="label">
@@ -100,10 +106,10 @@
                 window.location.href = `/candidat/voir-offre/${id_fiche}`;
             };
 
-            let t_search = document.querySelector('input');
-            t_search.addEventListener("keydown", (event) => {
+            let post_search = document.querySelector('#post_search');
+            post_search.addEventListener("keydown", (event) => {
                 if(event.key === "Enter") {
-                    let text = t_search.value;
+                    let text = post_search.value;
                     if(text === ''){
                         window.location.href = `/candidat/candidat_main`;
                     }
@@ -113,6 +119,22 @@
                     }
                 }
             });
+
+            let locate_search = document.querySelector('#locate_search');
+            locate_search.addEventListener("keydown", (event) => {
+                if(event.key === "Enter") {
+                    let text = locate_search.value;
+                    if(text === ''){
+                        window.location.href = `/candidat/candidat_main`;
+                    }
+                    else {
+                        console.log(text);
+                        window.location.href = `/candidat/localisation/${text}`;
+                    }
+                }
+            });
+
+
             //console.log(t_search);
         </script>
     </body>
