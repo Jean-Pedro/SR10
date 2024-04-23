@@ -22,7 +22,7 @@ module.exports = {
     },
 
     allinfoID: function (id, callback) {
-        db.query("select * from Fiche_Poste JOIN Offre_Emploi on Fiche_Poste.id_fiche = Offre_Emploi.fiche join Organisation on Fiche_Poste.organisation = Organisation.siren where Organisation.siren = ?;",[id], function (err, results) {
+        db.query("select * from Fiche_Poste JOIN Offre_Emploi on Fiche_Poste.id_fiche = Offre_Emploi.fiche join Organisation on Fiche_Poste.organisation = Organisation.siren where Fiche_Poste.id_fiche = ?;",[id], function (err, results) {
             if (err) {
                 callback(err);
             } else {

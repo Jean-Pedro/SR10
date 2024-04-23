@@ -18,9 +18,11 @@
                 <div class="desc_offre">
                     <div class="entreprise">
                         <h1><%= offre.nom %></h1>
-                        <p>Type de l'entreprise : <%= offre.type %></p>
+                        <p>Numéro de Siren : <%= offre.siren %></p>
+                        <p>Numéro de fiche de poste : <%= offre.id_fiche %></p>
                     </div>
                     <div class="description">
+                        <p>Type de l'entreprise : <%= offre.type %></p>
                         <p>Intitulé du poste : <%= offre.intitule %></p>
                         <p>Statut : <%= offre.statut %></p>
                         <p>Descirption du poste : <%= offre.description %></p>
@@ -31,10 +33,22 @@
                         <p></p>
                     </div>
                     <div class="offer_button">
+                        <button onclick="candidater(this)">Candidater</button>
                         <a href="candidat_candidate.html"><button>Candidater</button></a>
                     </div>
                 </div>
             </div>
         </div>
+
+        <script>
+            function candidater(button) {
+                var offreDiv = button.closest('#off');
+                var idCandidatureElement = offreDiv.querySelector('.entreprise > p:last-child');
+                var idCandidatureText = idCandidatureElement.textContent.trim();
+                var siren = idCandidatureText.split('Numéro de Siren : ')[1];
+                console.log(`/candidat/candidater/${siren}`);
+                window.location.href = `/candidat/candidater/${siren}`;
+            };
+        </script>
     </body>
 </html>

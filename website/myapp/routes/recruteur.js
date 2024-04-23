@@ -22,5 +22,13 @@ router.get('/', function (req, res, next) {
     });
   });
 
+  router.get('/search/:text', function (req, res, next) {
+    const text =req.params.text;
+    result = offreModel.allinfosearch(text, function (error, result) {
+      console.log(result);
+      res.render('recruteur/recruteur_main', { title: 'Recruteur - search', offres: result})
+    })
+  })
+
 
   module.exports = router;

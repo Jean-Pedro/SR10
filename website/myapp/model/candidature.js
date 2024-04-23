@@ -14,6 +14,27 @@ module.exports = {
         });
     },
 
+    readByIdCandidat: function (id, callback) {
+        db.query("SELECT * from Candidature where candidat= ?", id, function(err, results) {
+            if (err) throw err;
+            callback(null, results);
+        });
+    },
+
+    readTest: function (callback) {
+        db.query("SELECT * from Candidature JOIN Offre_Emploi ON Candidature.offre = Offre_Emploi.num JOIN Fiche_Poste ON Fiche_Poste.id_fiche = Offre_Emploi.fiche join Organisation on Fiche_Poste.organisation = Organisation.siren where Candidature.candidat= ?", 1, function(err, results) {
+            if (err) throw err;
+            callback(null, results);
+        });
+    },
+
+    readPieces: function (id, callback) {
+        db.query("SELECT * FROM Piece_Dossier where candidature = ?", id, function(err, results) {
+            if (err) throw err;
+            callback(null, results);
+        });
+    },
+
     //à voir
     create: function (date_candidature, offre, candidat, callback) {
         //voir comment faire pour les clés étrangères   

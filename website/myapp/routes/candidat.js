@@ -2,6 +2,7 @@ var express = require('express');
 var userModel = require('../model/utilisateur')
 var offreModel = require('../model/offre_emploi')
 var candModel = require('../model/candidat')
+var candidatureModel = require('../model/candidature')
 var router = express.Router();
 
 router.get('/', function (req, res, next) {
@@ -59,7 +60,38 @@ router.get('/voir-offre/:id', function (req, res, next) {
     });
   });
   
+  router.get('/mes_candidatures/:id', function (req, res, next) {
+    const id = req.params.id;
+    result = candidatureModel.readByIdCandidat(id, function (error, result) {
+      console.log(result);
+      res.render('candidat/candidature_c', {title : 'Candidat - Candidatures', offre: result[0]})
+    })
+  });
+
+  router.get('/mes_candidatures', function (req, res, next) {
+    result = candidatureModel.readTest(function (error, result) {
+      console.log(result);
+      res.render('candidat/candidature_c', {title : 'Candidat - Candidatures', offres: result})
+    })
+  });
+
+  router.get('/modif-offre/:id', function (req, res, next) {
+    const id = req.params.id;
+    console.log(id)
+    result = candidatureModel.readPieces(id, function (error, result) {
+    console.log(result)
+      res.render('candidat/candidat_modif_cand', { title: 'Candidat - Modification candidature', pieces: result});
+    });
+  });
 
 
+  router.get('/candidater/:id', function (req, res, next) {
+    const id = req.params.id;
+    console.log(id)
+    result = candidatureModel.readPieces(id, function (error, result) {
+    console.log(result)
+      res.render('candidat/candidat_modif_cand', { title: 'Candidat - Modification candidature', pieces: result});
+    });
+  });
 
 module.exports = router;

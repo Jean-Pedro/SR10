@@ -14,7 +14,7 @@
                     <a href="/candidat/new_recr"><button id="recruteur">Devenir recruteur</button></a>
                 </div>
                 <div id="account">
-                    <a href="/candidat/candidature_c"><button id="cand">Mes candidatures</button></a>
+                    <a href="/candidat/mes_candidatures"><button id="cand">Mes candidatures</button></a>
                     <a href="/candidat/candidat_account"><button id="account">Mon compte</button></a>
                 </div>
             </div>
@@ -31,7 +31,8 @@
                             </div>
                             <div class="entreprise">
                                 <h1><%= offre.nom%></h1>
-                                <p><%= offre.siren%></p>
+                                <p>Siren : <%= offre.siren%></p>
+                                <p>Numéro de fiche de poste : <%= offre.id_fiche %></p>
                             </div>
                             <div class="desc">
                                 <p><%= offre.type + ' - ' + offre.statut%></p>
@@ -92,11 +93,11 @@
         <script>
             function openOffre(button) {
                 var offreDiv = button.closest('#off');
-                var entrepriseDiv = offreDiv.querySelector('.entreprise');
-                var numeroElement = entrepriseDiv.querySelector('p');
-                var siren = numeroElement.textContent;
-                console.log(`/candidat/voir-offre/${siren}`);
-                window.location.href = `/candidat/voir-offre/${siren}`;
+                var idCandidatureElement = offreDiv.querySelector('.entreprise > p:last-child');
+                var idCandidatureText = idCandidatureElement.textContent.trim();
+                var id_fiche = idCandidatureText.split('Numéro de fiche de poste : ')[1];
+                console.log(`/candidat/voir-offre/${id_fiche}`);
+                window.location.href = `/candidat/voir-offre/${id_fiche}`;
             };
 
             let t_search = document.querySelector('input');
