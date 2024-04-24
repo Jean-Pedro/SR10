@@ -12,6 +12,7 @@ DROP TABLE Etat_Offre;
 DROP TABLE Adresse;
 DROP TABLE Type_Organisation;
 DROP TABLE Type_Metier;
+DROP TABLE Etat_demande;
 
 
 
@@ -21,20 +22,26 @@ CREATE TABLE IF NOT EXISTS Type_Organisation (
 
 CREATE TABLE IF NOT EXISTS Adresse (
     id_lieu INTEGER AUTO_INCREMENT PRIMARY KEY,
-    num INTEGER,
-    rue VARCHAR(100),
-    ville VARCHAR(100),
-    code_postal VARCHAR(10)
+    num INTEGER NOT NULL,
+    rue VARCHAR(100) NOT NULL,
+    ville VARCHAR(100) NOT NULL,
+    code_postal VARCHAR(10) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS Etat_demande (
+    demande VARCHAR(30) PRIMARY KEY
 );
     
 CREATE TABLE IF NOT EXISTS Organisation (
     siren INTEGER PRIMARY KEY,
-    nom VARCHAR(100),
-    siege_social INTEGER,
-    type VARCHAR(100),
-    logo VARCHAR(100),
+    nom VARCHAR(100) NOT NULL,
+    siege_social INTEGER NOT NULL,
+    type VARCHAR(100) NOT NULL,
+    logo VARCHAR(100) NOT NULL,
+    etat_demande VARCHAR(30) NOT NULL,
     FOREIGN KEY (siege_social) REFERENCES Adresse (id_lieu),
-    FOREIGN KEY (type) REFERENCES Type_Organisation (nom)
+    FOREIGN KEY (type) REFERENCES Type_Organisation (nom),
+    FOREIGN KEY (etat_demande) REFERENCES Etat_demande (demande)
 );
 
 CREATE TABLE IF NOT EXISTS Etat_Offre (
@@ -51,14 +58,14 @@ CREATE TABLE IF NOT EXISTS Type_Metier (
 
 CREATE TABLE IF NOT EXISTS Utilisateur (
     id_utilisateur INTEGER AUTO_INCREMENT PRIMARY KEY,
-    email VARCHAR(100),
-    nom VARCHAR(30),
-    prenom VARCHAR(30),
-    num_tel VARCHAR(15),
-    date_creation DATETIME,
-    last_login DATETIME,
-    statut BOOLEAN,
-    password VARCHAR(100)
+    email VARCHAR(100) UNIQUE NOT NULL,
+    nom VARCHAR(30) NOT NULL,
+    prenom VARCHAR(30) NOT NULL,
+    num_tel VARCHAR(15) UNIQUE NOT NULL,
+    date_creation DATETIME NOT NULL,
+    last_login DATETIME NOT NULL,
+    statut BOOLEAN NOT NULL,
+    password VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS Candidat (
@@ -68,9 +75,11 @@ CREATE TABLE IF NOT EXISTS Candidat (
 
 CREATE TABLE IF NOT EXISTS Recruteur (
     id_recruteur INTEGER PRIMARY KEY,
-    organisation INTEGER,
+    organisation INTEGER NOT NULL,
+    etat_demande VARCHAR(30) NOT NULL,
     FOREIGN KEY (id_recruteur) REFERENCES Utilisateur (id_utilisateur),
-    FOREIGN KEY (organisation) REFERENCES Organisation (siren)
+    FOREIGN KEY (organisation) REFERENCES Organisation (siren),
+    FOREIGN KEY (etat_demande) REFERENCES Etat_demande (demande)
 );
 
 CREATE TABLE IF NOT EXISTS Administrateur (
@@ -80,18 +89,18 @@ CREATE TABLE IF NOT EXISTS Administrateur (
 
 CREATE TABLE IF NOT EXISTS Fiche_Poste (
     id_fiche INTEGER AUTO_INCREMENT PRIMARY KEY,
-    intitule VARCHAR(100),
-    resp_hierarchique VARCHAR(100),
-    rythme_travail DECIMAL(4,2),
-    teletravail BOOLEAN,
-    salaire_min FLOAT,
-    salaire_max FLOAT,
-    description TEXT,
-    type VARCHAR(30),
-    statut VARCHAR(30),
-    lieu INTEGER,
-    organisation INTEGER,
-    recruteur INTEGER,
+    intitule VARCHAR(100) NOT NULL,
+    resp_hierarchique VARCHAR(100) NOT NULL,
+    rythme_travail DECIMAL(4,2) NOT NULL,
+    teletravail BOOLEAN NOT NULL,
+    salaire_min FLOAT NOT NULL,
+    salaire_max FLOAT NOT NULL,
+    description TEXT NOT NULL,
+    type VARCHAR(30) NOT NULL,
+    statut VARCHAR(30) NOT NULL,
+    lieu INTEGER NOT NULL,
+    organisation INTEGER NOT NULL,
+    recruteur INTEGER NOT NULL,
     FOREIGN KEY (type) REFERENCES Type_Metier (type),
     FOREIGN KEY (statut) REFERENCES Statut_Poste (statut),
     FOREIGN KEY (lieu) REFERENCES Adresse (id_lieu),
@@ -101,27 +110,28 @@ CREATE TABLE IF NOT EXISTS Fiche_Poste (
 
 CREATE TABLE IF NOT EXISTS Offre_Emploi (
     num INTEGER PRIMARY KEY,
-    date_validite DATETIME,
-    indications TEXT,
-    fiche INTEGER,
-    etat VARCHAR(30),
+    date_validite DATETIME NOT NULL,
+    indications TEXT NOT NULL,
+    fiche INTEGER NOT NULL,
+    etat VARCHAR(30) NOT NULL,
+    date_depot DATETIME NOT NULL,
     FOREIGN KEY (fiche) REFERENCES Fiche_Poste (id_fiche),
     FOREIGN KEY (etat) REFERENCES Etat_Offre (etat)
 );
 
 CREATE TABLE IF NOT EXISTS Candidature (
     id_c INTEGER AUTO_INCREMENT PRIMARY KEY,
-    date_candidature DATETIME,
-    offre INTEGER,
-    candidat INTEGER,
+    date_candidature DATETIME NOT NULL,
+    offre INTEGER NOT NULL,
+    candidat INTEGER NOT NULL,
     FOREIGN KEY (offre) REFERENCES Offre_Emploi (num),
     FOREIGN KEY (candidat) REFERENCES Candidat (id_candidat)
 );
 
 CREATE TABLE IF NOT EXISTS Piece_Dossier (
     id_piece INTEGER AUTO_INCREMENT PRIMARY KEY,
-    type VARCHAR(100),
-    candidature INTEGER,
-    fichier VARCHAR(100),
+    type VARCHAR(100) NOT NULL,
+    candidature INTEGER NOT NULL,
+    fichier VARCHAR(100) NOT NULL,
     FOREIGN KEY (candidature) REFERENCES Candidature (id_c)
 );
