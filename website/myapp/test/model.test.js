@@ -1,5 +1,5 @@
-const DB= require ("../model/db.js");
-const model= require ("../model/utilisateur.js");
+const DB = require ("../model/db.js");
+const model = require ("../model/utilisateur.js");
 describe("Model Tests", () => {
     beforeAll(() => {
         // des instructions à exécuter avant le lancement des tests

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1713950664649" clover="3.2.0">
-  <project timestamp="1713950664649" name="All files">
+<coverage generated="1713952912740" clover="3.2.0">
+  <project timestamp="1713952912740" name="All files">
     <metrics statements="57" coveredstatements="7" conditionals="24" coveredconditionals="0" methods="26" coveredmethods="1" elements="107" coveredelements="8" complexity="0" loc="57" ncloc="57" packages="1" files="2" classes="2"/>
     <file name="db.js" path="/home/jpontoire/Documents/UTC/GI02/SR10/website/myapp/model/db.js">
       <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
