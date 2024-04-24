@@ -72,4 +72,15 @@ router.get('/', function (req, res, next) {
     });
 
 
+  router.get('/voir-candidatures/:num', function (req, res, next) {
+    const num = req.params.num;
+    result=offreModel.candidatByOffre(num, function(error, result){
+      console.log(result);
+      res.render('recruteur/recruteur_cand_offre', { title: 'Liste des candidatures', users: result });
+    });
+  });
+  
+
+
+
   module.exports = router;

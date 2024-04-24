@@ -1,25 +1,26 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Administrateur</title>
+        <title>Candidatures offre</title>
         <link rel="stylesheet" href="/stylesheets/main.css">
     </head>
     <body>
         <div id="page">
             <div id="top_bar">
                 <div id="home_button">
-                    <a href="/admin/admin_main"><button id="menu">Menu</button></a>
+                    <a href="/recruteur/recruteur_main"><button id="menu">Menu</button></a>
+                    <a href="/recruteur/recruteur_recr/3"><button>Retour</button></a>
                 </div>
                 <div id="account">
-                    <a href="/admin/admin_account"><button id="account">Mon compte</button></a>
+                    <a href="/recruteur/recruteur_account"><button id="account">Mon compte</button></a>
                 </div>
             </div>
     
             <div id="container">
                 <div id="offers">
                     <div id="label">
-                        <label for="candidat">Espace Administrateur - Validation Recruteur</label>
-                    </div>        
+                        <label for="candidat">Espace Recruteur - Candidatures offres</label>
+                    </div>
                     <% users.forEach((user)=> { %>  
                         <div id="off">
                             <div id="off_img">
@@ -32,7 +33,7 @@
                                 <p><%= user.num_tel%></p>
                             </div>
                             <div class="offer_button">
-                                <a href="admin_desc_acc.html"><button id="accepter">Plus de détails</button></a>
+                                <a href=""><button>Plus de détails</button></a>
                             </div>
                         </div>
                     <% }) %>
@@ -47,30 +48,6 @@
                     </div>
                 </div>
     
-                <div id="box">
-                    <div id="toolbox">
-                        <div id="search">
-                            <div id="label">
-                                <label for="search">Rechercher</label> <br>
-                            </div>
-                            <div id="input_search">
-                                <input type="search" id="search" name="search" placeholder="Rechercher..." required>
-                            </div>
-                        </div>
-                        <div id="label">
-                                <label for="sort">Trier</label>
-                        </div>
-                        <select name="date" id="date">
-                            <option value="" disabled selected hidden>Date</option>
-                            <option value="recent">Récent</option>
-                            <option value="ancien">Ancien</option>
-                        </select>
-                        <div id="label">
-                            <label for="filter">Filtrer</label>
-                        </div>
-                    </div>
-    
-                </div>
             </div>
         </div>
     </body>

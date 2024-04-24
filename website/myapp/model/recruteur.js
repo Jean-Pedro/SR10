@@ -16,6 +16,21 @@ module.exports = {
         });
     },
 
+
+    readByStatut: function (statut, callback) {
+        db.query("select * from Recruteur join Utilisateur ON Recruteur.id_recruteur = Utilisateur.id_utilisateur where etat_demande = ?", statut, function(err, results) {
+            if (err) {
+                callback(err);
+            } else {
+                callback(null, results);
+            }
+        })
+    },
+
+
+
+
+
     areValid: function (email, password, callback) {
         sql = "SELECT password FROM Recruteur JOIN Utilisateur ON id_recruteur=id_utilisateur WHERE email = ?";
         rows = db.query(sql, email, function (err, results) {

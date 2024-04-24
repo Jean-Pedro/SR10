@@ -20,20 +20,23 @@
                     <div id="label">
                         <label for="candidat">Espace Administrateur - Validation Organisations</label>
                     </div>        
+                    <% orgas.forEach((orga)=> { %>
                     <div id="off">
                         <div id="off_img">
                             <img src="../LOGO-META.webp" alt="Logo de l'entreprise">
                         </div>
                         <div class="entreprise">                                
-                            <h1>Meta</h1>
+                            <h1><%= orga.nom%></h1>
+                            <p><%= orga.siren%></p>
                         </div>
                         <div class="desc">
-                            <p>Meta est une entreprise de ...</p>
+                            <p><%= orga.type%></p>
                         </div>
                         <div class="offer_button">
                             <a href="admin_val_orga.html"><button id="accepter">Plus de détails</button></a>
                         </div>
                     </div>
+                    <% }) %>
                     <div class="pagination">
                         <a href="#" class="prev">&laquo; Previous</a>
                         <a href="#" class="active">1</a>

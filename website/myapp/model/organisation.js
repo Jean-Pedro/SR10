@@ -14,6 +14,24 @@ module.exports = {
         });
     },
 
+
+    readByStatut: function (statut, callback) {
+        db.query("select * from Organisation where etat_demande = ?", statut, function(err, results) {
+            if (err) {
+                callback(err);
+            } else {
+                callback(null, results);
+            }
+        })
+    },
+
+
+
+
+
+
+
+
     //à voir
     create: function (siren, nom, siege_social, type, logo, callback) {
         //voir comment faire pour le siege social et le type     

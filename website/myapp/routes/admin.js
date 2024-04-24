@@ -1,6 +1,8 @@
 var express = require('express');
 var userModel = require('../model/utilisateur')
 var adminModel = require('../model/admin')
+var recruteurModel = require('../model/recruteur')
+var organisationModel = require('../model/organisation')
 var router = express.Router();
 
 
@@ -35,12 +37,18 @@ router.get('/admin_main', function (req, res, next) {
     res.render('admin/admin_main');
 })
 
-router.get('/admin_enr_recr', function (req, res, next) {
-    res.render('admin/admin_enr_recr');
+router.get('/admin_enr_orga', function (req, res, next) {
+    result = organisationModel.readByStatut('en attente', function(error, result) {
+        res.render('admin/admin_enr_orga', { title: 'Admin - Validation Organisation', orgas: result});
+    })
 })
 
-router.get('/admin_enr_orga', function (req, res, next) {
-    res.render('admin/admin_enr_orga');
+router.get('/admin_enr_recr', function (req, res, next) {
+    console.log("test")
+    result = recruteurModel.readByStatut('en attente', function(error, result) {
+        console.log(result)
+        res.render('admin/admin_enr_recr', { title: 'Admin - Validation Recruteur', users: result});
+    })
 })
 
 module.exports = router;

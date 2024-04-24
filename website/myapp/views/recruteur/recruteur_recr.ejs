@@ -32,13 +32,15 @@
                             <h1><%= offre.nom%></h1>
                                 <p>Siren : <%= offre.siren%></p>
                                 <p>Numéro de fiche de poste : <%= offre.id_fiche %></p>
+                                <p>Numéro de l'offre : <%= offre.num %></p>
                         </div>
                         <div class="desc">
                             <p><%= offre.type + ' - ' + offre.intitule%></p>
                             <p><%= offre.description%></p>
                         </div>
                         <div class="offer_button">
-                            <a href="recuteur_cand_offre.html"><button>Voir les candidatures</button></a>
+                            <button onclick="openCandidatures(this)">Voir les candidatures</button>
+                            <a href="/recruteur/recuteur_cand_offre"><button>Voir les candidatures</button></a>
                             <a href="recruteur_modif_offre.html"><button>Modifier</button></a>
                         </div>
                          
@@ -88,5 +90,18 @@
                 -->
             </div>
         </div>
+
+        <script>
+            function openCandidatures(button) {
+                var offreDiv = button.closest('#off');
+                var idCandidatureElement = offreDiv.querySelector('.entreprise > p:last-child');
+                var idCandidatureText = idCandidatureElement.textContent.trim();
+                var num_offre = idCandidatureText.split("Numéro de l'offre : ")[1];
+                console.log(`/recruteur/voir-candidatures/${num_offre}`);
+                window.location.href = `/recruteur/voir-candidatures/${num_offre}`;
+            };
+
+
+        </script>
     </body>
 </html>

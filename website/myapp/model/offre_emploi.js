@@ -81,6 +81,28 @@ module.exports = {
         });
     },
 
+
+    candidatByOffre: function (num, callback) {
+        db.query("SELECT * FROM Candidature JOIN Offre_Emploi ON Candidature.offre = Offre_Emploi.num JOIN Utilisateur ON Candidature.candidat = Utilisateur.id_utilisateur WHERE Candidature.offre = ?", [num], function (err, results) {
+            if (err) {
+                callback(err);
+            } else {
+                callback(null, results);
+            }
+        });
+    },
+
+
+
+
+
+
+
+
+
+
+
+
     //à voir
     create: function (num, date_validite, indications, fiche, etat, callback) {
         //voir comment faire pour les clés étrangères     
