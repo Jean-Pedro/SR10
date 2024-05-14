@@ -1,7 +1,7 @@
 var createError = require('http-errors');
 var express = require('express');
+var cookieParser = require('cookie-parser')
 var path = require('path');
-var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
@@ -12,6 +12,18 @@ var loginRouter = require('./routes/login');
 var candidatRouter = require('./routes/candidat');
 
 var app = express();
+
+const sessions = require('express-session');
+
+const deuxHeures = 1000*60*60*2
+app.use(sessions({
+  secret: "zebi",
+  saveUninitialized:true,
+  cookie: {maxAge: deuxHeures},
+  resave: false
+}));
+
+app.use(cookieParser());
 
 //app.use("/CSS", express.static(__dirname + "/CSS/"));
 
