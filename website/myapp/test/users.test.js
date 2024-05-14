@@ -11,13 +11,9 @@ describe("Model Tests", () => {
         }
         DB.end(callback);
     });
-    test ("read user",()=>{
-        nom=null;
-        function cbRead(resultat){
-            nom = resultat[0].nom;
-            expect(nom).toBe("Johnny");
-        }
-        model.read("johnny@gmail.com", cbRead);
+    test("read user", async () => {
+        const result = await model.read("johnny@gmail.com");
+        expect(result.nom).toBe("kiuytfg");
     });
     test ("read all user",()=>{
         nom1=null;
