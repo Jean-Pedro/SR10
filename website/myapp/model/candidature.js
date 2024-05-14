@@ -29,6 +29,7 @@ module.exports = {
     },
 
     readPiecesByFiche: function (id, callback) {
+        // on devrait pouvoir enlever le join et garder que offre_emploi vu ce qu'on utilise
         db.query("SELECT Offre_Emploi.indications FROM Fiche_Poste JOIN Offre_Emploi ON Offre_Emploi.fiche = Fiche_Poste.id_fiche where id_fiche = ?", id, function(err, results) {
             if (err) throw err;
             if (results.length > 0) {
