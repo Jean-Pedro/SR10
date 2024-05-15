@@ -2,63 +2,120 @@ var db = require('./db.js');
 var user = require('./utilisateur.js')
 
 module.exports = {
-    read: function (email, callback) {
-        db.query("SELECT * from Recruteur JOIN Utilisateur ON id_recruteur=id_utilisateur WHERE email= ?",email, function (err, results) {
-            if (err) throw err;
-            callback(results);
-        });
-    },
-
-    readall: function (callback) {
-        db.query("select * from Recruteur JOIN Utilisateur ON id_recruteur=id_utilisateur", function (err, results) {
-            if (err) throw err;
-            callback(results);
-        });
-    },
-
-
-    readByStatut: function (statut, callback) {
-        db.query("select * from Recruteur join Utilisateur ON Recruteur.id_recruteur = Utilisateur.id_utilisateur where etat_demande = ?", statut, function(err, results) {
-            if (err) {
-                callback(err);
-            } else {
-                callback(null, results);
-            }
-        })
-    },
-
-
-
-
-
-    areValid: function (email, password, callback) {
-        sql = "SELECT password FROM Recruteur JOIN Utilisateur ON id_recruteur=id_utilisateur WHERE email = ?";
-        rows = db.query(sql, email, function (err, results) {
-            if (err) throw err;
-            if (rows.length == 1 && rows[0].pwd === password) {
-                callback(true)
-            } else {
-                callback(false);
-            }
-        });
-    },  
-
-    create: function (email, nom, prenom, num_tel, password, organisation, callback) {
-        user.create(email, nom, prenom, num_tel, password, function(err, id) {
-            if (err) {
-                callback(err, null);
-            } else {
-                console.log("ID : " + id);
-            }
-            rows = db.query("INSERT INTO Recruteur VALUES (?, ?);", [id, organisation], function (err, results) {
+    read: async (email) => {
+        return new Promise((resolve, reject) => {
+            db.query("SELECT * from Recruteur JOIN Utilisateur ON id_recruteur=id_utilisateur WHERE email= ?", email, (err, results) => {
                 if (err) {
-                    callback(err, null);
+                    reject(err);
                 } else {
-                    callback(null, results);
+                    resolve(results[0]);
                 }
             });
         });
     },
+
+    readall: async () => {
+        return new Promise((resolve, reject) => {
+            const sql = "select * from Recruteur JOIN Utilisateur ON id_recruteur=id_utilisateur";
+            db.query(sql, (err, results) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(results);
+                }
+            });
+        });
+    },
+
+    readByStatut: async (statut) => {
+        return new Promise((resolve, reject) => {
+            const sql = "select * from Recruteur join Utilisateur ON Recruteur.id_recruteur = Utilisateur.id_utilisateur where etat_demande = ?";
+            db.query(sql, statut, (err, results) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(results);
+                }
+            });
+        });
+    },
+
+    // read: function (email, callback) {
+    //     db.query("SELECT * from Recruteur JOIN Utilisateur ON id_recruteur=id_utilisateur WHERE email= ?",email, function (err, results) {
+    //         if (err) throw err;
+    //         callback(results);
+    //     });
+    // },
+
+    // readall: function (callback) {
+    //     db.query("select * from Recruteur JOIN Utilisateur ON id_recruteur=id_utilisateur", function (err, results) {
+    //         if (err) throw err;
+    //         callback(results);
+    //     });
+    // },
+
+
+    // readByStatut: function (statut, callback) {
+    //     db.query("select * from Recruteur join Utilisateur ON Recruteur.id_recruteur = Utilisateur.id_utilisateur where etat_demande = ?", statut, function(err, results) {
+    //         if (err) {
+    //             callback(err);
+    //         } else {
+    //             callback(null, results);
+    //         }
+    //     })
+    // },
+
+    create: async (email, nom, prenom, num_tel, password, organisation) => {
+        return new Promise((resolve, reject) => {
+            user.create(email, nom, prenom, num_tel, password, (err, id) => {
+                if(err) {
+                    return reject(err);
+                } else {
+                    console.log("ID : " + id)
+                }
+                const etat = "en attente";
+                const sql = "INSERT INTO Recruteur VALUES (?, ?, ?);"
+                db.query(sql, [id, organisation, etat], (err, results) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(results);
+                    }
+                })
+            })
+        });
+    },
+
+    createRecr: async (id, organisation) => {
+        return new Promise((resolve, reject) => {
+            const etat = "en attente";
+            const sql = "INSERT INTO Recruteur VALUES (?, ?, ?);"
+            db.query(sql, [id, organisation, etat], (err, results) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(results);
+                }
+            });
+        });
+    },
+
+    // create: function (email, nom, prenom, num_tel, password, organisation, callback) {
+    //     user.create(email, nom, prenom, num_tel, password, function(err, id) {
+    //         if (err) {
+    //             callback(err, null);
+    //         } else {
+    //             console.log("ID : " + id);
+    //         }
+    //         rows = db.query("INSERT INTO Recruteur VALUES (?, ?);", [id, organisation], function (err, results) {
+    //             if (err) {
+    //                 callback(err, null);
+    //             } else {
+    //                 callback(null, results);
+    //             }
+    //         });
+    //     });
+    // },
 
     delete: function (email, callback) {
         db.query("UPDATE Utilisateur SET statut = 0 WHERE email = ?", [email], function (err, results) {

@@ -135,6 +135,20 @@ module.exports = {
         })
     },
 
+
+    fullDelete : async (email) => {
+        return new Promise((resolve, reject) => {
+            const sql = "DELETE FROM Utilisateur WHERE email = ?";
+            db.query(sql, email, (err, result) => {
+                if(err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            });
+        });
+    },
+
     // readall: function (callback) {
     //     db.query("select * from Utilisateur", function (err, results) {
     //         if (err) throw err;
