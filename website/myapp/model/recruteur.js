@@ -127,6 +127,19 @@ module.exports = {
         });
     },
 
+    fired: async (id) => {
+        return new Promise((resolve, reject) => {
+            const sql = "DELETE FROM Recruteur WHERE id = ?;";
+            db.query(sql, id, (err, results) => {
+                if(err) {
+                    reject(err);
+                } else {
+                    resolve(results);
+                }
+            })
+        })
+    }
+
     /*delete: function (email, callback) {
         user.read(email, function (err, results) {
             if (err) throw err;

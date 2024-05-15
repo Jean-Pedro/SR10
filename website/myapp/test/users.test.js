@@ -48,6 +48,7 @@ describe("Model Tests", () => {
     test("update tel user", async () => {
         const result = await model.updateTel("test@test.com", "01-23-45-67-89");
         expect(result).toBeTruthy();
+        await model.fullDelete("test@test.com");
     });
 
     test("delete user", async () => {
@@ -61,6 +62,7 @@ describe("Model Tests", () => {
         await model.create(newUser[0], newUser[1], newUser[2], newUser[3], newUser[4]);
         const result = await model.delete("testDelete@test.com");
         expect(result).toBeTruthy();
+        await model.fullDelete(newUser[0]);
     });
 
     test("full delete user", async () => {
