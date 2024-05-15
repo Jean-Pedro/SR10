@@ -63,7 +63,18 @@ describe("Model Tests", () => {
         expect(result).toBeTruthy();
     });
 
-    
+    test("full delete user", async () => {
+        const newUserDelete = [
+            "testFullDelete@test.com",
+            "TestDelete",
+            "Jean-Test",
+            "06-13-64-58-96",
+            "c'estletestfulldelete"
+        ];
+        await model.create(newUserDelete[0], newUserDelete[1], newUserDelete[2], newUserDelete[3], newUserDelete[4]);
+        const result = await model.fullDelete(newUserDelete[0]);
+        expect(result).not.toBe(undefined);
+    })
 
     // test("valid passwd", async () => {
     //     const result = await model.arevalid("johnny@gmail.com", "JohnnyJeTAime");
