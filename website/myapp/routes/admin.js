@@ -22,11 +22,17 @@ router.get('/account', function (req, res, next) {
 router.get('/', function (req, res, next) {
     res.send('respond with a resource');
     });
-    router.get('/admin_visu_acc', function (req, res, next) {
-    result=userModel.readall(function(result){
-    res.render('admin/admin_visu_acc', { title: 'List des utilisateurs', users: result });
-    });
-    });
+
+    // router.get('/admin_visu_acc', function (req, res, next) {
+    // result=userModel.readall(function(result){
+    // res.render('admin/admin_visu_acc', { title: 'List des utilisateurs', users: result });
+    // });
+    // });
+
+    router.get('/admin_visu_acc', async function (req, res, next) {
+        const result = await userModel.readall();
+        res.render('admin/admin_visu_acc', { title: 'List des utilisateurs', users: result });
+        });
 
 
 router.get('/admin_account', function (req, res, next) {
@@ -43,12 +49,17 @@ router.get('/admin_enr_orga', function (req, res, next) {
     })
 })
 
-router.get('/admin_enr_recr', function (req, res, next) {
-    console.log("test")
-    result = recruteurModel.readByStatut('en attente', function(error, result) {
-        console.log(result)
-        res.render('admin/admin_enr_recr', { title: 'Admin - Validation Recruteur', users: result});
-    })
-})
+// router.get('/admin_enr_recr', function (req, res, next) {
+//     console.log("test")
+//     result = recruteurModel.readByStatut('en attente', function(error, result) {
+//         console.log(result)
+//         res.render('admin/admin_enr_recr', { title: 'Admin - Validation Recruteur', users: result});
+//     })
+// })
+
+router.get('/admin_enr_recr', async function (req, res, next) {
+    const result = await recruteurModel.readByStatut('en attente');
+    res.render('admin/admin_visu_acc', { title: 'Admin - Validation Recruteur', users: result });
+});
 
 module.exports = router;
