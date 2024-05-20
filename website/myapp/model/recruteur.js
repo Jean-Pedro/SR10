@@ -65,27 +65,27 @@ module.exports = {
     //     })
     // },
 
-    create: async (email, nom, prenom, num_tel, password, organisation) => {
-        return new Promise((resolve, reject) => {
-            user.create(email, nom, prenom, num_tel, password, (err, id) => {
-                if(err) {
-                    return reject(err);
-                } else {
-                    console.log("ID : " + id)
-                    const etat = "en attente";
-                    const sql = "INSERT INTO Recruteur VALUES (?, ?, ?);"
-                    db.query(sql, [id, organisation, etat], (err, results) => {
-                    if (err) {
-                        reject(err);
-                    } else {
-                        resolve(results);
-                    }
-                })
-                }
+    // create: async (email, nom, prenom, num_tel, password, organisation) => {
+    //     return new Promise((resolve, reject) => {
+    //         user.create(email, nom, prenom, num_tel, password, (err, id) => {
+    //             if(err) {
+    //                 return reject(err);
+    //             } else {
+    //                 console.log("ID : " + id)
+    //                 const etat = "en attente";
+    //                 const sql = "INSERT INTO Recruteur VALUES (?, ?, ?);"
+    //                 db.query(sql, [id, organisation, etat], (err, results) => {
+    //                 if (err) {
+    //                     reject(err);
+    //                 } else {
+    //                     resolve(results);
+    //                 }
+    //             })
+    //             }
                 
-            })
-        });
-    },
+    //         })
+    //     });
+    // },
 
     createRecr: async (id, organisation) => {
         return new Promise((resolve, reject) => {
@@ -98,16 +98,6 @@ module.exports = {
                     resolve(results);
                 }
             });
-        });
-    },
-
-    delete: function (email, callback) {
-        db.query("UPDATE Utilisateur SET statut = 0 WHERE email = ?", [email], function (err, results) {
-            if (err) {
-                callback(err, null);
-            } else {
-                callback(null, "Utilisateur supprimé");
-            } 
         });
     },
 
