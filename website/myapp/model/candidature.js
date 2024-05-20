@@ -54,26 +54,50 @@ module.exports = {
         });
     },
 
-    //à voir
-    create: function (date_candidature, offre, candidat, callback) {
-        //voir comment faire pour les clés étrangères   
-        rows = db.query("INSERT INTO Candidature (id_c, date_candidature, offre, candidat) \
-        VALUES(NULL, ?, ?, ?);", [date_candidature, offre, candidat], function (err, results) {
-            if (err) {
-                callback(err, null);
-            } else {
-                callback(null, results);
-            }
+
+    create: async (date_candidature, offre, candidat) => {
+        return new Promise((resolve, reject) => {
+            db.query("INSERT INTO Candidature (id_c, date_candidature, offre, candidat) \
+            VALUES(NULL, ?, ?, ?);", [date_candidature, offre, candidat], (err, results) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    var id = results.insertId;
+                    resolve(id);
+                }
+            });
         });
     },
 
-    delete: function (id_c, callback) {
-        db.query("DELETE FROM Candidature WHERE id_c = ?", [id_c], function (err, results) {
-            if (err) {
-                callback(err, null);
-            } else {
-                callback(null, "Candidature supprimée avec succès");
-            } 
+    delete : async (id_c) => {
+        return new Promise((resolve, reject) => {
+            const sql = "DELETE FROM Candidature WHERE id_c = ?";
+            db.query(sql, id_c, (err, result) => {
+                if(err) {
+                    reject(err);
+                } else {
+                    resolve(true);
+                }
+            });
         });
     },
+
+
+
+
+    // //à voir
+    // create: function (date_candidature, offre, candidat, callback) {
+    //     //voir comment faire pour les clés étrangères   
+    //     rows = db.query("INSERT INTO Candidature (id_c, date_candidature, offre, candidat) \
+    //     VALUES(NULL, ?, ?, ?);", [date_candidature, offre, candidat], function (err, results) {
+    //         if (err) {
+    //             callback(err, null);
+    //         } else {
+    //             callback(null, results);
+    //         }
+    //     });
+    // },
+
+
+
 }
