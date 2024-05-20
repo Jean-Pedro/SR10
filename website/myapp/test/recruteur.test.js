@@ -30,6 +30,9 @@ describe("Model Tests", () => {
     //     expect(result).not.toBe(undefined);
     // });
 
+
+
+
     test("create recruteur", async () => {
         const newRecr = [
             "testRecr@test.com",
@@ -42,6 +45,8 @@ describe("Model Tests", () => {
         const id = await userModel.create(newRecr[0], newRecr[1], newRecr[2], newRecr[3], newRecr[4])
         const result = await recrModel.createRecr(id, newRecr[5]);
         expect(result).not.toBe(undefined);
+        await recrModel.fired(id);
+        await userModel.fullDelete(newRecr[0]);
     });
 
 

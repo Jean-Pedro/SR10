@@ -76,18 +76,40 @@ describe("Model Tests", () => {
         await model.create(newUserDelete[0], newUserDelete[1], newUserDelete[2], newUserDelete[3], newUserDelete[4]);
         const result = await model.fullDelete(newUserDelete[0]);
         expect(result).not.toBe(undefined);
+    });
+
+    test("get by id", async () => {
+        const newUser = [
+            "testGetID@test.com",
+            "TestID",
+            "Jean-Test",
+            "06-13-64-58-59",
+            "c'estletestgetid"
+        ];
+        const id = await model.create(newUser[0], newUser[1], newUser[2], newUser[3], newUser[4]);
+        const result = await model.getbyID(id);
+        await model.fullDelete(newUser[0]);
+        expect(result[0]["email"]).toBe("testGetID@test.com");
+    });
+
+    test("get infos by email", async () => {
+        const newUser = [
+            "testGetInfos@test.com",
+            "TestInfos",
+            "Jean-Test",
+            "06-13-64-58-33",
+            "c'estletestgetinfos"
+        ];
+        await model.create(newUser[0], newUser[1], newUser[2], newUser[3], newUser[4]);
+        const result = await model.getInfos(newUser[0]);
+        await model.fullDelete(newUser[0]);
+        expect(result[0]["num_tel"]).toBe(newUser[3]);
     })
 
     // test("valid passwd", async () => {
     //     const result = await model.arevalid("johnny@gmail.com", "JohnnyJeTAime");
     //     expect(result).toBeTruthy();
     // });
-
-
-
-
-
-
 
     // test ("read all user",()=>{
     //     nom1=null;

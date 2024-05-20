@@ -1,36 +1,49 @@
 var db = require('./db.js');
 module.exports = {
-    read: function (nom, callback) {
-        db.query("select * from Type_Organisation where nom= ?", nom, function(err, results) {
-            if (err) throw err;
-            callback(results);
+    readall: async () => {
+        return new Promise((resolve, reject) => {
+            const sql = "SELECT * FROM Type_Organisation"
+            db.query(sql, (err, results) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(results);
+                }
+            });
         });
     },
 
-    readall: function (callback) {
-        db.query("select * from Type_Organisation", function (err, results) {
-            if (err) throw err;
-            callback(results);
-        });
-    },
+    create: async (nom) => {
+        return new Promise((resolve, reject) => {
+            db.query("SELECT COUNT(*) AS count FROM Type_Organisation WHERE nom = ?", nom, (err, result) => {
+                if (err) {
+                    return reject(err);
+                }
+                if (result[0].count > 0){
+                    return resolve(0);
+                }
+                else {
+                    db.query("INSERT INTO Type_Organisation (nom) VALUES (?);", nom, (err, results) => {
+                        if (err) {
+                            reject(err);
+                        } else {
+                            resolve(1);
+                        }
+                    })
+                }
+            })
+            });
+        },
 
-    create: function (nom, callback) {       
-        rows = db.query("INSERT INTO Type_Organisation (nom) VALUES (?);", nom, function (err, results) {
-            if (err) {
-                callback(err, null);
-            } else {
-                callback(null, "Type d'organisation correctement ajouté !");
-            }
-        });
-    },
-
-    delete: function (nom, callback) {
-        db.query("DELETE FROM Type_Organisation WHERE nom = ?", [nom], function (err, results) {
-            if (err) {
-                callback(err, null);
-            } else {
-                callback(null, "Type d'organisation supprimé avec succès");
-            } 
-        });
-    },
+    delete: async (nom) => {
+        return new Promise((resolve, reject) => {
+            db.query("DELETE FROM Type_Organisation WHERE nom = ?", [nom], (err, results) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    resolve(1);
+                }
+            })
+        })
+    }
 }

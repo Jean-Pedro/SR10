@@ -149,6 +149,32 @@ module.exports = {
         });
     },
 
+    getbyID: async (id) => {
+        return new Promise((resolve, reject) => {
+            const sql = "SELECT * FROM Utilisateur WHERE id_utilisateur= ?"
+            db.query(sql, id, (err, results) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(results);
+                }
+            });
+        });
+    },
+
+    getInfos: async (email) => {
+        return new Promise((resolve, reject) => {
+            const sql = "SELECT nom, prenom, num_tel FROM Utilisateur WHERE email = ?"
+            db.query(sql, email, (err, results) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(results);
+                }
+            });
+        });
+    },
+
     // readall: function (callback) {
     //     db.query("select * from Utilisateur", function (err, results) {
     //         if (err) throw err;
@@ -216,23 +242,23 @@ module.exports = {
     // },
     
 
+    // getbyID: function (id, callback) {
+    //     db.query("SELECT * FROM Utilisateur WHERE id_utilisateur= ?", id, function(err, result) {
+    //         if (err) throw err;
+    //         callback(results);
+    //     });
+    // },
 
-    getbyID: function (id, callback) {
-        db.query("SELECT * FROM Utilisateur WHERE id_utilisateur= ?", id, function(err, result) {
-            if (err) throw err;
-            callback(results);
-        });
-    },
-
-    getInfos: function (email, callback) {
-        db.query("SELECT nom, prenom, num_tel FROM Utilisateur WHERE email = ?", email, function (err, results) {
-            if (err) {
-                callback(err, null);
-            } else {
-                callback(null, results);
-            }
-        });
-    },
+    
+    // getInfos: function (email, callback) {
+    //     db.query("SELECT nom, prenom, num_tel FROM Utilisateur WHERE email = ?", email, function (err, results) {
+    //         if (err) {
+    //             callback(err, null);
+    //         } else {
+    //             callback(null, results);
+    //         }
+    //     });
+    // },
 
     // latitude longitude
 
@@ -247,19 +273,6 @@ module.exports = {
     //         } 
     //     });
     // },
-
-
-    
-
-    /*delete: function (email, callback) {
-        db.query("DELETE FROM Utilisateur WHERE email = ?", [email], function (err, results) {
-            if (err) {
-                callback(err, null);
-            } else {
-                callback(null, "Utilisateur supprimé avec succès");
-            } 
-        });
-    },*/
 
 
     TEST_MAIL: function (email_a_tester, callback) {
