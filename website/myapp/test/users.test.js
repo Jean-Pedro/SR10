@@ -106,10 +106,15 @@ describe("Model Tests", () => {
         expect(result[0]["num_tel"]).toBe(newUser[3]);
     })
 
-    // test("valid passwd", async () => {
-    //     const result = await model.arevalid("johnny@gmail.com", "JohnnyJeTAime");
-    //     expect(result).toBeTruthy();
-    // });
+    test("valid passwd", async () => {
+        const result = await model.arevalid("johnny@gmail.com", "JohnnyJeTAime");
+        expect(result).toBeTruthy();
+    });
+
+    test("check type user", async () => {
+        const result = await model.checkType("francoisrene@yahoo.fr")
+        expect(result).toBe("candidat")
+    })
 
     // test ("read all user",()=>{
     //     nom1=null;

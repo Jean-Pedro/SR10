@@ -38,15 +38,61 @@ module.exports = {
                 if (err) {
                     reject(err);
                 } 
-                if (rows.length == 1 && rows[0] === this.generateHash(password))
-                    {
-                        resolve(true);
-                    }
-                else {
+                if (results.length == 1) {
+                    bcrypt.compare(password, results[0]["password"], (err, result) => {
+                        if (err) {
+                            return reject(err);
+                        }
+                        else if (result){
+                            resolve(true)
+                        } else {
+                            resolve(false)
+                        }
+                    });
+                } else {
                     resolve(false);
                 }
+                
             });
         });
+    },
+
+
+    checkType: async (email) => {
+        return new Promise((resolve, reject) => {
+            db.query("select id_utilisateur from Utilisateur where email = ?;", email, (err, id) => {
+                if(err) {
+                    return reject(err);
+                }
+                const id_user = id[0]["id_utilisateur"]
+                db.query("select * from Administrateur where id_administrateur = ?", id_user, (err, resAdmin) => {
+                    if(err) {
+                        reject(err);
+                    }
+                    if(resAdmin[0]) {
+                        resolve("admin")
+                    }
+                    db.query("select * from Recruteur where id_recruteur = ?", id_user, (err, resRecr) => {
+                        if(err) {
+                            reject(err);
+                        }
+                        if(resRecr[0]) {
+                            resolve("recruteur")
+                        }
+                        db.query("select * from Candidat where id_candidat = ?", id_user, (err, resCandidat) => {
+                            if(err) {
+                                reject(err);
+                            }
+                            if(resCandidat[0]) {
+                                resolve("candidat")
+                            }
+                            
+                        })
+                        
+                    })
+                })
+            })
+        })
     },
 
     generateHash: function (plaintextPassword, callback) {

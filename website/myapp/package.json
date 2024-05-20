@@ -21,5 +21,8 @@
     "morgan": "~1.9.1",
     "mysql": "^2.18.1",
     "save-dev": "^0.0.1-security"
+  },
+  "devDependencies": {
+    "supertest": "^7.0.0"
   }
 }
