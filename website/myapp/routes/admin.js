@@ -60,6 +60,12 @@ router.get('/admin_enr_orga', async function (req, res, next) {
     res.render('admin/admin_enr_orga', { title: 'Admin - Validation Organisation', orgas: result});
 });
 
+router.get('/valide_orga/:siren', async function (req, res, next) {
+    const siren = req.params.siren;
+    const result = await organisationModel.read(siren);
+    res.render('admin/admin_valide_orga', { title: 'Admin - Validation Organisation', orga: result});
+});
+
 // router.get('/admin_enr_recr', function (req, res, next) {
 //     console.log("test")
 //     result = recruteurModel.readByStatut('en attente', function(error, result) {
@@ -72,5 +78,27 @@ router.get('/admin_enr_recr', async function (req, res, next) {
     const result = await recruteurModel.readByStatut('en attente');
     res.render('admin/admin_visu_acc', { title: 'Admin - Validation Recruteur', users: result });
 });
+
+  router.post('/update_mail', (req, res) => {
+    // db.query('SELECT * FROM Organisation WHERE siren = ?', [siren], (err, results) => {
+    //     if (results.length > 0) {
+    //         res.render('candidat/confirmation_candidat');
+    //     } else {
+    //         res.render('candidat/new_recr');
+    //     }
+    // });
+    res.render('admin/confirmation_admin');
+  });
+
+  router.post('/update_mdp', (req, res) => {
+    // db.query('SELECT * FROM Organisation WHERE siren = ?', [siren], (err, results) => {
+    //     if (results.length > 0) {
+    //         res.render('candidat/confirmation_candidat');
+    //     } else {
+    //         res.render('candidat/new_recr');
+    //     }
+    // });
+    res.render('admin/confirmation_admin');
+  });
 
 module.exports = router;
