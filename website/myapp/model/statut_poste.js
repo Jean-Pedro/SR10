@@ -15,19 +15,19 @@ module.exports = {
 
     create: async (statut) => {
         return new Promise((resolve, reject) => {
-            db.query("SELECT COUNT(*) AS count FROM Statut_Poste WHERE statut = ?", statut, (err, result) => {
+            db.query("SELECT COUNT(*) AS count, statut FROM Statut_Poste WHERE statut = ?", statut, (err, result) => {
                 if (err) {
                     return reject(err);
                 }
                 if (result[0].count > 0){
-                    return resolve(0);
+                    return resolve(result[0].statut);
                 }
                 else {
                     db.query("INSERT INTO Statut_Poste (statut) VALUES (?);", statut, (err, results) => {
                         if (err) {
                             reject(err);
                         } else {
-                            resolve(1);
+                            resolve(statut);
                         }
                     })
                 }
