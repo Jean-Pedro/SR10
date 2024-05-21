@@ -53,6 +53,32 @@ module.exports = {
         });
     },
 
+    updateType : async (id_piece, new_type) => {
+        return new Promise((resolve, reject) => {
+            const sql = "UPDATE Piece_Dossier SET type = ? WHERE id_piece =?";
+            db.query(sql, [new_type, id_piece], (err, result) => {
+                if(err) {
+                    reject(err);
+                } else {
+                    resolve(true);
+                }
+            })
+        })
+    },
+
+    updateFichier : async (id_piece, new_fichier) => {
+        return new Promise((resolve, reject) => {
+            const sql = "UPDATE Piece_Dossier SET fichier = ? WHERE id_piece = ?";
+            db.query(sql, [new_fichier, id_piece], (err, result) => {
+                if(err) {
+                    reject(err);
+                } else {
+                    resolve(true);
+                }
+            })
+        })
+    },
+
     // read: function (id_piece, callback) {
     //     db.query("select * from Piece_Dossier where id_piece= ?",id_piece, function(err, results) {
     //         if (err) throw err;
@@ -93,25 +119,27 @@ module.exports = {
     //     })
     // },
 
-    updateType: function (id_piece, new_type, callback) {
-        rows = db.query("UPDATE Piece_Dossier SET type = ? WHERE id_piece =?", [new_type, id_piece], function (err, results) {
-            if (err) {
-                callback(err, null);
-            } else {
-                callback(null, true);
-            }
-        });
-    },
 
-    updateFichier: function (id_piece, new_fichier, callback) {
-        rows = db.query("UPDATE Piece_Dossier SET fichier = ? WHERE id_piece = ?", [new_fichier, id_piece], function (err, results) {
-            if (err) {
-                callback(err, false);
-            } else {
-                callback(null, true);
-            }
-        });
-    },
+    // updateType: function (id_piece, new_type, callback) {
+    //     rows = db.query("UPDATE Piece_Dossier SET type = ? WHERE id_piece =?", [new_type, id_piece], function (err, results) {
+    //         if (err) {
+    //             callback(err, null);
+    //         } else {
+    //             callback(null, true);
+    //         }
+    //     });
+    // },
+
+
+    // updateFichier: function (id_piece, new_fichier, callback) {
+    //     rows = db.query("UPDATE Piece_Dossier SET fichier = ? WHERE id_piece = ?", [new_fichier, id_piece], function (err, results) {
+    //         if (err) {
+    //             callback(err, false);
+    //         } else {
+    //             callback(null, true);
+    //         }
+    //     });
+    // },
 
 
 }

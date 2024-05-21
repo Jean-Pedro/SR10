@@ -95,12 +95,12 @@ module.exports = {
         })
     },
 
-    generateHash: function (plaintextPassword, callback) {
-        bcrypt.hash(plaintextPassword, 10, function (err, hash) {
-            // call the function that Store hash in the database
-            callback(hash);
-        });
-    },
+    // generateHash: function (plaintextPassword, callback) {
+    //     bcrypt.hash(plaintextPassword, 10, function (err, hash) {
+    //         // call the function that Store hash in the database
+    //         callback(hash);
+    //     });
+    // },
 
     
 
@@ -321,35 +321,38 @@ module.exports = {
     // },
 
 
-    TEST_MAIL: function (email_a_tester, callback) {
-        // Vérification de l'adresse e-mail 
-        // Format :
-        //  - 1 ou plusieurs caractères alphanumériques ou caractères spéciaux . _ - +
-        //  - @
-        //  - 1 ou plusieurs caractères alphanumériques ou caractères spéciaux . _ - +
-        //  - .
-        //  - 2 ou 3 caractères alphanumériques
-
-        var correct_email_test = /^([a-zA-Z0-9_\.\-+]+)@([a-zA-Z0-9_\.\-+]+)\.([a-zA-Z]{2,3})$/;
-        callback(correct_email_test.test(email_a_tester));
-    },
 
 
-    TEST_MDP: function (mdp1, callback) {
-        // 12 caractères minimum dont 1 majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial parmis : &~"#'{}[]()-|`_\^@=/*-+.,?;:!<>€$£*
-        var correct_password_test = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[&~"#'{}[\]\(\)-|`_\^@=/*-+.,?;:!<>€$£*]).{12,}$/;
-        callback(correct_password_test.test(mdp1));
-    },
 
-    TEST_TEL: function (num_tel, callback) {
-        // Vérification du numéro de téléphone 
-        // Format : 
-        // - Commence par un + (optionnel) suivi de 1 à 3 chiffres (indicatif pays)
-        // - 0 ou 1 espace (optionnel)
-        // - 9 chiffres
-        var correct_tel_test = /(0|\+33)[1-9]( *[0-9]{2}){4}/;
-        callback(correct_tel_test.test(num_tel));
-    },
+    // TEST_MAIL: function (email_a_tester, callback) {
+    //     // Vérification de l'adresse e-mail 
+    //     // Format :
+    //     //  - 1 ou plusieurs caractères alphanumériques ou caractères spéciaux . _ - +
+    //     //  - @
+    //     //  - 1 ou plusieurs caractères alphanumériques ou caractères spéciaux . _ - +
+    //     //  - .
+    //     //  - 2 ou 3 caractères alphanumériques
+
+    //     var correct_email_test = /^([a-zA-Z0-9_\.\-+]+)@([a-zA-Z0-9_\.\-+]+)\.([a-zA-Z]{2,3})$/;
+    //     callback(correct_email_test.test(email_a_tester));
+    // },
+
+
+    // TEST_MDP: function (mdp1, callback) {
+    //     // 12 caractères minimum dont 1 majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial parmis : &~"#'{}[]()-|`_\^@=/*-+.,?;:!<>€$£*
+    //     var correct_password_test = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[&~"#'{}[\]\(\)-|`_\^@=/*-+.,?;:!<>€$£*]).{12,}$/;
+    //     callback(correct_password_test.test(mdp1));
+    // },
+
+    // TEST_TEL: function (num_tel, callback) {
+    //     // Vérification du numéro de téléphone 
+    //     // Format : 
+    //     // - Commence par un + (optionnel) suivi de 1 à 3 chiffres (indicatif pays)
+    //     // - 0 ou 1 espace (optionnel)
+    //     // - 9 chiffres
+    //     var correct_tel_test = /(0|\+33)[1-9]( *[0-9]{2}){4}/;
+    //     callback(correct_tel_test.test(num_tel));
+    // },
 
 
 }

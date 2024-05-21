@@ -1,13 +1,22 @@
 var express = require('express');
 var router = express.Router();
 var userModel = require('../model/utilisateur')
+var candidatModel = require('../model/candidat')
 const session = require('../utils/session')
 const {body, validationResult} = require('express-validator');
 
 
 router.get('/', function (req, res, next) {
-    if (req.session/loggedin) {
-        res.redirect('candidat/candidat_main')
+    if (req.session.userid) {
+        if(req.session.type_user === "candidat") {
+            res.redirect('candidat/candidat_main')
+        } else if (req.session.type_user === "recruteur") {
+            res.redirect('recruteur/recruteur_main')
+        } else {
+            res.redirect('admin/admin_main')
+        }
+    } else{
+        res.redirect('/auth/login')
     }
 
 });
@@ -37,9 +46,9 @@ router.post('/login', async function(req, res, next) {
     const result = await userModel.arevalid(email, password);
     if (result == true) {
         const user = await userModel.read(email)
-        const type = userModel.checkType(email)
+        const type = await userModel.checkType(email)
         session.createSession(req.session, email, type, user);
-        res.redirect("/candidat/candidat_main")
+        res.redirect("/auth")
         // req.session.loggedin = true;
         // req.session.username = email;
         // req.session.type_user = type;
@@ -74,7 +83,7 @@ const registerValidate = [
     body('password')
         .isLength({min: 12})
         .withMessage('Le mot de passe doit contenir au moins 12 caractères')
-        .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{12,}$/)
+        .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{12,}$/)
         .withMessage('Le mot de passe doit contenir des majuscules, des minuscules, des chiffres et des caractères spéciaux et de taille >= 12'),
 
     // Validate confirmed password
@@ -106,13 +115,14 @@ router.post('/inscription', registerValidate, async function (req, res, next) {
         const user = await userModel.read(req.body.email);
         console.log(user)
         if(!user) {
-            const result = await userModel.create(
+            const id = await userModel.create(
                 req.body.email,
                 req.body.nom,
                 req.body.prenom,
                 req.body.tel,
                 req.body.password
             );
+            const cand = await candidatModel.create(id)
             res.redirect("/auth/login")
         }
     }
@@ -131,6 +141,10 @@ router.post('/inscription', registerValidate, async function (req, res, next) {
 // })
 
 
+router.get('/logout', (req, res) => {
+    session.deleteSession(req.session);
+    res.redirect('/auth/login');
+});
 
 
 router.get('/inscription', function (req, res, next) {

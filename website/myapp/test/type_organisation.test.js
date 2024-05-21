@@ -22,14 +22,14 @@ describe("Model Tests", () => {
         const newType = "SCOP"
 
         const result = await model.create(newType);
-        expect(result).toBe(1);
+        expect(result).toBe(newType);
     });
 
     test("insert type already in", async () => {
         const newType = "SCOP"
-
         const result = await model.create(newType);
-        expect(result).toBe(0);
+        const result_doublon = await model.create(newType);
+        expect(result_doublon).toBe(newType);
         await model.delete(newType)
     });
 
