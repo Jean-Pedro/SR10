@@ -1,5 +1,6 @@
 const DB = require ("../model/db.js");
-const model = require ("../model/candidat.js");
+const candidatModel = require ("../model/candidat.js");
+const userModel = require("../model/utilisateur.js");
 
 describe("Model Tests", () => {
     beforeAll(() => {
@@ -12,28 +13,30 @@ describe("Model Tests", () => {
         }
         DB.end(callback);
     });
-    test ("read cand",()=>{
-        nom=null;
-        function cbRead(resultat){
-            nom = resultat[0].nom;
-            expect(nom).toBe("René");
-        }
-        model.read("francoisrene@yahoo.fr", cbRead);
+
+    const newCand = [
+        "testCand1@test.com",
+        "LeCand",
+        "Jean-Test",
+        "06-66-99-25-56",
+        "c'estletestCand1",
+    ];
+    
+    test("create candidat", async () => {
+        const user = await userModel.create(newCand[0], newCand[1], newCand[2], newCand[3], newCand[4]);
+        const candidat = await candidatModel.create(user);
+        const result = await candidatModel.read(candidat);
+        expect(result.id_candidat).toBe(user);
+        await candidatModel.delete(candidat);
+        await userModel.fullDelete(newCand[0]);
     });
-    test ("read all cand",()=>{
-        nom1=null;
-        function cbRead(resultat){
-            nom1 = resultat[0].nom;
-            expect(nom1).toBe("René");
-        }
-        model.readall(cbRead);
-    });
-    test ("valid candidate's passwd",()=>{
-        valide=null;
-        function cbRead(resultat){
-            valide = resultat;
-            expect(vailde).toBeTruthy();
-        }
-        model.areValid(cbRead);
-    });
+
+    test("delete candidat", async () => {
+        const user = await userModel.create(newCand[0], newCand[1], newCand[2], newCand[3], newCand[4]);
+        const candidat = await candidatModel.create(user);
+        const result = await candidatModel.delete(candidat);
+        expect(result).toBeTruthy();
+        await userModel.fullDelete(newCand[0]);
+    })
+
 })

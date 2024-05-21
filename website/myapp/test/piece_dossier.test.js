@@ -15,7 +15,6 @@ describe("Model Tests", () => {
     });
 
     const newCandidature = [
-        "2024-03-19 00:00:00",
         28200,
         2
     ];
@@ -25,7 +24,7 @@ describe("Model Tests", () => {
     ];
 
     test("read piece", async () => {
-        const id_cand = await candidatureModel.create(newCandidature[0], newCandidature[1], newCandidature[2]);
+        const id_cand = await candidatureModel.create(newCandidature[0], newCandidature[1]);
         const id_piece = await pieceModel.create(newPiece[0], id_cand, newPiece[1]);
         const result = await pieceModel.read(id_piece);
         expect(result["fichier"]).toBe(newPiece[1]);
@@ -39,7 +38,7 @@ describe("Model Tests", () => {
     })
 
     test("create piece", async () => {
-        const id_cand = await candidatureModel.create(newCandidature[0], newCandidature[1], newCandidature[2]);
+        const id_cand = await candidatureModel.create(newCandidature[0], newCandidature[1]);
         const result = await pieceModel.create(newPiece[0], id_cand, newPiece[1]);
         expect(result).not.toBe(undefined);
         await pieceModel.delete(result);
@@ -47,7 +46,7 @@ describe("Model Tests", () => {
     });
 
     test("delete piece", async () => {
-        const id_cand = await candidatureModel.create(newCandidature[0], newCandidature[1], newCandidature[2]);
+        const id_cand = await candidatureModel.create(newCandidature[0], newCandidature[1]);
         const id_piece = await pieceModel.create(newPiece[0], id_cand, newPiece[1]);
         const result = await pieceModel.delete(id_piece);
         expect(result).toBeTruthy();
@@ -55,7 +54,7 @@ describe("Model Tests", () => {
     });
 
     test("update type piece", async () => {
-        const id_cand = await candidatureModel.create(newCandidature[0], newCandidature[1], newCandidature[2]);
+        const id_cand = await candidatureModel.create(newCandidature[0], newCandidature[1]);
         const id_piece = await pieceModel.create(newPiece[0], id_cand, newPiece[1]);
         await pieceModel.updateType(id_piece, "Lettre de motivation");
         const result = await pieceModel.read(id_piece);
@@ -65,7 +64,7 @@ describe("Model Tests", () => {
     });
 
     test("update file piece", async () => {
-        const id_cand = await candidatureModel.create(newCandidature[0], newCandidature[1], newCandidature[2]);
+        const id_cand = await candidatureModel.create(newCandidature[0], newCandidature[1]);
         const id_piece = await pieceModel.create(newPiece[0], id_cand, newPiece[1]);
         await pieceModel.updateFichier(id_piece, "CV_1234.pdf");
         const result = await pieceModel.read(id_piece);

@@ -22,14 +22,16 @@ describe("Model Tests", () => {
         const newType = "opérateur"
 
         const result = await model.create(newType);
-        expect(result).toBe(1);
+        expect(result).toBe(newType);
+        await model.delete(newType)
     });
 
     test("insert type already in", async () => {
         const newType = "opérateur"
 
         const result = await model.create(newType);
-        expect(result).toBe(0);
+        const result2 = await model.create(newType);
+        expect(result2).toBe(newType);
         await model.delete(newType)
     });
 

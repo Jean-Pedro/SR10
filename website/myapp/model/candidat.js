@@ -2,31 +2,45 @@ var db = require('./db.js');
 var user = require('./utilisateur.js')
 
 module.exports = {
-    read: function (email, callback) {
-        db.query("SELECT * from Candidat JOIN Utilisateur ON id_candidat=id_utilisateur WHERE email= ?",email, function (err, results) {
-            if (err) throw err;
-            callback(results);
+    read: async (id) => {
+        return new Promise((resolve, reject) => {
+            db.query("SELECT * from Candidat WHERE id_candidat = ?", id, (err, results) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(results[0]);
+                }
+            });
         });
     },
 
-    readall: function (callback) {
-        db.query("select * from Candidat JOIN Utilisateur ON id_candidat=id_utilisateur", function (err, results) {
-            if (err) throw err;
-            callback(results);
+    readByEmail: async (email) => {
+        return new Promise((resolve, reject) => {
+            db.query("SELECT * from Candidat JOIN Utilisateur ON id_candidat=id_utilisateur WHERE email= ?", email, (err, results) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(results[0]);
+                }
+            });
         });
     },
 
-    areValid: function (email, password, callback) {
-        sql = "SELECT password FROM Candidat JOIN Utilisateur ON id_candidat=id_utilisateur WHERE email = ?";
-        rows = db.query(sql, email, function (err, results) {
-            if (err) throw err;
-            if (rows.length == 1 && rows[0].pwd === password) {
-                callback(true)
-            } else {
-                callback(false);
-            }
+    readall: async () => {
+        return new Promise((resolve, reject) => {
+            const sql = "select * from Candidat JOIN Utilisateur ON id_candidat=id_utilisateur";
+            db.query(sql, (err, results) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(results);
+                }
+            });
         });
-    },  
+    },
+
+    
+    
 
     create: async (id) => {
         return new Promise((resolve, reject) => {
@@ -57,15 +71,43 @@ module.exports = {
     //     });
     // },
 
-    delete: function (email, callback) {
-        db.query("UPDATE Utilisateur SET statut = 0 WHERE email = ?", [email], function (err, results) {
-            if (err) {
-                callback(err, null);
-            } else {
-                callback(null, "Utilisateur supprimé");
-            } 
+    delete : async (id) => {
+        return new Promise((resolve, reject) => {
+            const sql = "DELETE FROM Candidat WHERE id_candidat = ?";
+            db.query(sql, id, (err, result) => {
+                if(err) {
+                    reject(err);
+                } else {
+                    resolve(true);
+                }
+            });
         });
     },
+
+    // delete: function (email, callback) {
+    //     db.query("UPDATE Utilisateur SET statut = 0 WHERE email = ?", [email], function (err, results) {
+    //         if (err) {
+    //             callback(err, null);
+    //         } else {
+    //             callback(null, "Utilisateur supprimé");
+    //         } 
+    //     });
+    // },
+
+    // read: function (email, callback) {
+    //     db.query("SELECT * from Candidat JOIN Utilisateur ON id_candidat=id_utilisateur WHERE email= ?",email, function (err, results) {
+    //         if (err) throw err;
+    //         callback(results);
+    //     });
+    // },
+
+    // readall: function (callback) {
+    //     db.query("select * from Candidat JOIN Utilisateur ON id_candidat=id_utilisateur", function (err, results) {
+    //         if (err) throw err;
+    //         callback(results);
+    //     });
+    // },
+
 
     /*delete: function (email, callback) {
         user.read(email, function (err, results) {
@@ -88,4 +130,16 @@ module.exports = {
             });
         });
     },*/
+
+    // areValid: function (email, password, callback) {
+    //     sql = "SELECT password FROM Candidat JOIN Utilisateur ON id_candidat=id_utilisateur WHERE email = ?";
+    //     rows = db.query(sql, email, function (err, results) {
+    //         if (err) throw err;
+    //         if (rows.length == 1 && rows[0].pwd === password) {
+    //             callback(true)
+    //         } else {
+    //             callback(false);
+    //         }
+    //     });
+    // },  
 };

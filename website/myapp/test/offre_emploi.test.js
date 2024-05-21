@@ -8,8 +8,6 @@ const recruteurModel = require("../model/recruteur.js");
 const typeOrgaModel = require("../model/type_organisation.js")
 const userModel = require("../model/utilisateur.js")
 const offreModel = require("../model/offre_emploi.js");
-const candidatureModel = require ("../model/candidature.js");
-const candidatModel = require("../model/candidat.js")
 
 describe("Model Tests", () => {
     beforeAll(() => {
@@ -23,53 +21,46 @@ describe("Model Tests", () => {
         DB.end(callback);
     });
 
-    const newType = "traducteur3";
-    const newStatut = "directeur test3";
+    const newType = "traducteur2";
+    const newStatut = "directeur test2";
     const newAdresse = [
-        49,
+        45,
         "rue de la flemme",
         "Saint-Valery sur Somme",
-        80102,
+        80101,
     ];
-    const newTypeOrga = "Orga de traduction3";
+    const newTypeOrga = "Orga de traduction2";
     const newOrga = [
-        8564,
-        "Test orga fiche3",
-        "logo_test3.pdf"
+        85640,
+        "Test orga fiche2",
+        "logo_test2.pdf"
     ];
     const newRecr = [
-        "testRecrFiche3@test.com",
-        "Test3",
-        "Jean-Fiche3",
-        "06-66-99-66-81",
-        "c'estletestRecrFiche3",
+        "testRecrFiche2@test.com",
+        "Test2",
+        "Jean-Fiche2",
+        "06-66-99-66-22",
+        "c'estletestRecrFiche2",
     ];
 
     const newFiche = [
-        "traducteur japonais vers français3",
+        "traducteur japonais vers français2",
         "Patrick Patrick",
         35.00,
         0,
         1500,
         3000,
-        "traduction de livres japonais3"
+        "traduction de livres japonais2"
     ];
 
     const newOffre = [
-        "2024-12-01 00:00:00",
+        "2024-12-25 00:00:00",
         "CV",
         "non publiée"
     ];
 
-    const newCandidat = [
-        "testCandFiche3@test.com",
-        "Test3",
-        "Jean3",
-        "06-66-99-25-45",
-        "c'estletestCandFiche3",
-    ];
 
-    test("create candidature", async () => {
+    test("create offre", async () => {
         const typeMetier = await typeMetierModel.create(newType);
         const statutPoste = await statutPosteModel.create(newStatut);
         const adresse = await adresseModel.create(newAdresse[0], newAdresse[1], newAdresse[2], newAdresse[3]);
@@ -79,15 +70,9 @@ describe("Model Tests", () => {
         const recruteur = await recruteurModel.createRecr(user, orga);
         const fiche = await ficheModel.create(newFiche[0], newFiche[1], newFiche[2], newFiche[3], newFiche[4], newFiche[5], newFiche[6], typeMetier, statutPoste, adresse, orga, recruteur);
         const offre = await offreModel.create(newOffre[0], newOffre[1], fiche, newOffre[2]);
-        const userCand = await userModel.create(newCandidat[0], newCandidat[1], newCandidat[2], newCandidat[3], newCandidat[4]);
-        const candidat = await candidatModel.create(userCand);
-        const candidature = await candidatureModel.create(offre, candidat);
-
-        const result = await candidatureModel.read(candidature);
-        expect(result.id_c).not.toBe(undefined);
-        await candidatureModel.delete(candidature);
-        await candidatModel.delete(candidat);
-        await userModel.fullDelete(newCandidat[0]);
+        console.log(offre)
+        const result = await offreModel.read(offre)
+        expect(result.num).toBe(offre);
         await offreModel.delete(offre);
         await ficheModel.delete(fiche);
         await recruteurModel.fired(user);
@@ -100,7 +85,7 @@ describe("Model Tests", () => {
 
     });
 
-    test("delete candidature", async () => {
+    test("delete offre", async () => {
         const typeMetier = await typeMetierModel.create(newType);
         const statutPoste = await statutPosteModel.create(newStatut);
         const adresse = await adresseModel.create(newAdresse[0], newAdresse[1], newAdresse[2], newAdresse[3]);
@@ -110,15 +95,10 @@ describe("Model Tests", () => {
         const recruteur = await recruteurModel.createRecr(user, orga);
         const fiche = await ficheModel.create(newFiche[0], newFiche[1], newFiche[2], newFiche[3], newFiche[4], newFiche[5], newFiche[6], typeMetier, statutPoste, adresse, orga, recruteur);
         const offre = await offreModel.create(newOffre[0], newOffre[1], fiche, newOffre[2]);
-        const userCand = await userModel.create(newCandidat[0], newCandidat[1], newCandidat[2], newCandidat[3], newCandidat[4]);
-        const candidat = await candidatModel.create(userCand);
-        const candidature = await candidatureModel.create(offre, candidat);
-        const result = await candidatureModel.delete(candidature);
+        const result = await offreModel.delete(offre);
+
         expect(result).toBeTruthy();
         
-        await candidatModel.delete(candidat);
-        await userModel.fullDelete(newCandidat[0]);
-        await offreModel.delete(offre);
         await ficheModel.delete(fiche);
         await recruteurModel.fired(user);
         await userModel.fullDelete(newRecr[0]);
@@ -129,36 +109,5 @@ describe("Model Tests", () => {
         await typeMetierModel.delete(typeMetier);
 
     });
-
-    test("read pieces by fiche", async () => {
-        const typeMetier = await typeMetierModel.create(newType);
-        const statutPoste = await statutPosteModel.create(newStatut);
-        const adresse = await adresseModel.create(newAdresse[0], newAdresse[1], newAdresse[2], newAdresse[3]);
-        const typeOrga = await typeOrgaModel.create(newTypeOrga);
-        const orga = await organisationModel.create(newOrga[0], newOrga[1], adresse, typeOrga, newOrga[2]);
-        const user = await userModel.create(newRecr[0], newRecr[1], newRecr[2], newRecr[3], newRecr[4]);
-        const recruteur = await recruteurModel.createRecr(user, orga);
-        const fiche = await ficheModel.create(newFiche[0], newFiche[1], newFiche[2], newFiche[3], newFiche[4], newFiche[5], newFiche[6], typeMetier, statutPoste, adresse, orga, recruteur);
-        const offre = await offreModel.create(newOffre[0], newOffre[1], fiche, newOffre[2]);
-        const userCand = await userModel.create(newCandidat[0], newCandidat[1], newCandidat[2], newCandidat[3], newCandidat[4]);
-        const candidat = await candidatModel.create(userCand);
-        const candidature = await candidatureModel.create(offre, candidat);
-        const result = await candidatureModel.readPiecesByFiche(fiche);
-        expect(result[0]).toBe("CV");
-        await candidatureModel.delete(candidature);
-        await candidatModel.delete(candidat);
-        await userModel.fullDelete(newCandidat[0]);
-        await offreModel.delete(offre);
-        await ficheModel.delete(fiche);
-        await recruteurModel.fired(user);
-        await userModel.fullDelete(newRecr[0]);
-        await organisationModel.delete(orga);
-        await typeOrgaModel.delete(typeOrga);
-        await adresseModel.delete(adresse);
-        await statutPosteModel.delete(statutPoste);
-        await typeMetierModel.delete(typeMetier);
-    })
-
-
 
 })

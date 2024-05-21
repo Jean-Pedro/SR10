@@ -95,7 +95,7 @@ module.exports = {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve(results);
+                    resolve(id);
                 }
             });
         });
