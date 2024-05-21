@@ -16,39 +16,22 @@
                 </div>
             </div>
     
-            <div id="container">
-                <div id="formulaire">
-                    <form action="" method="post">
+            <div>
+                <div>
+                    <form action="/candidat/verif_siren" method="post">
                         <div id="label">
                             <label for="candidat">Devenir Recruteur</label>
                         </div>
-                        <div id="label_form">
-                            <label for="siren">Numero de siren</label> <br>
+                        <div id="div_center">
+                            <div id="label_form">
+                                <label for="siren">Numero de siren</label> <br>
+                            </div>
+                            <div id="input_form">
+                                <input type="number" id="siren" name="siren" required>
+                            </div>
+                            <button id="submit" type="submit">Valider</button>
                         </div>
-                        <div id="input_form">
-                            <input type="number" id="siren" name="siren" required>
-                        </div>
-                        <button id="submit" type="submit">Valider</button>
                     </form>
-                    <!-- <% offres.forEach((offre)=> { %>
-                        <div id="off">
-                            <div id="off_img">
-                                <img src="../LOGO-META.webp" alt="Logo de l'entreprise">
-                            </div>
-                            <div class="entreprise">
-                                <h1><%= offre.nom%></h1>
-                                <p><%= offre.siren%></p>
-                            </div>
-                            <div class="desc">
-                                <p><%= offre.type + ' - ' + offre.statut%></p>
-                                <p><%= offre.description%></p>
-                            </div>
-                            
-                            <div class="offer_button">
-                                <button onclick="openOffre(this)">Demander à rejoindre</button>
-                            </div>
-                        </div>
-                    <% }) %> -->
                     <br>
                     <div class="new_org">
                         <a href="/candidat/create_orga"><button>Ajouter une nouvelle organisation</button></a>
@@ -90,7 +73,7 @@
         </div>
 
         <!-- <script>
-            function openOffre(button) {
+            function orgaExists(button) {
                 var offreDiv = button.closest('#off');
                 var entrepriseDiv = offreDiv.querySelector('.entreprise');
                 var numeroElement = entrepriseDiv.querySelector('p');
