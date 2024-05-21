@@ -7,10 +7,10 @@ var router = express.Router();
 router.get('/', function (req, res, next) {
   res.send('respond with a resource');
   });
-  router.get('/recruteur_main', function (req, res, next) {
-    result=offreModel.allinfo(function(result){
-      res.render('recruteur/recruteur_main', { title: 'List des offres', offres: result });
-    });
+
+  router.get('/recruteur_main', async function (req, res, next) {
+    const result = await offreModel.allinfo();
+    res.render('recruteur/recruteur_main', { title: 'List des offres', offres: result });
   });
 
   router.get('/recruteur_account', function (req, res, next) {
@@ -33,79 +33,70 @@ router.get('/', function (req, res, next) {
     res.render('recruteur/verif_suppr');
   });
 
-  router.get('/voir-offre/:id', function (req, res, next) {
+  router.get('/voir-offre/:id', async function (req, res, next) {
     const id = req.params.id;
     console.log(id);
-    result = offreModel.allinfoID(id, function (error, result) {
+    const result = await offreModel.allinfoID(id);
     console.log(result)
-      res.render('recruteur/recruteur_desc_offre', { title: 'Recruteur - description offre', offre: result[0] });
-    });
+    res.render('recruteur/recruteur_desc_offre', { title: 'Recruteur - description offre', offre: result[0] });
   });
 
-  router.get('/search/:text', function (req, res, next) {
+  router.get('/search/:text', async function (req, res, next) {
     const text =req.params.text;
-    result = offreModel.allinfosearch(text, function (error, result) {
-      console.log(result);
-      res.render('recruteur/recruteur_main', { title: 'Recruteur - search', offres: result})
-    })
+    const result = await offreModel.allinfosearch(text);
+    console.log(result);
+    res.render('recruteur/recruteur_main', { title: 'Recruteur - search', offres: result})
   })
 
-  router.get('/salaire_min/:text', function (req, res, next) {
-    const text =req.params.text;
-    result = offreModel.allinfoSalaire(text, function (error, result) {
-      console.log(result);
-      res.render('recruteur/recruteur_main', { title: 'Recruteur - search', offres: result})
-    })
+  router.get('/salaire_min/:text', async function (req, res, next) {
+    const text = req.params.text;
+    const result = await offreModel.allinfoSalaire(text);
+    console.log(result);
+    res.render('recruteur/recruteur_main', { title: 'Recruteur - search', offres: result})
   })
 
-  router.get('/localisation/:text', function (req, res, next) {
+  router.get('/localisation/:text', async function (req, res, next) {
     const text =req.params.text;
-    result = offreModel.allinfoLocate(text, function (error, result) {
-      console.log(result);
-      res.render('recruteur/recruteur_main', { title: 'Recruteur - search', offres: result})
-    })
+    const result = await offreModel.allinfoLocate(text);
+    console.log(result);
+    res.render('recruteur/recruteur_main', { title: 'Recruteur - search', offres: result})
   })
 
-  router.get('/candidater/:id', function (req, res, next) {
+  router.get('/candidater/:id', async function (req, res, next) {
     const id = req.params.id;
     console.log(id)
-    result = candidatureModel.readPiecesByFiche(id, function (error, result) {
+    const result = await candidatureModel.readPiecesByFiche(id);
     console.log(result)
-      res.render('recruteur/recruteur_candidate', { title: 'Recruteur - Candidater', pieces: result});
-    });
+    res.render('recruteur/recruteur_candidate', { title: 'Recruteur - Candidater', pieces: result});
   });
 
-  router.get('/mes_candidatures', function (req, res, next) {
-    result = candidatureModel.readTest(function (error, result) {
-      console.log(result);
-      res.render('recruteur/candidature_r', {title : 'Recruteur - Candidatures', offres: result})
-    })
+  router.get('/mes_candidatures', async function (req, res, next) {
+    const result = await candidatureModel.readTest();
+    console.log(result);
+    res.render('recruteur/candidature_r', {title : 'Recruteur - Candidatures', offres: result})
   });
 
-  router.get('/recruteur_recr/:id', function (req, res, next) {
+  router.get('/recruteur_recr/:id', async function (req, res, next) {
     const id = req.params.id;
-    result=offreModel.allinfoByRecruteur(id, function(error, result){
-      console.log(result);
-      res.render('recruteur/recruteur_recr', { title: 'List des offres', offres: result });
-    });
-    });
+    const result = await offreModel.allinfoByRecruteur(id);
+    console.log(result);
+    res.render('recruteur/recruteur_recr', { title: 'List des offres', offres: result });
+  });
 
 
-  router.get('/voir-candidatures/:num', function (req, res, next) {
+  router.get('/voir-candidatures/:num', async function (req, res, next) {
     const num = req.params.num;
-    result=offreModel.candidatByOffre(num, function(error, result){
-      console.log(result);
-      res.render('recruteur/recruteur_cand_offre', { title: 'Liste des candidatures', users: result });
-    });
+    const result = await offreModel.candidatByOffre(num);
+    console.log(result);
+    res.render('recruteur/recruteur_cand_offre', { title: 'Liste des candidatures', users: result });
   });
 
-  router.get('/modif-cand/:id', function (req, res, next) {
+  router.get('/modif-cand/:id', async function (req, res, next) {
     const id = req.params.id;
     console.log(id)
-    result = candidatureModel.readPieces(id, function (error, result) {
+    const result = await candidatureModel.readPieces(id);
     console.log(result)
-      res.render('recruteur/recruteur_modif_cand', { title: 'Recruteur - Modification candidature', pieces: result});
-    });
+    res.render('recruteur/recruteur_modif_cand', { title: 'Recruteur - Modification candidature', pieces: result});
   });
   
   router.post('/confirm_modif_cand', (req, res) => {
