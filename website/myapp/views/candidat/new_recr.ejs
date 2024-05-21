@@ -10,50 +10,32 @@
                 <div id="home_button">
                     <a href="/candidat/candidat_main"><button id="menu">Menu</button></a>
                 </div>
-                <div class="new_org">
-                    <a href="/candidat/create_orga"><button>Ajouter une nouvelle organisation</button></a>
-                </div> 
                 <div id="account">
                     <a href="/candidat/mes_candidatures"><button id="cand">Mes candidatures</button></a>
                     <a href="/candidat/candidat_account"><button id="account">Mon compte</button></a>
                 </div>
             </div>
     
-            <div id="container">
-                <div id="offers">
-                    <div id="label">
-                        <label for="candidat">Devenir Recruteur</label>
-                    </div>
-                    <% offres.forEach((offre)=> { %>
-                        <div id="off">
-                            <div id="off_img">
-                                <img src="../LOGO-META.webp" alt="Logo de l'entreprise">
-                            </div>
-                            <div class="entreprise">
-                                <h1><%= offre.nom%></h1>
-                                <p><%= offre.siren%></p>
-                            </div>
-                            <div class="desc">
-                                <p><%= offre.type + ' - ' + offre.statut%></p>
-                                <p><%= offre.description%></p>
-                            </div>
-                            
-                            <div class="offer_button">
-                                <button onclick="openOffre(this)">Demander à rejoindre</button>
-                            </div>
+            <div>
+                <div>
+                    <form action="/candidat/verif_siren" method="post">
+                        <div id="label">
+                            <label for="candidat">Devenir Recruteur</label>
                         </div>
-                    <% }) %>
-                    
-                    <div class="pagination">
-                        <a href="#" class="prev">&laquo; Previous</a>
-                        <a href="#" class="active">1</a>
-                        <a href="#">2</a>
-                        <a href="#">3</a>
-                        <a href="#">4</a>
-                        <a href="#">5</a>
-                        <a href="#" class="next">Next &raquo;</a>
-                    </div>
-
+                        <div id="div_center">
+                            <div id="label_form">
+                                <label for="siren">Numero de siren</label> <br>
+                            </div>
+                            <div id="input_form">
+                                <input type="number" id="siren" name="siren" required>
+                            </div>
+                            <button id="submit" type="submit">Valider</button>
+                        </div>
+                    </form>
+                    <br>
+                    <div class="new_org">
+                        <a href="/candidat/create_orga"><button>Ajouter une nouvelle organisation</button></a>
+                    </div> 
                 </div>
                 <!--
                 <div id="box">
@@ -90,8 +72,8 @@
             </div>
         </div>
 
-        <script>
-            function openOffre(button) {
+        <!-- <script>
+            function orgaExists(button) {
                 var offreDiv = button.closest('#off');
                 var entrepriseDiv = offreDiv.querySelector('.entreprise');
                 var numeroElement = entrepriseDiv.querySelector('p');
@@ -99,6 +81,6 @@
                 console.log(`/candidat/rejoindre_orga/${siren}`);
                 window.location.href = `/candidat/rejoindre_orga/${siren}`
             }
-        </script>
+        </script> -->
     </body>
 </html>

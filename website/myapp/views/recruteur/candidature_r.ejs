@@ -8,7 +8,7 @@
         <div id="page">
             <div id="top_bar">
                 <div id="home_button">
-                    <a href="/recruteur/candidat_main"><button id="menu">Menu</button></a>                
+                    <a href="/recruteur/recruteur_main"><button id="menu">Menu</button></a>                
                 </div>
                 <div id="account">
                     <a href="/recruteur/recruteur_account"><button id="account">Mon compte</button></a>
@@ -36,23 +36,12 @@
                         </div>
                         <div class="offer_button">
                             <button onclick="modifCand(this)">Modifier</button>
-                            <a href="validation_candidat.html"><button>Supprimer</button></a>
+                            <a href="/recruteur/verif_suppr"><button>Supprimer</button></a>
                             
                         </div>
                         
                     </div>
                     <% }) %>
-                    
-                    <div class="pagination">
-                        <a href="#" class="prev">&laquo; Previous</a>
-                        <a href="#" class="active">1</a>
-                        <a href="#">2</a>
-                        <a href="#">3</a>
-                        <a href="#">4</a>
-                        <a href="#">5</a>
-                        <a href="#" class="next">Next &raquo;</a>
-                    </div>
-
                 </div>
                 <!--
                 <div id="box">
@@ -94,8 +83,8 @@
                 var idCandidatureElement = offreDiv.querySelector('.entreprise > p:last-child');
                 var idCandidatureText = idCandidatureElement.textContent.trim();
                 var id_c = idCandidatureText.split('ID Candidature : ')[1];
-                console.log(`/recruteur/modif-offre/${id_c}`);
-                window.location.href = `/recruteur/modif-offre/${id_c}`;
+                console.log(`/recruteur/modif-cand/${id_c}`);
+                window.location.href = `/recruteur/modif-cand/${id_c}`;
             };
         </script>
     </body>

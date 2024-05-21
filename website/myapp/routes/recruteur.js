@@ -8,11 +8,30 @@ router.get('/', function (req, res, next) {
   res.send('respond with a resource');
   });
   router.get('/recruteur_main', function (req, res, next) {
-  result=offreModel.allinfo(function(result){
-  res.render('recruteur/recruteur_main', { title: 'List des offres', offres: result });
-  });
+    result=offreModel.allinfo(function(result){
+      res.render('recruteur/recruteur_main', { title: 'List des offres', offres: result });
+    });
   });
 
+  router.get('/recruteur_account', function (req, res, next) {
+    res.render('recruteur/recruteur_account');
+  });
+
+  router.get('/recruteur_modif_mail', function (req, res, next) {
+    res.render('recruteur/recruteur_modif_mail');
+  });
+
+  router.get('/recruteur_modif_mdp', function (req, res, next) {
+      res.render('recruteur/recruteur_modif_mdp');
+  });
+
+  router.get('/confirmation', function (req, res, next) {
+    res.render('recruteur/confirmation_recruteur');
+  });
+
+  router.get('/verif_suppr', function (req, res, next) {
+    res.render('recruteur/verif_suppr');
+  });
 
   router.get('/voir-offre/:id', function (req, res, next) {
     const id = req.params.id;
@@ -79,8 +98,58 @@ router.get('/', function (req, res, next) {
       res.render('recruteur/recruteur_cand_offre', { title: 'Liste des candidatures', users: result });
     });
   });
+
+  router.get('/modif-cand/:id', function (req, res, next) {
+    const id = req.params.id;
+    console.log(id)
+    result = candidatureModel.readPieces(id, function (error, result) {
+    console.log(result)
+      res.render('recruteur/recruteur_modif_cand', { title: 'Recruteur - Modification candidature', pieces: result});
+    });
+  });
   
+  router.post('/confirm_modif_cand', (req, res) => {
+    // db.query('SELECT * FROM Organisation WHERE siren = ?', [siren], (err, results) => {
+    //     if (results.length > 0) {
+    //         res.render('candidat/confirmation_candidat');
+    //     } else {
+    //         res.render('candidat/new_recr');
+    //     }
+    // });
+    res.render('recruteur/confirmation_recruteur');
+  });
 
+  router.post('/update_mail', (req, res) => {
+    // db.query('SELECT * FROM Organisation WHERE siren = ?', [siren], (err, results) => {
+    //     if (results.length > 0) {
+    //         res.render('candidat/confirmation_candidat');
+    //     } else {
+    //         res.render('candidat/new_recr');
+    //     }
+    // });
+    res.render('recruteur/confirmation_recruteur');
+  });
 
+  router.post('/update_mdp', (req, res) => {
+    // db.query('SELECT * FROM Organisation WHERE siren = ?', [siren], (err, results) => {
+    //     if (results.length > 0) {
+    //         res.render('candidat/confirmation_candidat');
+    //     } else {
+    //         res.render('candidat/new_recr');
+    //     }
+    // });
+    res.render('recruteur/confirmation_recruteur');
+  });
+
+  router.post('/valide_cand', (req, res) => {
+    // db.query('SELECT * FROM Organisation WHERE siren = ?', [siren], (err, results) => {
+    //     if (results.length > 0) {
+    //         res.render('candidat/confirmation_candidat');
+    //     } else {
+    //         res.render('candidat/new_recr');
+    //     }
+    // });
+    res.render('recruteur/confirmation_recruteur');
+  });
 
   module.exports = router;

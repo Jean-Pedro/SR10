@@ -18,34 +18,25 @@
             <div id="container">
                 <div id="offers">
                     <div id="label">
-                        <label for="candidat">Espace Administrateur - Validation Organisations</label>
+                        <label>Espace Administrateur - Validation Organisations</label>
                     </div>        
                     <% orgas.forEach((orga)=> { %>
-                    <div id="off">
-                        <div id="off_img">
-                            <img src="../LOGO-META.webp" alt="Logo de l'entreprise">
+                        <div id="off">
+                            <div id="off_img">
+                                <img src="../LOGO-META.webp" alt="Logo de l'entreprise">
+                            </div>
+                            <div class="entreprise">                                
+                                <h1><%= orga.nom%></h1>
+                                <p><%= orga.siren%></p>
+                            </div>
+                            <div class="desc">
+                                <p><%= orga.type%></p>
+                            </div>
+                            <div class="offer_button">
+                                <a href="admin_val_orga.html"><button id="accepter">Plus de détails</button></a>
+                            </div>
                         </div>
-                        <div class="entreprise">                                
-                            <h1><%= orga.nom%></h1>
-                            <p><%= orga.siren%></p>
-                        </div>
-                        <div class="desc">
-                            <p><%= orga.type%></p>
-                        </div>
-                        <div class="offer_button">
-                            <a href="admin_val_orga.html"><button id="accepter">Plus de détails</button></a>
-                        </div>
-                    </div>
                     <% }) %>
-                    <div class="pagination">
-                        <a href="#" class="prev">&laquo; Previous</a>
-                        <a href="#" class="active">1</a>
-                        <a href="#">2</a>
-                        <a href="#">3</a>
-                        <a href="#">4</a>
-                        <a href="#">5</a>
-                        <a href="#" class="next">Next &raquo;</a>
-                    </div>
                 </div>
                 <!--
                 <div id="box">

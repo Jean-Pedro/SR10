@@ -39,15 +39,26 @@ router.get('/admin_account', function (req, res, next) {
     res.render('admin/admin_account');
 })
 
+router.get('/admin_modif_mail', function (req, res, next) {
+    res.render('admin/admin_modif_mail');
+});
+
+router.get('/admin_modif_mdp', function (req, res, next) {
+    res.render('admin/admin_modif_mdp');
+});
+
 router.get('/admin_main', function (req, res, next) {
     res.render('admin/admin_main');
-})
+});
 
-router.get('/admin_enr_orga', function (req, res, next) {
-    result = organisationModel.readByStatut('en attente', function(error, result) {
-        res.render('admin/admin_enr_orga', { title: 'Admin - Validation Organisation', orgas: result});
-    })
-})
+router.get('/confirmation', function (req, res, next) {
+    res.render('admin/confirmation_admin');
+});
+
+router.get('/admin_enr_orga', async function (req, res, next) {
+    const result = await organisationModel.readByStatut('en attente');
+    res.render('admin/admin_enr_orga', { title: 'Admin - Validation Organisation', orgas: result});
+});
 
 // router.get('/admin_enr_recr', function (req, res, next) {
 //     console.log("test")
