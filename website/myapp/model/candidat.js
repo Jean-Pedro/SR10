@@ -28,22 +28,34 @@ module.exports = {
         });
     },  
 
-    create: function (email, nom, prenom, num_tel, password, callback) {
-        user.create(email, nom, prenom, num_tel, password, function(err, id) {
-            if (err) {
-                callback(err, null);
-            } else {
-                console.log("ID : " + id);
-            }
-            rows = db.query("INSERT INTO Candidat VALUES (?);", id, function (err, results) {
+    create: async (id) => {
+        return new Promise((resolve, reject) => {
+            db.query("INSERT INTO Candidat VALUES(?);", id, (err, results) => {
                 if (err) {
-                    callback(err, null);
+                    reject(err);
                 } else {
-                    callback(null, results);
+                    resolve(id);
                 }
             });
         });
     },
+
+    // create: function (email, nom, prenom, num_tel, password, callback) {
+    //     user.create(email, nom, prenom, num_tel, password, function(err, id) {
+    //         if (err) {
+    //             callback(err, null);
+    //         } else {
+    //             console.log("ID : " + id);
+    //         }
+    //         rows = db.query("INSERT INTO Candidat VALUES (?);", id, function (err, results) {
+    //             if (err) {
+    //                 callback(err, null);
+    //             } else {
+    //                 callback(null, results);
+    //             }
+    //         });
+    //     });
+    // },
 
     delete: function (email, callback) {
         db.query("UPDATE Utilisateur SET statut = 0 WHERE email = ?", [email], function (err, results) {

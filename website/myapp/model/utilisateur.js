@@ -38,23 +38,69 @@ module.exports = {
                 if (err) {
                     reject(err);
                 } 
-                if (rows.length == 1 && rows[0] === this.generateHash(password))
-                    {
-                        resolve(true);
-                    }
-                else {
+                if (results.length == 1) {
+                    bcrypt.compare(password, results[0]["password"], (err, result) => {
+                        if (err) {
+                            return reject(err);
+                        }
+                        else if (result){
+                            resolve(true)
+                        } else {
+                            resolve(false)
+                        }
+                    });
+                } else {
                     resolve(false);
                 }
+                
             });
         });
     },
 
-    generateHash: function (plaintextPassword, callback) {
-        bcrypt.hash(plaintextPassword, 10, function (err, hash) {
-            // call the function that Store hash in the database
-            callback(hash);
-        });
+
+    checkType: async (email) => {
+        return new Promise((resolve, reject) => {
+            db.query("select id_utilisateur from Utilisateur where email = ?;", email, (err, id) => {
+                if(err) {
+                    return reject(err);
+                }
+                const id_user = id[0]["id_utilisateur"]
+                db.query("select * from Administrateur where id_administrateur = ?", id_user, (err, resAdmin) => {
+                    if(err) {
+                        reject(err);
+                    }
+                    if(resAdmin[0]) {
+                        resolve("admin")
+                    }
+                    db.query("select * from Recruteur where id_recruteur = ?", id_user, (err, resRecr) => {
+                        if(err) {
+                            reject(err);
+                        }
+                        if(resRecr[0]) {
+                            resolve("recruteur")
+                        }
+                        db.query("select * from Candidat where id_candidat = ?", id_user, (err, resCandidat) => {
+                            if(err) {
+                                reject(err);
+                            }
+                            if(resCandidat[0]) {
+                                resolve("candidat")
+                            }
+                            
+                        })
+                        
+                    })
+                })
+            })
+        })
     },
+
+    // generateHash: function (plaintextPassword, callback) {
+    //     bcrypt.hash(plaintextPassword, 10, function (err, hash) {
+    //         // call the function that Store hash in the database
+    //         callback(hash);
+    //     });
+    // },
 
     
 
@@ -149,6 +195,32 @@ module.exports = {
         });
     },
 
+    getbyID: async (id) => {
+        return new Promise((resolve, reject) => {
+            const sql = "SELECT * FROM Utilisateur WHERE id_utilisateur= ?"
+            db.query(sql, id, (err, results) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(results);
+                }
+            });
+        });
+    },
+
+    getInfos: async (email) => {
+        return new Promise((resolve, reject) => {
+            const sql = "SELECT nom, prenom, num_tel FROM Utilisateur WHERE email = ?"
+            db.query(sql, email, (err, results) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(results);
+                }
+            });
+        });
+    },
+
     // readall: function (callback) {
     //     db.query("select * from Utilisateur", function (err, results) {
     //         if (err) throw err;
@@ -216,23 +288,23 @@ module.exports = {
     // },
     
 
+    // getbyID: function (id, callback) {
+    //     db.query("SELECT * FROM Utilisateur WHERE id_utilisateur= ?", id, function(err, result) {
+    //         if (err) throw err;
+    //         callback(results);
+    //     });
+    // },
 
-    getbyID: function (id, callback) {
-        db.query("SELECT * FROM Utilisateur WHERE id_utilisateur= ?", id, function(err, result) {
-            if (err) throw err;
-            callback(results);
-        });
-    },
-
-    getInfos: function (email, callback) {
-        db.query("SELECT nom, prenom, num_tel FROM Utilisateur WHERE email = ?", email, function (err, results) {
-            if (err) {
-                callback(err, null);
-            } else {
-                callback(null, results);
-            }
-        });
-    },
+    
+    // getInfos: function (email, callback) {
+    //     db.query("SELECT nom, prenom, num_tel FROM Utilisateur WHERE email = ?", email, function (err, results) {
+    //         if (err) {
+    //             callback(err, null);
+    //         } else {
+    //             callback(null, results);
+    //         }
+    //     });
+    // },
 
     // latitude longitude
 
@@ -249,48 +321,38 @@ module.exports = {
     // },
 
 
-    
-
-    /*delete: function (email, callback) {
-        db.query("DELETE FROM Utilisateur WHERE email = ?", [email], function (err, results) {
-            if (err) {
-                callback(err, null);
-            } else {
-                callback(null, "Utilisateur supprimé avec succès");
-            } 
-        });
-    },*/
 
 
-    TEST_MAIL: function (email_a_tester, callback) {
-        // Vérification de l'adresse e-mail 
-        // Format :
-        //  - 1 ou plusieurs caractères alphanumériques ou caractères spéciaux . _ - +
-        //  - @
-        //  - 1 ou plusieurs caractères alphanumériques ou caractères spéciaux . _ - +
-        //  - .
-        //  - 2 ou 3 caractères alphanumériques
 
-        var correct_email_test = /^([a-zA-Z0-9_\.\-+]+)@([a-zA-Z0-9_\.\-+]+)\.([a-zA-Z]{2,3})$/;
-        callback(correct_email_test.test(email_a_tester));
-    },
+    // TEST_MAIL: function (email_a_tester, callback) {
+    //     // Vérification de l'adresse e-mail 
+    //     // Format :
+    //     //  - 1 ou plusieurs caractères alphanumériques ou caractères spéciaux . _ - +
+    //     //  - @
+    //     //  - 1 ou plusieurs caractères alphanumériques ou caractères spéciaux . _ - +
+    //     //  - .
+    //     //  - 2 ou 3 caractères alphanumériques
+
+    //     var correct_email_test = /^([a-zA-Z0-9_\.\-+]+)@([a-zA-Z0-9_\.\-+]+)\.([a-zA-Z]{2,3})$/;
+    //     callback(correct_email_test.test(email_a_tester));
+    // },
 
 
-    TEST_MDP: function (mdp1, callback) {
-        // 12 caractères minimum dont 1 majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial parmis : &~"#'{}[]()-|`_\^@=/*-+.,?;:!<>€$£*
-        var correct_password_test = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[&~"#'{}[\]\(\)-|`_\^@=/*-+.,?;:!<>€$£*]).{12,}$/;
-        callback(correct_password_test.test(mdp1));
-    },
+    // TEST_MDP: function (mdp1, callback) {
+    //     // 12 caractères minimum dont 1 majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial parmis : &~"#'{}[]()-|`_\^@=/*-+.,?;:!<>€$£*
+    //     var correct_password_test = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[&~"#'{}[\]\(\)-|`_\^@=/*-+.,?;:!<>€$£*]).{12,}$/;
+    //     callback(correct_password_test.test(mdp1));
+    // },
 
-    TEST_TEL: function (num_tel, callback) {
-        // Vérification du numéro de téléphone 
-        // Format : 
-        // - Commence par un + (optionnel) suivi de 1 à 3 chiffres (indicatif pays)
-        // - 0 ou 1 espace (optionnel)
-        // - 9 chiffres
-        var correct_tel_test = /(0|\+33)[1-9]( *[0-9]{2}){4}/;
-        callback(correct_tel_test.test(num_tel));
-    },
+    // TEST_TEL: function (num_tel, callback) {
+    //     // Vérification du numéro de téléphone 
+    //     // Format : 
+    //     // - Commence par un + (optionnel) suivi de 1 à 3 chiffres (indicatif pays)
+    //     // - 0 ou 1 espace (optionnel)
+    //     // - 9 chiffres
+    //     var correct_tel_test = /(0|\+33)[1-9]( *[0-9]{2}){4}/;
+    //     callback(correct_tel_test.test(num_tel));
+    // },
 
 
 }

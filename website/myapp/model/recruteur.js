@@ -65,26 +65,27 @@ module.exports = {
     //     })
     // },
 
-    create: async (email, nom, prenom, num_tel, password, organisation) => {
-        return new Promise((resolve, reject) => {
-            user.create(email, nom, prenom, num_tel, password, (err, id) => {
-                if(err) {
-                    return reject(err);
-                } else {
-                    console.log("ID : " + id)
-                }
-                const etat = "en attente";
-                const sql = "INSERT INTO Recruteur VALUES (?, ?, ?);"
-                db.query(sql, [id, organisation, etat], (err, results) => {
-                    if (err) {
-                        reject(err);
-                    } else {
-                        resolve(results);
-                    }
-                })
-            })
-        });
-    },
+    // create: async (email, nom, prenom, num_tel, password, organisation) => {
+    //     return new Promise((resolve, reject) => {
+    //         user.create(email, nom, prenom, num_tel, password, (err, id) => {
+    //             if(err) {
+    //                 return reject(err);
+    //             } else {
+    //                 console.log("ID : " + id)
+    //                 const etat = "en attente";
+    //                 const sql = "INSERT INTO Recruteur VALUES (?, ?, ?);"
+    //                 db.query(sql, [id, organisation, etat], (err, results) => {
+    //                 if (err) {
+    //                     reject(err);
+    //                 } else {
+    //                     resolve(results);
+    //                 }
+    //             })
+    //             }
+                
+    //         })
+    //     });
+    // },
 
     createRecr: async (id, organisation) => {
         return new Promise((resolve, reject) => {
@@ -100,36 +101,9 @@ module.exports = {
         });
     },
 
-    // create: function (email, nom, prenom, num_tel, password, organisation, callback) {
-    //     user.create(email, nom, prenom, num_tel, password, function(err, id) {
-    //         if (err) {
-    //             callback(err, null);
-    //         } else {
-    //             console.log("ID : " + id);
-    //         }
-    //         rows = db.query("INSERT INTO Recruteur VALUES (?, ?);", [id, organisation], function (err, results) {
-    //             if (err) {
-    //                 callback(err, null);
-    //             } else {
-    //                 callback(null, results);
-    //             }
-    //         });
-    //     });
-    // },
-
-    delete: function (email, callback) {
-        db.query("UPDATE Utilisateur SET statut = 0 WHERE email = ?", [email], function (err, results) {
-            if (err) {
-                callback(err, null);
-            } else {
-                callback(null, "Utilisateur supprimé");
-            } 
-        });
-    },
-
     fired: async (id) => {
         return new Promise((resolve, reject) => {
-            const sql = "DELETE FROM Recruteur WHERE id = ?;";
+            const sql = "DELETE FROM Recruteur WHERE id_recruteur = ?;";
             db.query(sql, id, (err, results) => {
                 if(err) {
                     reject(err);
@@ -139,26 +113,4 @@ module.exports = {
             })
         })
     }
-
-    /*delete: function (email, callback) {
-        user.read(email, function (err, results) {
-            if (err) throw err;
-            callback(results);
-            var id = results[0].id_candidat;
-            db.query("DELETE FROM Recruteur WHERE id_recruteur = ?", [id], function (err, results) {
-                if (err) {
-                    callback(err, null);
-                } else {
-                    callback(null, "Utilisateur supprimé des recruteurs");
-                } 
-            });
-            user.delete(email, function (err, results) {
-                if (err) {
-                    callback(err, null);
-                } else {
-                    callback(null, "Utilisateur supprimé avec succès");
-                } 
-            });
-        });
-    },*/
 };

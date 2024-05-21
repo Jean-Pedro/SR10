@@ -16,19 +16,15 @@ describe("Model Tests", () => {
         DB.end(callback);
     });
 
+    test("read user", async () => {
+        const result = await recrModel.read("jeanjean@gmail.com");
+        expect(result.nom).toBe("Jean");
+    });
 
-    // test("create recruteur", async () => {
-    //     const newRecr = [
-    //         "testRecr@test.com",
-    //         "Test",
-    //         "Jean-Test",
-    //         "06-66-99-66-99",
-    //         "c'estletestRecr",
-    //         27332
-    //     ];
-    //     const result = await model.createRecr(newRecr[0], newRecr[1], newRecr[2], newRecr[3], newRecr[4], newRecr[5]);
-    //     expect(result).not.toBe(undefined);
-    // });
+    test("read all user", async () => {
+        const result = await recrModel.readall();
+        expect(result).not.toBe(undefined);
+    });
 
     test("create recruteur", async () => {
         const newRecr = [
@@ -42,7 +38,28 @@ describe("Model Tests", () => {
         const id = await userModel.create(newRecr[0], newRecr[1], newRecr[2], newRecr[3], newRecr[4])
         const result = await recrModel.createRecr(id, newRecr[5]);
         expect(result).not.toBe(undefined);
+        await recrModel.fired(id);
+        await userModel.fullDelete(newRecr[0]);
     });
+
+
+    test("get recr 'en attente'", async () => {
+        const newRecr = [
+            "testRecr@test.com",
+            "Test",
+            "Jean-Test",
+            "06-66-99-66-99",
+            "c'estletestRecr",
+            27332
+        ];
+        const id = await userModel.create(newRecr[0], newRecr[1], newRecr[2], newRecr[3], newRecr[4])
+        await recrModel.createRecr(id, newRecr[5]);
+        const result = await recrModel.readByStatut("en attente")
+        expect(result).not.toBe(undefined);
+        await recrModel.fired(id);
+        await userModel.fullDelete(newRecr[0]);
+    });
+
 
 
     // test ("read recruteur",()=>{
