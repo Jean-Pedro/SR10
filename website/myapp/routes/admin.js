@@ -39,6 +39,14 @@ router.get('/admin_account', function (req, res, next) {
     res.render('admin/admin_account');
 })
 
+router.get('/admin_modif_mail', function (req, res, next) {
+    res.render('admin/admin_modif_mail');
+});
+
+router.get('/admin_modif_mdp', function (req, res, next) {
+    res.render('admin/admin_modif_mdp');
+});
+
 router.get('/admin_main', function (req, res, next) {
     res.render('admin/admin_main');
 })

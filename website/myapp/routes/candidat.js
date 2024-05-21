@@ -20,10 +20,13 @@ router.get('/', function (req, res, next) {
     res.render('candidat/candidat_account');
   });
 
-  router.get('/account_modif', function (req, res, next) {
-    res.render('candidat/account_modif');
+  router.get('/candidat_modif_mail', function (req, res, next) {
+    res.render('candidat/candidat_modif_mail');
   });
 
+  router.get('/candidat_modif_mdp', function (req, res, next) {
+      res.render('candidat/candidat_modif_mdp');
+  });
 
 
   router.get('/new_recr', function (req, res, next) {
@@ -32,6 +35,11 @@ router.get('/', function (req, res, next) {
     res.render('candidat/new_recr', { title: 'List des offres', offres: result });
     });
     });
+
+  
+  router.get('/create_orga', function (req, res, next) {
+    res.render('candidat/candidat_create_orga');
+  });
 
 
   router.get('/search/:text', function (req, res, next) {
@@ -68,13 +76,13 @@ router.get('/voir-offre/:id', function (req, res, next) {
   });
 
 
-  router.get('/rejoindre_orga/:siren', function (req, res, next) {
-    const siren = req.params.siren;
-    result = offreModel.allinfoSiren(siren, function (error, result) {
-    console.log(result)
-      res.render('candidat/rejoindre_orga', { title: 'Candidat - rejoindre organisation', offre: result[0] });
-    });
-  });
+  // router.get('/rejoindre_orga/:siren', function (req, res, next) {
+  //   const siren = req.params.siren;
+  //   result = offreModel.allinfoSiren(siren, function (error, result) {
+  //   console.log(result)
+  //     res.render('candidat/rejoindre_orga', { title: 'Candidat - rejoindre organisation', offre: result[0] });
+  //   });
+  // });
   
   router.get('/mes_candidatures/:id', function (req, res, next) {
     const id = req.params.id;
