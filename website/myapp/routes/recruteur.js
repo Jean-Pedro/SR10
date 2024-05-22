@@ -88,7 +88,7 @@ router.get('/', function (req, res, next) {
     const num = req.params.num;
     const result = await offreModel.candidatByOffre(num);
     console.log(result);
-    res.render('recruteur/recruteur_cand_offre', { title: 'Liste des candidatures', users: result });
+    res.render('recruteur/recruteur_cand_offre', { title: 'Liste des candidatures', users: result, num: num });
   });
 
   router.get('/modif-cand/:id', async function (req, res, next) {
@@ -98,8 +98,27 @@ router.get('/', function (req, res, next) {
     console.log(result)
     res.render('recruteur/recruteur_modif_cand', { title: 'Recruteur - Modification candidature', pieces: result});
   });
+
+  router.get('/modif-offre/:offre', async function (req, res, next) {
+    const offre = req.params.offre;
+    console.log(offre)
+    const result = await offreModel.read(offre);
+    console.log(result)
+    res.render('recruteur/recruteur_modif_offre', { title: 'Recruteur - Modification offre', offre: result});
+  });
   
   router.post('/confirm_modif_cand', (req, res) => {
+    // db.query('SELECT * FROM Organisation WHERE siren = ?', [siren], (err, results) => {
+    //     if (results.length > 0) {
+    //         res.render('candidat/confirmation_candidat');
+    //     } else {
+    //         res.render('candidat/new_recr');
+    //     }
+    // });
+    res.render('recruteur/confirmation_recruteur');
+  });
+
+  router.post('/confirm_modif_offre', (req, res) => {
     // db.query('SELECT * FROM Organisation WHERE siren = ?', [siren], (err, results) => {
     //     if (results.length > 0) {
     //         res.render('candidat/confirmation_candidat');
@@ -142,5 +161,27 @@ router.get('/', function (req, res, next) {
     // });
     res.render('recruteur/confirmation_recruteur');
   });
+
+  router.get('/recruteur_menu_offres', async function (req, res, next) {
+    res.render('recruteur/recruteur_menu_offres')
+  });
+
+  router.get('/create_fiche', async function (req, res, next) {
+    res.render('recruteur/create_fiche');
+  })
+
+  router.get('/create_offre', async function (req, res, next) {
+    res.render('recruteur/create_offre');
+  })
+
+  router.get('/details_candidature_user/:num/:email', async function (req, res, next) {
+    const num = req.params.num
+    const email = req.params.email
+    const user = await userModel.read(email);
+    const candidature = await candidatureModel.readByIdCandidatOffre(user.id_utilisateur, num)
+    const pieces = await candidatureModel.readPieces(candidature.id_c)
+    console.log(pieces)
+    res.render('recruteur/details_candidature_user', { title: 'Recruteur - Détails candidature', pieces: pieces, user: user, candidature: candidature})
+  })
 
   module.exports = router;

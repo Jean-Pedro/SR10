@@ -29,10 +29,12 @@
                             <h1><%= user.prenom + ' ' + user.nom%></h1>
                         </div>
                         <div class="desc">
+                            <p><%= user.email%></p>
                             <p><%= user.num_tel%></p>
                         </div>
                         <div class="offer_button">
-                            <a href="admin_desc_acc.html"><button id="accepter">Plus de détails</button></a>
+                            <!-- <a href="admin_desc_acc.html"><button id="accepter">Plus de détails</button></a> -->
+                            <button onclick="details(this)" data-email="<%= user.email %>">Plus de détails</button>
                         </div>
                     </div>
                     <% }) %>
@@ -65,5 +67,12 @@
                 -->
             </div>
         </div>
+        <script>
+            function details(button) {
+                var email = button.getAttribute('data-email');
+                console.log(`Email de l'utilisateur : ${email}`);
+                window.location.href = `/admin/user_details/${email}`;
+            };
+        </script>
     </body>
 </html>

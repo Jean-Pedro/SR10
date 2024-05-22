@@ -19,7 +19,7 @@
             <div id="container">
                 <div id="offers">
                     <div id="label">
-                        <label for="candidat">Espace Recruteur - Candidatures offres</label>
+                        <label for="candidat">Espace Recruteur - Candidatures offre <%= num %></label>
                     </div>
                     <% users.forEach((user)=> { %>  
                         <div id="off">
@@ -33,12 +33,21 @@
                                 <p><%= user.num_tel%></p>
                             </div>
                             <div class="offer_button">
-                                <a href=""><button>Plus de détails</button></a>
+                                <!-- <a href="/recruteur/details_candidature_user"><button>Plus de détails</button></a> -->
+                                <button onclick="details(this)" data-email="<%= user.email %>" data-num="<%= num %>">Plus de détails</button>
                             </div>
                         </div>
                     <% }) %>
                 </div> 
             </div>
         </div>
+        <script>
+            function details(button) {
+                var email = button.getAttribute('data-email');
+                var num = button.getAttribute('data-num');
+                console.log(`Email de l'utilisateur : ${email}`);
+                window.location.href = `/recruteur/details_candidature_user/${num}/${email}`;
+            };
+        </script>
     </body>
 </html>
