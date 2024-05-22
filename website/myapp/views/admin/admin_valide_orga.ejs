@@ -1,0 +1,62 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Demande Creation Orga</title>
+        <link rel="stylesheet" href="/stylesheets/main.css">
+    </head>
+    <body>
+        <div id="page">
+            <div id="top_bar">
+                <div id="home_button">
+                    <a href="/admin/admin_main"><button id="menu">Menu</button></a>
+                </div>
+                <div id="account">
+                    <a href="/admin/admin_account"><button id="account">Mon compte</button></a>
+                </div>
+            </div>
+            <div class="container_val">
+                <div class="desc_offre">
+                    <div class="entreprise">
+                        <div id="off_img">
+                            <img src="<%= orga.logo %>" alt="Logo de l'entreprise">
+                        </div>
+                        <h1><%= orga.nom %></h1>
+                        <p>Numéro de Siren : <%= orga.siren %></p>
+                        <p>Type d'organisation : <%= orga.type %></p>
+                    </div>
+                    <div class="siege_social">
+                        <!--TEMPORAIRE PARCE QU'ON A PAS LA FONCTION ALLINFO-->
+                        <p>Id : <%= orga.siege_social %></p>
+                        <!-- <p>Type de l'entreprise : <%# offre.type %></p>
+                        <p>Intitulé du poste : <%# offre.intitule %></p>
+                        <p>Statut : <%# offre.statut %></p>
+                        <p>Descirption du poste : <%# offre.description %></p>
+                        <p>Indications : <%# offre.indications %></p>
+                        <p>Rythme de travail : <%# offre.rythme_travail %></p>
+                        <p>Télétravail : <%# offre.teletravail %></p>
+                        <p>Salaire : <%# offre.salaire_min %> - <%# offre.salaire_max %></p>
+                        <p></p> -->
+                    </div>
+                    <div class="offer_button">
+                        <!-- <button onclick="candidater(this)">Candidater</button> -->
+                        <a href="/admin/confirmation_admin"><button id="accepter">Accepter</button></a>
+                    </div>
+                    <div class="offer_button">
+                        <a href="/admin/confirmation_admin"><button id="accepter">Refuse</button></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            function candidater(button) {
+                var offreDiv = button.closest('.desc_offre');
+                var idCandidatureElement = offreDiv.querySelector('.entreprise > p:last-child');
+                var idCandidatureText = idCandidatureElement.textContent.trim();
+                var id_fiche = idCandidatureText.split('Numéro de fiche de poste : ')[1];
+                console.log(`/candidat/candidater/${id_fiche}`);
+                window.location.href = `/candidat/candidater/${id_fiche}`;
+            };
+        </script>
+    </body>
+</html>

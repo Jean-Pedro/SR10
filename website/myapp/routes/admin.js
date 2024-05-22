@@ -32,7 +32,7 @@ router.get('/', function (req, res, next) {
     router.get('/admin_visu_acc', async function (req, res, next) {
         const result = await userModel.readall();
         res.render('admin/admin_visu_acc', { title: 'List des utilisateurs', users: result });
-        });
+    });
 
 
 router.get('/admin_account', function (req, res, next) {
@@ -51,7 +51,7 @@ router.get('/admin_main', function (req, res, next) {
     res.render('admin/admin_main');
 });
 
-router.get('/confirmation', function (req, res, next) {
+router.get('/confirmation_admin', function (req, res, next) {
     res.render('admin/confirmation_admin');
 });
 
@@ -59,6 +59,28 @@ router.get('/admin_enr_orga', async function (req, res, next) {
     const result = await organisationModel.readByStatut('en attente');
     res.render('admin/admin_enr_orga', { title: 'Admin - Validation Organisation', orgas: result});
 });
+
+router.get('/valide_orga/:siren', async function (req, res, next) {
+    const siren = req.params.siren;
+    const result = await organisationModel.read(siren);
+    res.render('admin/admin_valide_orga', { title: 'Admin - Validation Organisation', orga: result});
+});
+
+router.get('/user_recr_details/:email', async function (req, res, next) {
+    var email = req.params.email;
+    email.toString()
+    const result = await userModel.read(email);
+    console.log(result)
+    res.render('admin/user_recr_details', {title: 'Admin - Visu Account', user: result})
+});
+
+router.get('/user_details/:email', async function (req, res, next) {
+    var email = req.params.email;
+    email.toString()
+    const result = await userModel.read(email);
+    console.log(result)
+    res.render('admin/user_details', {title: 'Admin - Visu Account', user: result})
+})
 
 // router.get('/admin_enr_recr', function (req, res, next) {
 //     console.log("test")
@@ -70,7 +92,34 @@ router.get('/admin_enr_orga', async function (req, res, next) {
 
 router.get('/admin_enr_recr', async function (req, res, next) {
     const result = await recruteurModel.readByStatut('en attente');
-    res.render('admin/admin_visu_acc', { title: 'Admin - Validation Recruteur', users: result });
+    res.render('admin/admin_enr_recr', { title: 'Admin - Validation Recruteur', users: result });
 });
+
+router.post('/update_mail', (req, res) => {
+    // db.query('SELECT * FROM Organisation WHERE siren = ?', [siren], (err, results) => {
+    //     if (results.length > 0) {
+    //         res.render('candidat/confirmation_candidat');
+    //     } else {
+    //         res.render('candidat/new_recr');
+    //     }
+    // });
+    res.render('admin/confirmation_admin');
+  });
+
+  router.post('/update_mdp', (req, res) => {
+    // db.query('SELECT * FROM Organisation WHERE siren = ?', [siren], (err, results) => {
+    //     if (results.length > 0) {
+    //         res.render('candidat/confirmation_candidat');
+    //     } else {
+    //         res.render('candidat/new_recr');
+    //     }
+    // });
+    res.render('admin/confirmation_admin');
+  });
+
+
+  router.get('/desc_account', async function (req, res, next) {
+    const type = await userModel.checkType()
+  })
 
 module.exports = router;

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1716326664784" clover="3.2.0">
-  <project timestamp="1716326664784" name="All files">
+<coverage generated="1716330762770" clover="3.2.0">
+  <project timestamp="1716330762770" name="All files">
     <metrics statements="648" coveredstatements="376" conditionals="236" coveredconditionals="87" methods="307" coveredmethods="202" elements="1191" coveredelements="665" complexity="0" loc="648" ncloc="648" packages="1" files="14" classes="14"/>
     <file name="admin.js" path="/home/jpontoire/Documents/UTC/GI02/SR10/website/myapp/model/admin.js">
       <metrics statements="31" coveredstatements="21" conditionals="10" coveredconditionals="4" methods="15" coveredmethods="12"/>

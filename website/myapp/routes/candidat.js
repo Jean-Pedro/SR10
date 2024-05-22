@@ -9,12 +9,12 @@ var router = express.Router();
 router.get('/', function (req, res, next) {
   res.send('respond with a resource');
   });
-  router.get('/candidat_main', function (req, res, next) {
-  result=offreModel.allinfo(function(result){
-    //console.log(result)
+
+router.get('/candidat_main', async function (req, res, next) {
+  const result = await offreModel.allinfo();
+  //console.log(result
   res.render('candidat/candidat_main', { title: 'List des offres', offres: result });
-  });
-  });
+});
 
 
   router.get('/candidat_account', function (req, res, next) {
@@ -37,11 +37,10 @@ router.get('/', function (req, res, next) {
     res.render('candidat/verif_suppr');
   });
 
-  router.get('/new_recr', function (req, res, next) {
-    result=offreModel.allinfo(function(result){
+  router.get('/new_recr', async function (req, res, next) {
+    const result = await offreModel.allinfo();
       //console.log(result)
     res.render('candidat/new_recr', { title: 'List des offres', offres: result });
-    });
     });
 
   
@@ -50,37 +49,33 @@ router.get('/', function (req, res, next) {
   });
 
 
-  router.get('/search/:text', function (req, res, next) {
+  router.get('/search/:text', async function (req, res, next) {
     const text =req.params.text;
-    result = offreModel.allinfosearch(text, function (error, result) {
+    const result = await offreModel.allinfosearch(text);
       console.log(result);
       res.render('candidat/candidat_main', { title: 'Candidat - search', offres: result})
-    })
   })
 
-  router.get('/localisation/:text', function (req, res, next) {
+  router.get('/localisation/:text', async function (req, res, next) {
     const text =req.params.text;
-    result = offreModel.allinfoLocate(text, function (error, result) {
+    const result = await offreModel.allinfoLocate(text)
       console.log(result);
       res.render('candidat/candidat_main', { title: 'Candidat - search', offres: result})
-    })
   })
 
-  router.get('/salaire_min/:text', function (req, res, next) {
+  router.get('/salaire_min/:text', async function (req, res, next) {
     const text =req.params.text;
-    result = offreModel.allinfoSalaire(text, function (error, result) {
+    const result = await offreModel.allinfoSalaire(text);
       console.log(result);
       res.render('candidat/candidat_main', { title: 'Candidat - search', offres: result})
-    })
   })
 
 
-router.get('/voir-offre/:id', function (req, res, next) {
+router.get('/voir-offre/:id', async function (req, res, next) {
     const id = req.params.id;
-    result = offreModel.allinfoID(id, function (error, result) {
+    const result = await offreModel.allinfoID(id);
     console.log(result)
       res.render('candidat/candidat_desc_offre', { title: 'Candidat - description offre', offre: result[0] });
-    });
   });
 
 
@@ -92,38 +87,34 @@ router.get('/voir-offre/:id', function (req, res, next) {
   //   });
   // });
   
-  router.get('/mes_candidatures/:id', function (req, res, next) {
+  router.get('/mes_candidatures/:id', async function (req, res, next) {
     const id = req.params.id;
-    result = candidatureModel.readByIdCandidat(id, function (error, result) {
+    const result = await candidatureModel.readByIdCandidat(id);
       console.log(result);
       res.render('candidat/candidature_c', {title : 'Candidat - Candidatures', offre: result[0]})
-    })
   });
 
-  router.get('/mes_candidatures', function (req, res, next) {
-    result = candidatureModel.readTest(function (error, result) {
+  router.get('/mes_candidatures', async function (req, res, next) {
+    const result = await candidatureModel.readTest();
       console.log(result);
       res.render('candidat/candidature_c', {title : 'Candidat - Candidatures', offres: result})
-    })
   });
 
-  router.get('/modif-offre/:id', function (req, res, next) {
+  router.get('/modif-offre/:id', async function (req, res, next) {
     const id = req.params.id;
     console.log(id)
-    result = candidatureModel.readPieces(id, function (error, result) {
+    const result = await candidatureModel.readPieces(id);
     console.log(result)
       res.render('candidat/candidat_modif_cand', { title: 'Candidat - Modification candidature', pieces: result});
-    });
   });
 
 
-  router.get('/candidater/:id', function (req, res, next) {
+  router.get('/candidater/:id', async function (req, res, next) {
     const id = req.params.id;
     console.log(id)
-    result = candidatureModel.readPiecesByFiche(id, function (error, result) {
+    const result = await candidatureModel.readPiecesByFiche(id);
     console.log(result)
       res.render('candidat/candidat_candidate', { title: 'Candidat - Candidater', pieces: result});
-    });
   });
 
   router.post('/verif_siren', (req, res) => {

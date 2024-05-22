@@ -1,0 +1,35 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Creation offre d'emploi</title>
+        <link rel="stylesheet" href="/stylesheets/connexion.css">
+    </head>
+    <body>
+        <div id="container">
+            <div id="titre">
+                <h1>Création Offre d'Emploi</h1>
+            </div>
+            <form action="/recruteur/confirm_fiche" method="post">
+                <div id="case">
+                    <div id="column_g">
+                        <div id="formulaire">
+                            <div id="label_form">
+                                <label for="indications">Indications</label> <br>
+                            </div>
+                            <div id="input_form">
+                                <input type="text" id="indications" name="indications" placeholder="CV, lettre de motivation, ..." required>
+                            </div>
+                            <div id="label_form">
+                                <label for="fiche">Fiche de poste</label> <br>
+                            </div>
+                            <div id="input_form">
+                                <input type="text" id="fiche" name="fiche" placeholder="Entrez le numéro de la fiche" required>
+                            </div>
+                            <button id="submit" type="submit">Valider</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </body>
+</html>

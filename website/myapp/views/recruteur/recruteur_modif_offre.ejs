@@ -1,38 +1,35 @@
 <html lang="fr">
     <head>
         <meta charset="utf-8">
-        <title>Modifier Profil</title>
+        <title>Modifier Offre</title>
         <link rel="stylesheet" href="/stylesheets/connexion.css">
     </head>
     <body>
         <div id="container_2">
             <div id="titre">
-                <h1>Modifier Profil</h1>
+                <h1>Modifier Offre</h1>
             </div>
             
             <div id="case">
                 <div id="column_g">
                     <div id="formulaire">
-                        <form action="/admin/update_mail" method="post">
+                        <form action="/recruteur/confirm_modif_offre" method="post">
                             <div id="label_form">
-                                <label for="mail">Nouvelle adresse mail</label> <br>
+                                <label for="date">Date Validité</label> <br>
                             </div>
                             <div id="input_form">
-                                <input type="email" id="mail" name="mail" value="Adresse mail actuelle" required>
+                                <input type="datetime" id="date" name="date" value="<%= offre.date_validite%>" required>
                             </div>
                             <div id="label_form">
-                                <label for="password">Mot de passe</label> <br>
+                                <label for="indications">Indications</label> <br>
                             </div>
                             <div id="input_form">
-                                <input type="password" id="password" name="password" required>
+                                <input type="text" id="indications" name="indications" value="<%= offre.indications%>" required>
                             </div>
                             <button id="submit" type="submit">Modifier</button>
                         </form>
                     </div>
-                </div>
-                <div id="column_d">
-                    <img src="../connexion.png" alt="Image d'illustration">
-                </div>    
+                </div>  
             </div>
         </div>
     </body>

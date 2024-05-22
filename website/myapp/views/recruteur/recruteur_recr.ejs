@@ -40,7 +40,8 @@
                         </div>
                         <div class="offer_button">
                             <button onclick="openCandidatures(this)">Voir les candidatures</button>
-                            <a href="recruteur_modif_offre.html"><button>Modifier</button></a>
+                            <button onclick="modifOffre(this)">Modifier l'offre</button>
+                            <!-- <a href="recruteur_modif_offre"><button>Modifier</button></a> -->
                         </div>
                          
                     </div>
@@ -87,8 +88,17 @@
                 var idCandidatureElement = offreDiv.querySelector('.entreprise > p:last-child');
                 var idCandidatureText = idCandidatureElement.textContent.trim();
                 var num_offre = idCandidatureText.split("Numéro de l'offre : ")[1];
-                console.log(`/recruteur/voir-candidatures/${num_offre}`);
+                // console.log(`/recruteur/voir-candidatures/${num_offre}`);
                 window.location.href = `/recruteur/voir-candidatures/${num_offre}`;
+            };
+
+            function modifOffre(button) {
+                var offreDiv = button.closest('#off');
+                var idCandidatureElement = offreDiv.querySelector('.entreprise > p:last-child');
+                var idCandidatureText = idCandidatureElement.textContent.trim();
+                var num_offre = idCandidatureText.split("Numéro de l'offre : ")[1];
+                console.log(`/recruteur/voir-candidatures/${num_offre}`);
+                window.location.href = `/recruteur/modif-offre/${num_offre}`;
             };
 
         </script>

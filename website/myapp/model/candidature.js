@@ -36,6 +36,18 @@ module.exports = {
             });
         });
     },
+
+    readByIdCandidatOffre: async (id, offre) => {
+        return new Promise((resolve, reject) => {
+            db.query("SELECT * from Candidature where candidat= ? and offre = ?", [id, offre], (err, results) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(results[0]);
+                }
+            });
+        });
+    },
     
     readTest: async () => {
         return new Promise((resolve, reject) => {
@@ -78,6 +90,8 @@ module.exports = {
             });
         });
     },
+
+    
 
     create: async (offre, candidat) => {
         return new Promise((resolve, reject) => {
