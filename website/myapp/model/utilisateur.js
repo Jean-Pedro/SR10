@@ -72,7 +72,7 @@ module.exports = {
                     if(resAdmin[0]) {
                         resolve("admin")
                     }
-                    db.query("select * from Recruteur where id_recruteur = ?", id_user, (err, resRecr) => {
+                    db.query("select * from Recruteur where id_recruteur = ? and etat_demande = 'acceptée';", id_user, (err, resRecr) => {
                         if(err) {
                             reject(err);
                         }

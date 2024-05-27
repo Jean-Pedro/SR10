@@ -3,79 +3,163 @@ var express = require('express');
 var userModel = require('../model/utilisateur')
 var offreModel = require('../model/offre_emploi')
 var candModel = require('../model/candidat')
-var candidatureModel = require('../model/candidature')
+var candidatureModel = require('../model/candidature');
+const orgaModel = require('../model/organisation');
+const recrModel = require('../model/recruteur');
 var router = express.Router();
 
-router.get('/', function (req, res, next) {
-  res.send('respond with a resource');
-  });
+// router.get('/', function (req, res, next) {
+//   res.send('respond with a resource');
+//   });
 
 router.get('/candidat_main', async function (req, res, next) {
-  const result = await offreModel.allinfo();
-  //console.log(result
-  res.render('candidat/candidat_main', { title: 'List des offres', offres: result });
+  const session = req.session;
+  if(session.userid && session.type_user === "candidat") {
+    const result = await offreModel.allinfo();
+    res.render('candidat/candidat_main', { title: 'List des offres', offres: result });
+  }
+  else {
+    res.redirect("/auth/login");
+  }
 });
 
 
   router.get('/candidat_account', function (req, res, next) {
-    res.render('candidat/candidat_account');
+    const session = req.session;
+    if(session.userid && session.type_user === "candidat") {
+      res.render('candidat/candidat_account');
+    }
+    else {
+      res.redirect("/auth/login");
+    }
+    
   });
 
   router.get('/candidat_modif_mail', function (req, res, next) {
-    res.render('candidat/candidat_modif_mail');
+    const session = req.session;
+    if(session.userid && session.type_user === "candidat") {
+      res.render('candidat/candidat_modif_mail');
+    }
+    else {
+      res.redirect("/auth/login");
+    }
+    
   });
 
   router.get('/candidat_modif_mdp', function (req, res, next) {
+    const session = req.session;
+    if(session.userid && session.type_user === "candidat") {
       res.render('candidat/candidat_modif_mdp');
+    }
+    else {
+      res.redirect("/auth/login");
+    }
+      
   });
 
   router.get('/confirmation', function (req, res, next) {
-    res.render('candidat/confirmation_candidat');
+    const session = req.session;
+    if(session.userid && session.type_user === "candidat") {
+      res.render('candidat/confirmation_candidat');
+    }
+    else {
+      res.redirect("/auth/login");
+    }
+    
   });
 
   router.get('/verif_suppr', function (req, res, next) {
-    res.render('candidat/verif_suppr');
+    const session = req.session;
+    if(session.userid && session.type_user === "candidat") {
+      res.render('candidat/verif_suppr');
+    }
+    else {
+      res.redirect("/auth/login");
+    }
+    
   });
 
   router.get('/new_recr', async function (req, res, next) {
-    const result = await offreModel.allinfo();
-      //console.log(result)
-    res.render('candidat/new_recr', { title: 'List des offres', offres: result });
+    const session = req.session;
+    if(session.userid && session.type_user === "candidat") {
+        //const sirens = await orgaModel.readAllSiren();
+        res.render('candidat/new_recr');
+        // res.render('candidat/new_recr', { title: 'List des sirens', sirens: sirens });
+    }
+    else {
+      res.redirect("/auth/login");
+    }
+    
     });
 
   
   router.get('/create_orga', function (req, res, next) {
-    res.render('candidat/candidat_create_orga');
+    const session = req.session;
+    if(session.userid && session.type_user === "candidat") {
+      res.render('candidat/candidat_create_orga');
+    }
+    else {
+      res.redirect("/auth/login");
+    }
+    
   });
 
 
   router.get('/search/:text', async function (req, res, next) {
-    const text =req.params.text;
-    const result = await offreModel.allinfosearch(text);
+    const session = req.session;
+    if(session.userid && session.type_user === "candidat") {
+      const text =req.params.text;
+      const result = await offreModel.allinfosearch(text);
       console.log(result);
       res.render('candidat/candidat_main', { title: 'Candidat - search', offres: result})
+    }
+    else {
+      res.redirect("/auth/login");
+    }
+    
   })
 
   router.get('/localisation/:text', async function (req, res, next) {
-    const text =req.params.text;
-    const result = await offreModel.allinfoLocate(text)
+    const session = req.session;
+    if(session.userid && session.type_user === "candidat") {
+      const text =req.params.text;
+      const result = await offreModel.allinfoLocate(text)
       console.log(result);
       res.render('candidat/candidat_main', { title: 'Candidat - search', offres: result})
+    }
+    else {
+      res.redirect("/auth/login");
+    }
+    
   })
 
   router.get('/salaire_min/:text', async function (req, res, next) {
-    const text =req.params.text;
-    const result = await offreModel.allinfoSalaire(text);
+    const session = req.session;
+    if(session.userid && session.type_user === "candidat") {
+      const text =req.params.text;
+      const result = await offreModel.allinfoSalaire(text);
       console.log(result);
       res.render('candidat/candidat_main', { title: 'Candidat - search', offres: result})
+    }
+    else {
+      res.redirect("/auth/login");
+    }
+    
   })
 
 
 router.get('/voir-offre/:id', async function (req, res, next) {
-    const id = req.params.id;
-    const result = await offreModel.allinfoID(id);
-    console.log(result)
+  const session = req.session;
+    if(session.userid && session.type_user === "candidat") {
+      const id = req.params.id;
+      const result = await offreModel.allinfoID(id);
+      console.log(result)
       res.render('candidat/candidat_desc_offre', { title: 'Candidat - description offre', offre: result[0] });
+    }
+    else {
+      res.redirect("/auth/login");
+    }
+    
   });
 
 
@@ -87,45 +171,81 @@ router.get('/voir-offre/:id', async function (req, res, next) {
   //   });
   // });
   
-  router.get('/mes_candidatures/:id', async function (req, res, next) {
-    const id = req.params.id;
-    const result = await candidatureModel.readByIdCandidat(id);
-      console.log(result);
-      res.render('candidat/candidature_c', {title : 'Candidat - Candidatures', offre: result[0]})
-  });
+  // router.get('/mes_candidatures/:id', async function (req, res, next) {
+  //   const id = req.params.id;
+  //   const result = await candidatureModel.readByIdCandidat(id);
+  //     console.log(result);
+  //     res.render('candidat/candidature_c', {title : 'Candidat - Candidatures', offre: result[0]})
+  // });
 
   router.get('/mes_candidatures', async function (req, res, next) {
-    const result = await candidatureModel.readTest();
-      console.log(result);
+    const session = req.session;
+    if(session.userid && session.type_user === "candidat") {
+      const cand = await candModel.readByEmail(session.userid);
+      const id = cand.id_candidat;
+      const result = await candidatureModel.readCandidatureByCandidat(id);
       res.render('candidat/candidature_c', {title : 'Candidat - Candidatures', offres: result})
+      console.log(result);
+    }
+    else {
+      res.redirect("/auth/login");
+    }
+    // const result = await candidatureModel.readTest();
+    //   console.log(result);
+    //   res.render('candidat/candidature_c', {title : 'Candidat - Candidatures', offres: result})
   });
 
   router.get('/modif-offre/:id', async function (req, res, next) {
-    const id = req.params.id;
-    console.log(id)
-    const result = await candidatureModel.readPieces(id);
-    console.log(result)
+    const session = req.session;
+    if(session.userid && session.type_user === "candidat") {
+      const id = req.params.id;
+      console.log(id)
+      const result = await candidatureModel.readPieces(id);
+      console.log(result)
       res.render('candidat/candidat_modif_cand', { title: 'Candidat - Modification candidature', pieces: result});
+    }
+    else {
+      res.redirect("/auth/login");
+    }
+    
   });
 
 
   router.get('/candidater/:id', async function (req, res, next) {
-    const id = req.params.id;
-    console.log(id)
-    const result = await candidatureModel.readPiecesByFiche(id);
-    console.log(result)
+    const session = req.session;
+    if(session.userid && session.type_user === "candidat") {
+      const id = req.params.id;
+      console.log(id)
+      const result = await candidatureModel.readPiecesByFiche(id);
+      console.log(result)
       res.render('candidat/candidat_candidate', { title: 'Candidat - Candidater', pieces: result});
+    }
+    else {
+      res.redirect("/auth/login");
+    }
+    
   });
 
-  router.post('/verif_siren', (req, res) => {
-    const siren = req.body.siren;
-    db.query('SELECT * FROM Organisation WHERE siren = ?', [siren], (err, results) => {
-        if (results.length > 0) {
-            res.render('candidat/confirmation_candidat');
-        } else {
-            res.render('candidat/new_recr');
-        }
-    });
+  router.post('/verif_siren', async function (req, res) {
+    const session = req.session;
+    if(session.userid && session.type_user === "candidat") {
+      const siren = req.body.siren;
+      const results = await orgaModel.read(siren);
+      console.log(results)
+      if (results) {
+        const user = await candModel.readByEmail(session.userid)
+        const id = user.id_candidat
+        await recrModel.createRecr(id, siren)
+        res.render('candidat/confirmation_candidat');
+      } else {
+        res.render('candidat/new_recr');
+      }
+    }
+    else {
+      res.redirect("/auth/login");
+    }
+    
+    
   });
 
   router.post('/confirm_orga', (req, res) => {

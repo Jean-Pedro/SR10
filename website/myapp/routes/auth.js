@@ -2,7 +2,8 @@ var express = require('express');
 var router = express.Router();
 var userModel = require('../model/utilisateur')
 var candidatModel = require('../model/candidat')
-const session = require('../utils/session')
+var recrModel = require('../model/recruteur');
+const session = require('../utils/session');
 const {body, validationResult} = require('express-validator');
 
 
@@ -25,7 +26,13 @@ router.get('/', function (req, res, next) {
 router.get('/login', function (req, res, next) {
     const session = req.session;
     if (session.userid) {
-        res.redirect("/candidat/candidat_main")
+        if(session.type_user === "candidat") {
+            res.redirect("/candidat/candidat_main")
+        } else if(session.type_user === "recruteur") {
+            res.redirect('recruteur/recruteur_main')
+        } else {
+            res.redirect('admin/admin_main')
+        }
     }
     else {
         res.render('auth/login')
@@ -147,8 +154,18 @@ router.get('/logout', (req, res) => {
 });
 
 
-router.get('/inscription', function (req, res, next) {
-    res.render('auth/inscription');
+router.get('/inscription', async function (req, res, next) {
+    if (req.session.userid) {
+        if(req.session.type_user === "candidat") {
+            res.redirect('/candidat/candidat_main')
+        } else if (req.session.type_user === "recruteur") {
+            res.redirect('/recruteur/recruteur_main')
+        } else {
+            res.redirect('/admin/admin_main')
+        }
+    } else{
+        res.render('auth/inscription');
+    }
 });
 
 module.exports = router;
