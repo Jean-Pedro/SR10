@@ -101,24 +101,24 @@ const registerValidate = [
 ];
 
 router.post('/inscription', registerValidate, async function (req, res, next) {
-    const errors = validationResult(req)
-    console.log(errors)
-    if (!errors.isEmpty()) {
-        return res.render('auth/inscription', {
-            title: 'Inscription',
-            error: "Veuillez corriger les erreurs suivantes:",
-            errors: errors.array().reduce((obj, err) => {
-                obj[err.path] = err;
-                return obj;
-            }, {}),
-            prenom: req.body.prenom,
-            nom: req.body.nom,
-            email: req.body.email,
-            tel: req.body.tel,
-            password: req.body.password,
-            password2: req.body.password2
-        });
-    } else {
+    // const errors = validationResult(req)
+    // console.log(errors)
+    // if (!errors.isEmpty()) {
+    //     return res.render('auth/inscription', {
+    //         title: 'Inscription',
+    //         error: "Veuillez corriger les erreurs suivantes:",
+    //         errors: errors.array().reduce((obj, err) => {
+    //             obj[err.path] = err;
+    //             return obj;
+    //         }, {}),
+    //         prenom: req.body.prenom,
+    //         nom: req.body.nom,
+    //         email: req.body.email,
+    //         tel: req.body.tel,
+    //         password: req.body.password,
+    //         password2: req.body.password2
+    //     });
+    // } else {
         const user = await userModel.read(req.body.email);
         console.log(user)
         if(!user) {
@@ -132,7 +132,7 @@ router.post('/inscription', registerValidate, async function (req, res, next) {
             const cand = await candidatModel.create(id)
             res.redirect("/auth/login")
         }
-    }
+    // }
 
 })
 

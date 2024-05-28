@@ -195,7 +195,7 @@ router.get('/voir-offre/:id', async function (req, res, next) {
     //   res.render('candidat/candidature_c', {title : 'Candidat - Candidatures', offres: result})
   });
 
-  router.get('/modif-offre/:id', async function (req, res, next) {
+  router.get('/modif-cand/:id', async function (req, res, next) {
     const session = req.session;
     if(session.userid && session.type_user === "candidat") {
       const id = req.params.id;

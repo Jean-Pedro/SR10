@@ -9,7 +9,6 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var recruteurRouter = require('./routes/recruteur');
 var adminRouter = require('./routes/admin');
-var loginRouter = require('./routes/login');
 var candidatRouter = require('./routes/candidat');
 var authRouteur = require('./routes/auth');
 
@@ -43,7 +42,6 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/recruteur', recruteurRouter);
 app.use('/admin', adminRouter);
-app.use('/login', loginRouter);
 app.use('/candidat', candidatRouter);
 app.use('/auth', authRouteur);
 

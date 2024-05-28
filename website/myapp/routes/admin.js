@@ -6,22 +6,16 @@ var organisationModel = require('../model/organisation')
 var router = express.Router();
 
 
-router.get('/account', function (req, res, next) {
-    //if (req.session.user_type !== 'administrateur') {
-    //    return res.redirect('/');
-    //}
- console.log( req.session.successMessage );
-        userModel.getByStatusAndType("inactif", "candidat", function (error, result) {
-            res.render('AdminHomePageNewM', { title: 'Homepage - admin', users: result});
-        });
-        delete req.session.successMessage;
+// router.get('/account', function (req, res, next) {
+    
+//  console.log( req.session.successMessage );
+//         userModel.getByStatusAndType("inactif", "candidat", function (error, result) {
+//             res.render('AdminHomePageNewM', { title: 'Homepage - admin', users: result});
+//         });
+//         delete req.session.successMessage;
 
-    }
-);
-
-router.get('/', function (req, res, next) {
-    res.send('respond with a resource');
-    });
+//     }
+// );
 
     // router.get('/admin_visu_acc', function (req, res, next) {
     // result=userModel.readall(function(result){
@@ -30,56 +24,117 @@ router.get('/', function (req, res, next) {
     // });
 
     router.get('/admin_visu_acc', async function (req, res, next) {
-        const result = await userModel.readall();
-        res.render('admin/admin_visu_acc', { title: 'List des utilisateurs', users: result });
+        const session = req.session;
+        if(session.userid && session.type_user === "admin") {
+            const result = await userModel.readall();
+            res.render('admin/admin_visu_acc', { title: 'List des utilisateurs', users: result });
+        } else {
+            res.redirect("/auth/login");
+        }
+
     });
 
 
 router.get('/admin_account', function (req, res, next) {
-    res.render('admin/admin_account');
+    const session = req.session;
+    if(session.userid && session.type_user === "admin") {
+        res.render('admin/admin_account');
+    } else {
+        res.redirect("/auth/login");
+    }
+
 })
 
 router.get('/admin_modif_mail', function (req, res, next) {
-    res.render('admin/admin_modif_mail');
+    const session = req.session;
+    if(session.userid && session.type_user === "admin") {
+        res.render('admin/admin_modif_mail');
+    } else {
+        res.redirect("/auth/login");
+    }
+
 });
 
 router.get('/admin_modif_mdp', function (req, res, next) {
-    res.render('admin/admin_modif_mdp');
+    const session = req.session;
+    if(session.userid && session.type_user === "admin") {
+        res.render('admin/admin_modif_mdp');
+    } else {
+        res.redirect("/auth/login");
+    }
+
 });
 
 router.get('/admin_main', function (req, res, next) {
-    res.render('admin/admin_main');
+    const session = req.session;
+    if(session.userid && session.type_user === "admin") {
+        res.render('admin/admin_main');
+    }else {
+      res.redirect("/auth/login");
+    }
+
+
 });
 
 router.get('/confirmation_admin', function (req, res, next) {
-    res.render('admin/confirmation_admin');
+    const session = req.session;
+    if(session.userid && session.type_user === "admin") {
+        res.render('admin/confirmation_admin');
+    } else {
+        res.redirect("/auth/login");
+    }
+
 });
 
 router.get('/admin_enr_orga', async function (req, res, next) {
-    const result = await organisationModel.readByStatut('en attente');
-    res.render('admin/admin_enr_orga', { title: 'Admin - Validation Organisation', orgas: result});
+    const session = req.session;
+    if(session.userid && session.type_user === "admin") {
+        const result = await organisationModel.readByStatut('en attente');
+        res.render('admin/admin_enr_orga', { title: 'Admin - Validation Organisation', orgas: result});
+    } else {
+        res.redirect("/auth/login");
+    }
+
 });
 
 router.get('/valide_orga/:siren', async function (req, res, next) {
-    const siren = req.params.siren;
-    const result = await organisationModel.read(siren);
-    res.render('admin/admin_valide_orga', { title: 'Admin - Validation Organisation', orga: result});
+    const session = req.session;
+    if(session.userid && session.type_user === "admin") {
+        const siren = req.params.siren;
+        const result = await organisationModel.read(siren);
+        res.render('admin/admin_valide_orga', { title: 'Admin - Validation Organisation', orga: result});
+    } else {
+        res.redirect("/auth/login");
+    }
+
 });
 
 router.get('/user_recr_details/:email', async function (req, res, next) {
-    var email = req.params.email;
-    email.toString()
-    const result = await userModel.read(email);
-    console.log(result)
-    res.render('admin/user_recr_details', {title: 'Admin - Visu Account', user: result})
+    const session = req.session;
+    if(session.userid && session.type_user === "admin") {
+        var email = req.params.email;
+        email.toString()
+        const result = await userModel.read(email);
+        console.log(result)
+        res.render('admin/user_recr_details', {title: 'Admin - Visu Account', user: result})
+    } else {
+        res.redirect("/auth/login");
+    }
+
 });
 
 router.get('/user_details/:email', async function (req, res, next) {
-    var email = req.params.email;
-    email.toString()
-    const result = await userModel.read(email);
-    console.log(result)
-    res.render('admin/user_details', {title: 'Admin - Visu Account', user: result})
+    const session = req.session;
+    if(session.userid && session.type_user === "admin") {
+        var email = req.params.email;
+        email.toString()
+        const result = await userModel.read(email);
+        console.log(result)
+        res.render('admin/user_details', {title: 'Admin - Visu Account', user: result})
+    } else {
+        res.redirect("/auth/login");
+    }
+
 })
 
 // router.get('/admin_enr_recr', function (req, res, next) {
@@ -91,8 +146,14 @@ router.get('/user_details/:email', async function (req, res, next) {
 // })
 
 router.get('/admin_enr_recr', async function (req, res, next) {
-    const result = await recruteurModel.readByStatut('en attente');
-    res.render('admin/admin_enr_recr', { title: 'Admin - Validation Recruteur', users: result });
+    const session = req.session;
+    if(session.userid && session.type_user === "admin") {
+        const result = await recruteurModel.readByStatut('en attente');
+        res.render('admin/admin_enr_recr', { title: 'Admin - Validation Recruteur', users: result });
+    } else {
+        res.redirect("/auth/login");
+    }
+
 });
 
 router.post('/update_mail', (req, res) => {
@@ -118,8 +179,8 @@ router.post('/update_mail', (req, res) => {
   });
 
 
-  router.get('/desc_account', async function (req, res, next) {
-    const type = await userModel.checkType()
-  })
+//   router.get('/desc_account', async function (req, res, next) {
+//     const type = await userModel.checkType()
+//   })
 
 module.exports = router;
