@@ -6,6 +6,7 @@ var candModel = require('../model/candidat')
 var candidatureModel = require('../model/candidature');
 const orgaModel = require('../model/organisation');
 const recrModel = require('../model/recruteur');
+const piecesModel = require('../model/piece_dossier')
 var router = express.Router();
 
 // router.get('/', function (req, res, next) {
@@ -68,10 +69,11 @@ router.get('/candidat_main', async function (req, res, next) {
     
   });
 
-  router.get('/verif_suppr', function (req, res, next) {
+  router.get('/verif_suppr/:id', function (req, res, next) {
     const session = req.session;
     if(session.userid && session.type_user === "candidat") {
-      res.render('candidat/verif_suppr');
+      const id = req.params.id
+      res.render('candidat/verif_suppr', {title: 'Verif suppr', id:id});
     }
     else {
       res.redirect("/auth/login");
@@ -302,5 +304,24 @@ router.get('/voir-offre/:id', async function (req, res, next) {
     // });
     res.render('candidat/confirmation_candidat');
   });
+
+  router.get('/suppression_candidature/:id', async function (req, res) {
+    const session = req.session;
+    if(session.userid && session.type_user === "candidat") {
+      const id = req.params.id;
+      console.log(`id = ${id}`)
+      let pieces = await candidatureModel.readPieces(id);
+      console.log(pieces)
+      for(let ele in pieces){
+        console.log(pieces[ele].id_piece)
+        await piecesModel.delete(pieces[ele].id_piece)
+      }
+      await candidatureModel.delete(id);
+      res.redirect('/candidat/confirmation')
+    }
+    else {
+      res.redirect("/auth/login");
+    }
+  })
 
 module.exports = router;
