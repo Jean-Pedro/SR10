@@ -8,7 +8,7 @@ const {body, validationResult} = require('express-validator');
 
 
 router.get('/', function (req, res, next) {
-    if (req.session.userid) {
+    if (req.session.usermail) {
         if(req.session.type_user === "candidat") {
             res.redirect('candidat/candidat_main')
         } else if (req.session.type_user === "recruteur") {
@@ -25,7 +25,7 @@ router.get('/', function (req, res, next) {
 
 router.get('/login', function (req, res, next) {
     const session = req.session;
-    if (session.userid) {
+    if (session.usermail) {
         if(session.type_user === "candidat") {
             res.redirect("/candidat/candidat_main")
         } else if(session.type_user === "recruteur") {
@@ -155,7 +155,7 @@ router.get('/logout', (req, res) => {
 
 
 router.get('/inscription', async function (req, res, next) {
-    if (req.session.userid) {
+    if (req.session.usermail) {
         if(req.session.type_user === "candidat") {
             res.redirect('/candidat/candidat_main')
         } else if (req.session.type_user === "recruteur") {

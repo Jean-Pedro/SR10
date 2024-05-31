@@ -6,7 +6,7 @@ var router = express.Router();
 
   router.get('/recruteur_main', async function (req, res, next) {
     const session = req.session;
-    if(session.userid && session.type_user === "recruteur") {
+    if(session.usermail && session.type_user === "recruteur") {
       const result = await offreModel.allinfo();
       res.render('recruteur/recruteur_main', { title: 'List des offres', offres: result });
     } else {
@@ -16,7 +16,7 @@ var router = express.Router();
 
   router.get('/recruteur_account', function (req, res, next) {
     const session = req.session;
-    if(session.userid && session.type_user === "recruteur") {
+    if(session.usermail && session.type_user === "recruteur") {
       res.render('recruteur/recruteur_account');
     } else {
       res.redirect('/auth/login')
@@ -26,7 +26,7 @@ var router = express.Router();
 
   router.get('/recruteur_modif_mail', function (req, res, next) {
     const session = req.session;
-    if(session.userid && session.type_user === "recruteur") {
+    if(session.usermail && session.type_user === "recruteur") {
       res.render('recruteur/recruteur_modif_mail');
     } else {
       res.redirect('/auth/login')
@@ -36,7 +36,7 @@ var router = express.Router();
 
   router.get('/recruteur_modif_mdp', function (req, res, next) {
     const session = req.session;
-    if(session.userid && session.type_user === "recruteur") {
+    if(session.usermail && session.type_user === "recruteur") {
       res.render('recruteur/recruteur_modif_mdp');
     } else {
       res.redirect('/auth/login')
@@ -46,7 +46,7 @@ var router = express.Router();
 
   router.get('/confirmation', function (req, res, next) {
     const session = req.session;
-    if(session.userid && session.type_user === "recruteur") {
+    if(session.usermail && session.type_user === "recruteur") {
       res.render('recruteur/confirmation_recruteur');
     } else {
       res.redirect('/auth/login')
@@ -56,7 +56,7 @@ var router = express.Router();
 
   router.get('/verif_suppr', function (req, res, next) {
     const session = req.session;
-    if(session.userid && session.type_user === "recruteur") {
+    if(session.usermail && session.type_user === "recruteur") {
       res.render('recruteur/verif_suppr');
     } else {
       res.redirect('/auth/login')
@@ -66,7 +66,7 @@ var router = express.Router();
 
   router.get('/voir-offre/:id', async function (req, res, next) {
     const session = req.session;
-    if(session.userid && session.type_user === "recruteur") {
+    if(session.usermail && session.type_user === "recruteur") {
       const id = req.params.id;
       console.log(id);
       const result = await offreModel.allinfoID(id);
@@ -80,7 +80,7 @@ var router = express.Router();
 
   router.get('/search/:text', async function (req, res, next) {
     const session = req.session;
-    if(session.userid && session.type_user === "recruteur") {
+    if(session.usermail && session.type_user === "recruteur") {
       const text =req.params.text;
       const result = await offreModel.allinfosearch(text);
       console.log(result);
@@ -93,7 +93,7 @@ var router = express.Router();
 
   router.get('/salaire_min/:text', async function (req, res, next) {
     const session = req.session;
-    if(session.userid && session.type_user === "recruteur") {
+    if(session.usermail && session.type_user === "recruteur") {
       const text = req.params.text;
       const result = await offreModel.allinfoSalaire(text);
       console.log(result);
@@ -106,7 +106,7 @@ var router = express.Router();
 
   router.get('/localisation/:text', async function (req, res, next) {
     const session = req.session;
-    if(session.userid && session.type_user === "recruteur") {
+    if(session.usermail && session.type_user === "recruteur") {
       const text =req.params.text;
       const result = await offreModel.allinfoLocate(text);
       console.log(result);
@@ -119,7 +119,7 @@ var router = express.Router();
 
   router.get('/candidater/:id', async function (req, res, next) {
     const session = req.session;
-    if(session.userid && session.type_user === "recruteur") {
+    if(session.usermail && session.type_user === "recruteur") {
       const id = req.params.id;
       console.log(id)
       const result = await candidatureModel.readPiecesByFiche(id);
@@ -133,7 +133,7 @@ var router = express.Router();
 
   router.get('/mes_candidatures', async function (req, res, next) {
     const session = req.session;
-    if(session.userid && session.type_user === "recruteur") {
+    if(session.usermail && session.type_user === "recruteur") {
       const result = await candidatureModel.readTest();
       console.log(result);
       res.render('recruteur/candidature_r', {title : 'Recruteur - Candidatures', offres: result})
@@ -145,7 +145,7 @@ var router = express.Router();
 
   router.get('/recruteur_recr/:id', async function (req, res, next) {
     const session = req.session;
-    if(session.userid && session.type_user === "recruteur") {
+    if(session.usermail && session.type_user === "recruteur") {
       const id = req.params.id;
       const result = await offreModel.allinfoByRecruteur(id);
       console.log(result);
@@ -159,7 +159,7 @@ var router = express.Router();
 
   router.get('/voir-candidatures/:num', async function (req, res, next) {
     const session = req.session;
-    if(session.userid && session.type_user === "recruteur") {
+    if(session.usermail && session.type_user === "recruteur") {
       const num = req.params.num;
       const result = await offreModel.candidatByOffre(num);
       console.log(result);
@@ -172,7 +172,7 @@ var router = express.Router();
 
   router.get('/modif-cand/:id', async function (req, res, next) {
     const session = req.session;
-    if(session.userid && session.type_user === "recruteur") {
+    if(session.usermail && session.type_user === "recruteur") {
       const id = req.params.id;
       console.log(id)
       const result = await candidatureModel.readPieces(id);
@@ -186,7 +186,7 @@ var router = express.Router();
 
   router.get('/modif-offre/:offre', async function (req, res, next) {
     const session = req.session;
-    if(session.userid && session.type_user === "recruteur") {
+    if(session.usermail && session.type_user === "recruteur") {
       const offre = req.params.offre;
       console.log(offre)
       const result = await offreModel.read(offre);
@@ -255,7 +255,7 @@ var router = express.Router();
 
   router.get('/recruteur_menu_offres', async function (req, res, next) {
     const session = req.session;
-    if(session.userid && session.type_user === "recruteur") {
+    if(session.usermail && session.type_user === "recruteur") {
       res.render('recruteur/recruteur_menu_offres')
     } else {
       res.redirect('/auth/login')
@@ -265,7 +265,7 @@ var router = express.Router();
 
   router.get('/create_fiche', async function (req, res, next) {
     const session = req.session;
-    if(session.userid && session.type_user === "recruteur") {
+    if(session.usermail && session.type_user === "recruteur") {
       res.render('recruteur/create_fiche');
     } else {
       res.redirect('/auth/login')
@@ -275,7 +275,7 @@ var router = express.Router();
 
   router.get('/create_offre', async function (req, res, next) {
     const session = req.session;
-    if(session.userid && session.type_user === "recruteur") {
+    if(session.usermail && session.type_user === "recruteur") {
       res.render('recruteur/create_offre');
     } else {
       res.redirect('/auth/login')
@@ -285,7 +285,7 @@ var router = express.Router();
 
   router.get('/details_candidature_user/:num/:email', async function (req, res, next) {
     const session = req.session;
-    if(session.userid && session.type_user === "recruteur") {
+    if(session.usermail && session.type_user === "recruteur") {
       const num = req.params.num
       const email = req.params.email
       const user = await userModel.read(email);

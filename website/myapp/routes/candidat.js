@@ -15,7 +15,7 @@ var router = express.Router();
 
 router.get('/candidat_main', async function (req, res, next) {
   const session = req.session;
-  if(session.userid && session.type_user === "candidat") {
+  if(session.usermail && session.type_user === "candidat") {
     const result = await offreModel.allinfo();
     res.render('candidat/candidat_main', { title: 'List des offres', offres: result });
   }
@@ -27,7 +27,7 @@ router.get('/candidat_main', async function (req, res, next) {
 
   router.get('/candidat_account', function (req, res, next) {
     const session = req.session;
-    if(session.userid && session.type_user === "candidat") {
+    if(session.usermail && session.type_user === "candidat") {
       res.render('candidat/candidat_account');
     }
     else {
@@ -38,8 +38,8 @@ router.get('/candidat_main', async function (req, res, next) {
 
   router.get('/candidat_modif_mail', function (req, res, next) {
     const session = req.session;
-    if(session.userid && session.type_user === "candidat") {
-      res.render('candidat/candidat_modif_mail');
+    if(session.usermail && session.type_user === "candidat") {
+      res.render('candidat/candidat_modif_mail', {title: "Modif mail", email: req.session.usermail});
     }
     else {
       res.redirect("/auth/login");
@@ -49,7 +49,7 @@ router.get('/candidat_main', async function (req, res, next) {
 
   router.get('/candidat_modif_mdp', function (req, res, next) {
     const session = req.session;
-    if(session.userid && session.type_user === "candidat") {
+    if(session.usermail && session.type_user === "candidat") {
       res.render('candidat/candidat_modif_mdp');
     }
     else {
@@ -60,7 +60,7 @@ router.get('/candidat_main', async function (req, res, next) {
 
   router.get('/confirmation', function (req, res, next) {
     const session = req.session;
-    if(session.userid && session.type_user === "candidat") {
+    if(session.usermail && session.type_user === "candidat") {
       res.render('candidat/confirmation_candidat');
     }
     else {
@@ -71,7 +71,7 @@ router.get('/candidat_main', async function (req, res, next) {
 
   router.get('/verif_suppr/:id', function (req, res, next) {
     const session = req.session;
-    if(session.userid && session.type_user === "candidat") {
+    if(session.usermail && session.type_user === "candidat") {
       const id = req.params.id
       res.render('candidat/verif_suppr', {title: 'Verif suppr', id:id});
     }
@@ -83,7 +83,7 @@ router.get('/candidat_main', async function (req, res, next) {
 
   router.get('/new_recr', async function (req, res, next) {
     const session = req.session;
-    if(session.userid && session.type_user === "candidat") {
+    if(session.usermail && session.type_user === "candidat") {
         //const sirens = await orgaModel.readAllSiren();
         res.render('candidat/new_recr');
         // res.render('candidat/new_recr', { title: 'List des sirens', sirens: sirens });
@@ -97,7 +97,7 @@ router.get('/candidat_main', async function (req, res, next) {
   
   router.get('/create_orga', function (req, res, next) {
     const session = req.session;
-    if(session.userid && session.type_user === "candidat") {
+    if(session.usermail && session.type_user === "candidat") {
       res.render('candidat/candidat_create_orga');
     }
     else {
@@ -109,7 +109,7 @@ router.get('/candidat_main', async function (req, res, next) {
 
   router.get('/search/:text', async function (req, res, next) {
     const session = req.session;
-    if(session.userid && session.type_user === "candidat") {
+    if(session.usermail && session.type_user === "candidat") {
       const text =req.params.text;
       const result = await offreModel.allinfosearch(text);
       console.log(result);
@@ -123,7 +123,7 @@ router.get('/candidat_main', async function (req, res, next) {
 
   router.get('/localisation/:text', async function (req, res, next) {
     const session = req.session;
-    if(session.userid && session.type_user === "candidat") {
+    if(session.usermail && session.type_user === "candidat") {
       const text =req.params.text;
       const result = await offreModel.allinfoLocate(text)
       console.log(result);
@@ -137,7 +137,7 @@ router.get('/candidat_main', async function (req, res, next) {
 
   router.get('/salaire_min/:text', async function (req, res, next) {
     const session = req.session;
-    if(session.userid && session.type_user === "candidat") {
+    if(session.usermail && session.type_user === "candidat") {
       const text =req.params.text;
       const result = await offreModel.allinfoSalaire(text);
       console.log(result);
@@ -152,7 +152,7 @@ router.get('/candidat_main', async function (req, res, next) {
 
 router.get('/voir-offre/:id', async function (req, res, next) {
   const session = req.session;
-    if(session.userid && session.type_user === "candidat") {
+    if(session.usermail && session.type_user === "candidat") {
       const id = req.params.id;
       const result = await offreModel.allinfoID(id);
       console.log(result)
@@ -182,8 +182,8 @@ router.get('/voir-offre/:id', async function (req, res, next) {
 
   router.get('/mes_candidatures', async function (req, res, next) {
     const session = req.session;
-    if(session.userid && session.type_user === "candidat") {
-      const cand = await candModel.readByEmail(session.userid);
+    if(session.usermail && session.type_user === "candidat") {
+      const cand = await candModel.readByEmail(session.usermail);
       const id = cand.id_candidat;
       const result = await candidatureModel.readCandidatureByCandidat(id);
       res.render('candidat/candidature_c', {title : 'Candidat - Candidatures', offres: result})
@@ -199,7 +199,7 @@ router.get('/voir-offre/:id', async function (req, res, next) {
 
   router.get('/modif-cand/:id', async function (req, res, next) {
     const session = req.session;
-    if(session.userid && session.type_user === "candidat") {
+    if(session.usermail && session.type_user === "candidat") {
       const id = req.params.id;
       console.log(id)
       const result = await candidatureModel.readPieces(id);
@@ -215,7 +215,7 @@ router.get('/voir-offre/:id', async function (req, res, next) {
 
   router.get('/candidater/:id', async function (req, res, next) {
     const session = req.session;
-    if(session.userid && session.type_user === "candidat") {
+    if(session.usermail && session.type_user === "candidat") {
       const id = req.params.id;
       console.log(id)
       const result = await candidatureModel.readPiecesByFiche(id);
@@ -230,12 +230,12 @@ router.get('/voir-offre/:id', async function (req, res, next) {
 
   router.post('/verif_siren', async function (req, res) {
     const session = req.session;
-    if(session.userid && session.type_user === "candidat") {
+    if(session.usermail && session.type_user === "candidat") {
       const siren = req.body.siren;
       const results = await orgaModel.read(siren);
       console.log(results)
       if (results) {
-        const user = await candModel.readByEmail(session.userid)
+        const user = await candModel.readByEmail(session.usermail)
         const id = user.id_candidat
         await recrModel.createRecr(id, siren)
         res.render('candidat/confirmation_candidat');
@@ -307,7 +307,7 @@ router.get('/voir-offre/:id', async function (req, res, next) {
 
   router.get('/suppression_candidature/:id', async function (req, res) {
     const session = req.session;
-    if(session.userid && session.type_user === "candidat") {
+    if(session.usermail && session.type_user === "candidat") {
       const id = req.params.id;
       console.log(`id = ${id}`)
       let pieces = await candidatureModel.readPieces(id);
