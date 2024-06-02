@@ -272,26 +272,40 @@ router.get('/voir-offre/:id', async function (req, res, next) {
     res.render('candidat/confirmation_candidat');
   });
 
-  router.post('/update_mail', (req, res) => {
-    // db.query('SELECT * FROM Organisation WHERE siren = ?', [siren], (err, results) => {
-    //     if (results.length > 0) {
-    //         res.render('candidat/confirmation_candidat');
-    //     } else {
-    //         res.render('candidat/new_recr');
-    //     }
-    // });
-    res.render('candidat/confirmation_candidat');
+  router.post('/update_mail', async (req, res) => {
+    const session = req.session;
+    if(session.usermail && session.type_user === "candidat") {
+      const old_mail = session.usermail;
+      const result = await userModel.arevalid(old_mail, req.body.password);
+      const verif = await userModel.read(req.body.mail);
+      if(result && !verif) {
+        await userModel.updateMail(old_mail, req.body.mail)
+        req.session.usermail = req.body.mail;
+        res.render('user/redirect');
+      }
+    }
+    else {
+      res.redirect("/auth/login");
+    }
   });
 
-  router.post('/update_mdp', (req, res) => {
-    // db.query('SELECT * FROM Organisation WHERE siren = ?', [siren], (err, results) => {
-    //     if (results.length > 0) {
-    //         res.render('candidat/confirmation_candidat');
-    //     } else {
-    //         res.render('candidat/new_recr');
-    //     }
-    // });
-    res.render('candidat/confirmation_candidat');
+  router.post('/update_mdp', async (req, res) => {
+    const session = req.session;
+    if(session.usermail && session.type_user === "candidat") {
+      const mail = session.usermail;
+      const old_pwd = req.body.old_password;
+      const new_pwd = req.body.new_password
+      const new_pwd2 = req.body.new_password2
+      const result = await userModel.arevalid(mail, old_pwd);
+      if(result && (new_pwd == new_pwd2)) {
+        console.log("zebi")
+        await userModel.updatePassword(mail, new_pwd)
+        res.render('user/redirect');
+      }
+    }
+    else {
+      res.redirect("/auth/login");
+    }
   });
 
   router.post('/valide_cand', (req, res) => {

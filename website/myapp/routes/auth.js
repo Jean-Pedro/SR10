@@ -29,9 +29,9 @@ router.get('/login', function (req, res, next) {
         if(session.type_user === "candidat") {
             res.redirect("/candidat/candidat_main")
         } else if(session.type_user === "recruteur") {
-            res.redirect('recruteur/recruteur_main')
+            res.redirect('/recruteur/recruteur_main')
         } else {
-            res.redirect('admin/admin_main')
+            res.redirect('/admin/admin_main')
         }
     }
     else {
@@ -130,6 +130,7 @@ router.post('/inscription', registerValidate, async function (req, res, next) {
                 req.body.password
             );
             const cand = await candidatModel.create(id)
+            await userModel.updateCandidat(req.body.email)
             res.redirect("/auth/login")
         }
     // }

@@ -1,0 +1,26 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Recruteur</title>
+        <link rel="stylesheet" href="/stylesheets/main.css">
+        <meta http-equiv="refresh" content="5;url=/auth/login">
+    </head>
+    <body>
+        <div id="page">
+            <div id="top_bar">
+                <div id="home_button">
+                    <a href="/auth/login"><button id="menu">Menu</button></a>                
+                </div>
+            </div>
+            <div id="div_center">
+                <p>Votre choix a bien été pris en compte.</p>
+                <p>Vous serez redirigé dans 5 secondes...</p>
+            </div>
+        </div>
+        <script>
+            setTimeout(function() {
+            window.location.href = '/auth/login';
+            }, 5000);
+        </script>
+    </body>
+</html>

@@ -1,5 +1,6 @@
 var express = require('express');
 var userModel = require('../model/utilisateur')
+const candidatModel = require('../model/candidat')
 var adminModel = require('../model/admin')
 var recruteurModel = require('../model/recruteur')
 var organisationModel = require('../model/organisation')
@@ -80,6 +81,26 @@ router.get('/confirmation_admin', function (req, res, next) {
     const session = req.session;
     if(session.usermail && session.type_user === "admin") {
         res.render('admin/confirmation_admin');
+    } else {
+        res.redirect("/auth/login");
+    }
+
+});
+
+router.get('/confirmation_passage_admin/:id', async function (req, res, next) {
+    const session = req.session;
+    if(session.usermail && session.type_user === "admin") {
+        const id = req.params.id;
+        // const role = await userModel.checkRole(id)
+        // console.log(role.role)
+        // if(role.role === "Candidat"){
+        //     await candidatModel.delete(id);
+        // } else if(role.role === "Recruteur"){
+        //     await recruteurModel.fired(id);
+        // }
+        await userModel.updateAdministrateur(id);
+        await adminModel.create(id)
+        res.render('user/redirect');
     } else {
         res.redirect("/auth/login");
     }
