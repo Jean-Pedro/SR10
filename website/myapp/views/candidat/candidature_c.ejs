@@ -21,7 +21,7 @@
                         <label for="candidat">Mes candidatures</label>
                     </div>
                     <% offres.forEach((offre)=> { %>
-                    <div id="off">
+                    <div id="off" data-num="<%= offre.num %>">
                         <div id="off_img">
                             <img src="../LOGO-META.webp" alt="Logo de l'entreprise">
                         </div>
@@ -29,6 +29,7 @@
                             <h1><%= offre.nom%></h1>
                             <p>Siren : <%= offre.siren%></p>
                             <p>ID Candidature : <%= offre.id_c%></p>
+                            <p>Numéro de l'offre : <%= offre.num%></p>
                         </div>
                         <div class="desc">
                             <p><%= offre.type + ' - ' + offre.statut%></p>
@@ -36,56 +37,45 @@
                         </div>
                         <div class="offer_button">
                             <button onclick="modifCand(this)">Modifier</button>
-                            <a href="/candidat/verif_suppr"><button>Supprimer</button></a>
+                            <!-- <button onclick="supprCand(this)">Supprimer</button> -->
+                            <button onclick="supprCand(this)">Supprimer</button>
+                            <!-- <a href="/candidat/verif_suppr"><button>Supprimer</button></a> -->
                             
                         </div>
                         
                     </div>
                     <% }) %>
                 </div>
-                <!--
-                <div id="box">
-                    <div id="toolbox">
-                        <div id="search">
-                            <div id="label">
-                                <label for="search">Rechercher</label> <br>
-                            </div>
-                            <div id="input_search">
-                                <input type="search" id="search" name="search" placeholder="Rechercher..." required>
-                            </div>
-                        </div>
-                        <div id="label">
-                                <label for="sort">Trier</label>
-                        </div>
-                        <select name="date" id="date">
-                            <option value="" disabled selected hidden>Date</option>
-                            <option value="recent">Récent</option>
-                            <option value="ancien">Ancien</option>
-                        </select>
-
-                        <select name="date" id="distance">
-                            <option value="" disabled selected hidden>Distance</option>
-                            <option value="recent">X</option>
-                            <option value="ancien">Y</option>
-                        </select>
-                        <div id="label">
-                            <label for="filter">Filtrer</label>
-                        </div>
-                    </div>
-    
-                </div>
-                -->
             </div>
         </div>
         <script>
             function modifCand(button) {
                 var offreDiv = button.closest('#off');
+                var idCandidatureElement = offreDiv.querySelector('.entreprise > p:nth-child(3)');
+                var idCandidatureText = idCandidatureElement.textContent.trim();
+                var id_c = idCandidatureText.split('ID Candidature : ')[1];
+                var offreNum = offreDiv.getAttribute('data-num');
+                console.log(`/candidat/modif-cand/${id_c}`);
+                window.location.href = `/candidat/modif-cand/${id_c}/${offreNum}`;
+            };
+
+            // function supprCand(button) {
+            //     var offreDiv = button.closest('#off');
+            //     var idCandidatureElement = offreDiv.querySelector('.entreprise > p:last-child');
+            //     var idCandidatureText = idCandidatureElement.textContent.trim();
+            //     var id_c = idCandidatureText.split('ID Candidature : ')[1];
+            //     console.log(`/candidat/suppression_candidature/${id_c}`);
+            //     window.location.href = `/candidat/suppression_candidature/${id_c}`;
+            // }
+
+            function supprCand(button) {
+                var offreDiv = button.closest('#off');
                 var idCandidatureElement = offreDiv.querySelector('.entreprise > p:last-child');
                 var idCandidatureText = idCandidatureElement.textContent.trim();
                 var id_c = idCandidatureText.split('ID Candidature : ')[1];
-                console.log(`/candidat/modif-offre/${id_c}`);
-                window.location.href = `/candidat/modif-offre/${id_c}`;
-            };
+                console.log(`/candidat/verif_suppr/${id_c}`);
+                window.location.href = `/candidat/verif_suppr/${id_c}`;
+            }
         </script>
     </body>
 </html>

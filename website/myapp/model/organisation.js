@@ -40,6 +40,19 @@ module.exports = {
         })
     },
 
+    readAllSiren: async () => {
+        return new Promise((resolve, reject) => {
+            const sql = "select siren from Organisation";
+            db.query(sql, (err, results) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(results);
+                }
+            })
+        })
+    },
+
     create: async (siren, nom, siege_social, type, logo) => {
         return new Promise((resolve, reject) => {
             db.query("INSERT INTO Organisation (siren, nom, siege_social, type, logo, etat_demande) \

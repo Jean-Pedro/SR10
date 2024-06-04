@@ -8,7 +8,7 @@
         <div id="page">
             <div id="top_bar">
                 <div id="home_button">
-                    <a href="/candidat/candidat_main"><button id="menu">Menu</button></a>
+                    <a href="/auth/login"><button id="menu">Menu</button></a>
                 </div>
                 <div id="account">
                     <a href="/candidat/mes_candidatures"><button id="cand">Mes candidatures</button></a>
@@ -37,50 +37,7 @@
                         <a href="/candidat/create_orga"><button>Ajouter une nouvelle organisation</button></a>
                     </div> 
                 </div>
-                <!--
-                <div id="box">
-                    <div id="toolbox">
-                        <div id="search">
-                            <div id="label">
-                                <label for="search">Rechercher</label> <br>
-                            </div>
-                            <div id="input_search">
-                                <input type="search" id="search" name="search" placeholder="Rechercher..." required>
-                            </div>
-                        </div>
-                        <div id="label">
-                                <label for="sort">Trier</label>
-                        </div>
-                        <select name="date" id="date">
-                            <option value="" disabled selected hidden>Date</option>
-                            <option value="recent">Récent</option>
-                            <option value="ancien">Ancien</option>
-                        </select>
-
-                        <select name="date" id="distance">
-                            <option value="" disabled selected hidden>Distance</option>
-                            <option value="recent">X</option>
-                            <option value="ancien">Y</option>
-                        </select>
-                        <div id="label">
-                            <label for="filter">Filtrer</label>
-                        </div>
-                    </div>
-                       
-                </div>
-                -->
             </div>
         </div>
-
-        <!-- <script>
-            function orgaExists(button) {
-                var offreDiv = button.closest('#off');
-                var entrepriseDiv = offreDiv.querySelector('.entreprise');
-                var numeroElement = entrepriseDiv.querySelector('p');
-                var siren = numeroElement.textContent;
-                console.log(`/candidat/rejoindre_orga/${siren}`);
-                window.location.href = `/candidat/rejoindre_orga/${siren}`
-            }
-        </script> -->
     </body>
 </html>

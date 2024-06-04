@@ -10,7 +10,8 @@
                 <h1>Inscription</h1>
                 <p>S'inscrire</p>
             </div>
-            <form action="/auth/inscription" method="post">
+            
+            <form id="formInscription" action="/auth/inscription" method="post">
                 <div id="case">
                         <div id="column_g">
                             <div id="formulaire">
@@ -47,24 +48,93 @@
                             </div>
                             <div id="input_form">
                                 <input type="password" id="password" name="password" placeholder="Entrez votre mot de passe" required>
+                                <div id="password-errors" class="error"></div>
                             </div>
                             <div id="label_form">
                                 <label for="password2">Veuillez ré-entrer votre mot de passe</label>
                             </div>
                             <div id="input_form">
                                 <input type="password" id="password2" name="password2" placeholder="Entrez à nouveau votre mot de passe" required>
+                                <div id="password2-errors" class="error"></div>
                             </div>
                         </div>
                     </div>
                     <div id="inscription">
-                        <button id="submit" type="submit">S'inscrire</button>
+                        <button id="submit" type="submit" disabled="disabled">S'inscrire</button>
                         <p>Vous avez déjà un compte ? <a href="/auth/login">Se connecter</a></p>
                     </div>
                 </form>
-                </div>
+                </div>      
+                <script>
+                    function validatePasswordRealTime() {
+                        const password = document.getElementById("password").value;
+                        const password2 = document.getElementById("password2").value;
+                        const errorContainer = document.getElementById("password-errors");
+                        const confirmErrorContainer = document.getElementById("password2-errors");
+                        let errorMessages = [];
+                        let confirmErrorMessages = [];
             
-        
-    
-    
+                        const minLength = 12;
+                        const uppercasePattern = /[A-Z]/;
+                        const lowercasePattern = /[a-z]/;
+                        const numberPattern = /[0-9]/;
+                        const specialCharPattern = /[!@#\$%\^&\*\(\)_\+\-=\[\]\{\};':"\\|,.<>\/?]+/;
+            
+                        if (password.length < minLength) {
+                            errorMessages.push("Le mot de passe doit contenir au moins 12 caractères.");
+                        }
+                        if (!uppercasePattern.test(password)) {
+                            errorMessages.push("Le mot de passe doit contenir au moins une lettre majuscule.");
+                        }
+                        if (!lowercasePattern.test(password)) {
+                            errorMessages.push("Le mot de passe doit contenir au moins une lettre minuscule.");
+                        }
+                        if (!numberPattern.test(password)) {
+                            errorMessages.push("Le mot de passe doit contenir au moins un chiffre.");
+                        }
+                        if (!specialCharPattern.test(password)) {
+                            errorMessages.push("Le mot de passe doit contenir au moins un caractère spécial.");
+                        }
+                        if (password !== password2 && password2 !== "") {
+                            confirmErrorMessages.push("Les mots de passe ne correspondent pas.");
+                        }
+            
+                        errorContainer.innerHTML = errorMessages.join("<br>");
+                        confirmErrorContainer.innerHTML = confirmErrorMessages.join("<br>");
+
+                        updateSubmitButtonState();
+
+                    }
+
+                    function updateSubmitButtonState() {
+                        const errorContainer = document.getElementById("password-errors");
+                        const confirmErrorContainer = document.getElementById("password2-errors");
+                        const submitButton = document.getElementById("submit");
+
+                        if (errorContainer.innerHTML || confirmErrorContainer.innerHTML) {
+                            submitButton.disabled = true;
+                        } else {
+                            submitButton.disabled = false;
+                        }
+                    }
+            
+                    document.addEventListener("DOMContentLoaded", function() {
+                        document.getElementById("password").addEventListener("input", validatePasswordRealTime);
+                        document.getElementById("password2").addEventListener("input", validatePasswordRealTime);
+
+                        // const pass1 = document.getElementById("password-errors");
+                        // const pass2 = document.getElementById("password2-errors");
+                        // let submitButton = document.getElementById('submit')
+                        // console.log("test", pass1.textContent)
+                        // if(pass1.textContent || pass2.textContent){
+                        //     submitButton.disabled = true;
+                        // } else {
+                        //     submitButton.disabled = false;
+                        // }
+                        
+
+                    });
+
+                </script>
     </body>
 </html>

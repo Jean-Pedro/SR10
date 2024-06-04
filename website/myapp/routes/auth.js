@@ -2,12 +2,13 @@ var express = require('express');
 var router = express.Router();
 var userModel = require('../model/utilisateur')
 var candidatModel = require('../model/candidat')
-const session = require('../utils/session')
+var recrModel = require('../model/recruteur');
+const session = require('../utils/session');
 const {body, validationResult} = require('express-validator');
 
 
 router.get('/', function (req, res, next) {
-    if (req.session.userid) {
+    if (req.session.usermail) {
         if(req.session.type_user === "candidat") {
             res.redirect('candidat/candidat_main')
         } else if (req.session.type_user === "recruteur") {
@@ -24,8 +25,14 @@ router.get('/', function (req, res, next) {
 
 router.get('/login', function (req, res, next) {
     const session = req.session;
-    if (session.userid) {
-        res.redirect("/candidat/candidat_main")
+    if (session.usermail) {
+        if(session.type_user === "candidat") {
+            res.redirect("/candidat/candidat_main")
+        } else if(session.type_user === "recruteur") {
+            res.redirect('/recruteur/recruteur_main')
+        } else {
+            res.redirect('/admin/admin_main')
+        }
     }
     else {
         res.render('auth/login')
@@ -47,7 +54,7 @@ router.post('/login', async function(req, res, next) {
     if (result == true) {
         const user = await userModel.read(email)
         const type = await userModel.checkType(email)
-        session.createSession(req.session, email, type, user);
+        session.createSession(req.session, email, type, user.id_utilisateur);
         res.redirect("/auth")
         // req.session.loggedin = true;
         // req.session.username = email;
@@ -94,24 +101,24 @@ const registerValidate = [
 ];
 
 router.post('/inscription', registerValidate, async function (req, res, next) {
-    const errors = validationResult(req)
-    console.log(errors)
-    if (!errors.isEmpty()) {
-        return res.render('auth/inscription', {
-            title: 'Inscription',
-            error: "Veuillez corriger les erreurs suivantes:",
-            errors: errors.array().reduce((obj, err) => {
-                obj[err.path] = err;
-                return obj;
-            }, {}),
-            prenom: req.body.prenom,
-            nom: req.body.nom,
-            email: req.body.email,
-            tel: req.body.tel,
-            password: req.body.password,
-            password2: req.body.password2
-        });
-    } else {
+    // const errors = validationResult(req)
+    // console.log(errors)
+    // if (!errors.isEmpty()) {
+    //     return res.render('auth/inscription', {
+    //         title: 'Inscription',
+    //         error: "Veuillez corriger les erreurs suivantes:",
+    //         errors: errors.array().reduce((obj, err) => {
+    //             obj[err.path] = err;
+    //             return obj;
+    //         }, {}),
+    //         prenom: req.body.prenom,
+    //         nom: req.body.nom,
+    //         email: req.body.email,
+    //         tel: req.body.tel,
+    //         password: req.body.password,
+    //         password2: req.body.password2
+    //     });
+    // } else {
         const user = await userModel.read(req.body.email);
         console.log(user)
         if(!user) {
@@ -123,9 +130,10 @@ router.post('/inscription', registerValidate, async function (req, res, next) {
                 req.body.password
             );
             const cand = await candidatModel.create(id)
+            await userModel.updateCandidat(req.body.email)
             res.redirect("/auth/login")
         }
-    }
+    // }
 
 })
 
@@ -147,8 +155,18 @@ router.get('/logout', (req, res) => {
 });
 
 
-router.get('/inscription', function (req, res, next) {
-    res.render('auth/inscription');
+router.get('/inscription', async function (req, res, next) {
+    if (req.session.usermail) {
+        if(req.session.type_user === "candidat") {
+            res.redirect('/candidat/candidat_main')
+        } else if (req.session.type_user === "recruteur") {
+            res.redirect('/recruteur/recruteur_main')
+        } else {
+            res.redirect('/admin/admin_main')
+        }
+    } else{
+        res.render('auth/inscription');
+    }
 });
 
 module.exports = router;

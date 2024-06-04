@@ -29,6 +29,24 @@ module.exports = {
         });
     },
 
+
+    checkRole: async (id) => {
+        return new Promise((resolve, reject) => {
+            const sql = "SELECT role FROM Utilisateur where id_utilisateur = ?"
+            db.query(sql, [id], (err, results) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(results[0]);
+                }
+            });
+        });
+    },
+
+
+
+
+
     
 
     arevalid: async (email, password) => {
@@ -72,7 +90,7 @@ module.exports = {
                     if(resAdmin[0]) {
                         resolve("admin")
                     }
-                    db.query("select * from Recruteur where id_recruteur = ?", id_user, (err, resRecr) => {
+                    db.query("select * from Recruteur where id_recruteur = ? and etat_demande = 'acceptée';", id_user, (err, resRecr) => {
                         if(err) {
                             reject(err);
                         }
@@ -114,8 +132,8 @@ module.exports = {
                     return reject(err);
                 }
     
-                db.query("INSERT INTO Utilisateur (id_utilisateur, email, nom, prenom, num_tel, date_creation, last_login, statut, password) \
-                VALUES(NULL, ?, ?, ?, ?, ?, ?, 1, ?);", [email, nom, prenom, num_tel, date_creation, date_creation, hash], (err, results) => {
+                db.query("INSERT INTO Utilisateur (id_utilisateur, email, nom, prenom, num_tel, date_creation, last_login, statut, password, role) \
+                VALUES(NULL, ?, ?, ?, ?, ?, ?, 1, ?, 'Candidat');", [email, nom, prenom, num_tel, date_creation, date_creation, hash], (err, results) => {
                     if (err) {
                         reject(err);
                     } else {
@@ -159,6 +177,76 @@ module.exports = {
         return new Promise((resolve, reject) => {
             const sql = "UPDATE Utilisateur SET num_tel = ? WHERE email =?";
             db.query(sql, [new_tel, email], (err, result) => {
+                if(err) {
+                    reject(err);
+                } else {
+                    resolve(true);
+                }
+            })
+        })
+    },
+
+    updateMail : async (email, new_mail) => {
+        return new Promise((resolve, reject) => {
+            const sql = "UPDATE Utilisateur SET email = ? WHERE email =?";
+            db.query(sql, [new_mail, email], (err, result) => {
+                if(err) {
+                    reject(err);
+                } else {
+                    resolve(true);
+                }
+            })
+        })
+    },
+
+    updatePassword : async (email, new_password) => {
+        return new Promise((resolve, reject) => {
+            bcrypt.hash(new_password, 10, (err, hash) => {
+                if (err) {
+                    return reject(err);
+                }
+                const sql = "UPDATE Utilisateur SET password = ? WHERE email =?";
+                db.query(sql, [hash, email], (err, result) => {
+                    if(err) {
+                        reject(err);
+                    } else {
+                        resolve(true);
+                    }
+                })
+            });
+        })
+    },
+
+    updateCandidat : async (id) => {
+        return new Promise((resolve, reject) => {
+            const sql = "UPDATE Utilisateur SET role = 'Candidat' WHERE id_utilisateur =?";
+            db.query(sql, [id], (err, result) => {
+                if(err) {
+                    reject(err);
+                } else {
+                    resolve(true);
+                }
+            })
+        })
+    },
+
+    updateRecruteur : async (id) => {
+        return new Promise((resolve, reject) => {
+            const sql = "UPDATE Utilisateur SET role = 'Recruteur' WHERE id_utilisateur =?";
+            db.query(sql, [id], (err, result) => {
+                if(err) {
+                    reject(err);
+                } else {
+                    resolve(true);
+                }
+            })
+        })
+    },
+
+    updateAdministrateur : async (id) => {
+        return new Promise((resolve, reject) => {
+            const sql = "UPDATE Utilisateur SET role = 'Administrateur' WHERE id_utilisateur =?";
+            db.query(sql, [id], (err, result) => {
                 if(err) {
                     reject(err);
                 } else {

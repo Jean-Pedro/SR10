@@ -3,7 +3,7 @@ const session = require("express-session");
 module.exports = {
     init: () => {
         return session({
-            secret: "zebi",
+            secret: "hjvgkjhctfjyghfhifui",
             saveUninitialized: true,
             cookie: {maxAge: 3600 * 1000}, // 1heure
             resave: false,
@@ -11,7 +11,7 @@ module.exports = {
     },
     createSession: function (session, mail, type, user) {
         session.user = user;
-        session.userid = mail;
+        session.usermail = mail;
         session.type_user = type
         
 
@@ -23,7 +23,7 @@ module.exports = {
     },
 
     isConnected: (session, role) => {
-        if (!session.userid) return false;
+        if (!session.usermail) return false;
         return !(type && session.type_user !== type);
     },
 

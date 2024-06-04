@@ -4,12 +4,13 @@ var cookieParser = require('cookie-parser')
 var path = require('path');
 var logger = require('morgan');
 const session = require('./utils/session');
+const multer = require('multer');
+const fs = require('fs');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var recruteurRouter = require('./routes/recruteur');
 var adminRouter = require('./routes/admin');
-var loginRouter = require('./routes/login');
 var candidatRouter = require('./routes/candidat');
 var authRouteur = require('./routes/auth');
 
@@ -43,7 +44,6 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/recruteur', recruteurRouter);
 app.use('/admin', adminRouter);
-app.use('/login', loginRouter);
 app.use('/candidat', candidatRouter);
 app.use('/auth', authRouteur);
 
@@ -63,5 +63,26 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+const uploadDir = path.join(__dirname, 'public/uploads');
+
+// Vérifiez et créez le dossier d'upload si nécessaire
+if (!fs.existsSync(uploadDir)){
+    fs.mkdirSync(uploadDir, { recursive: true });
+}
+
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/') // Directory to save uploaded files
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
+  }
+});
+
+const upload = multer({ storage: storage });
+
+
 
 module.exports = app;

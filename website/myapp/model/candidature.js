@@ -61,6 +61,18 @@ module.exports = {
         });
     },
 
+    readCandidatureByCandidat: async (id) => {
+        return new Promise((resolve, reject) => {
+            db.query("SELECT * from Candidature JOIN Offre_Emploi ON Candidature.offre = Offre_Emploi.num JOIN Fiche_Poste ON Fiche_Poste.id_fiche = Offre_Emploi.fiche join Organisation on Fiche_Poste.organisation = Organisation.siren where Candidature.candidat= ?", id, (err, results) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(results);
+                }
+            });
+        });
+    },
+
     readPiecesByFiche: async (id) => {
         return new Promise((resolve, reject) => {
             db.query("SELECT Offre_Emploi.indications FROM Fiche_Poste JOIN Offre_Emploi ON Offre_Emploi.fiche = Fiche_Poste.id_fiche where id_fiche = ?", id, (err, results) => {
