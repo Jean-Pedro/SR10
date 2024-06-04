@@ -54,7 +54,7 @@ router.post('/login', async function(req, res, next) {
     if (result == true) {
         const user = await userModel.read(email)
         const type = await userModel.checkType(email)
-        session.createSession(req.session, email, type, user);
+        session.createSession(req.session, email, type, user.id_utilisateur);
         res.redirect("/auth")
         // req.session.loggedin = true;
         // req.session.username = email;

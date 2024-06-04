@@ -6,8 +6,31 @@ var candModel = require('../model/candidat')
 var candidatureModel = require('../model/candidature');
 const orgaModel = require('../model/organisation');
 const recrModel = require('../model/recruteur');
-const piecesModel = require('../model/piece_dossier')
+const piecesModel = require('../model/piece_dossier');
+const adresseModel = require('../model/adresse')
+const typeOrgaModel = require('../model/type_organisation')
+const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
 var router = express.Router();
+
+// const uploadDir = path.join(__dirname, '../uploads');
+
+// // Vérifiez et créez le dossier d'upload si nécessaire
+// if (!fs.existsSync(uploadDir)){
+//     fs.mkdirSync(uploadDir, { recursive: true });
+// }
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'public/uploads/'); // Directory to save uploaded files
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  }
+});
+
+const upload = multer({ storage: storage });
 
 // router.get('/', function (req, res, next) {
 //   res.send('respond with a resource');
@@ -213,14 +236,21 @@ router.get('/voir-offre/:id', async function (req, res, next) {
   });
 
 
-  router.get('/candidater/:id', async function (req, res, next) {
+  router.get('/candidater/:id/:num', async function (req, res, next) {
     const session = req.session;
     if(session.usermail && session.type_user === "candidat") {
       const id = req.params.id;
+      const num = req.params.num;
       console.log(id)
-      const result = await candidatureModel.readPiecesByFiche(id);
-      console.log(result)
-      res.render('candidat/candidat_candidate', { title: 'Candidat - Candidater', pieces: result});
+      const verif = await candidatureModel.readByIdCandidatOffre(session.user, num)
+      if(!verif){
+        const result = await candidatureModel.readPiecesByFiche(id);
+        res.render('candidat/candidat_candidate', { title: 'Candidat - Candidater', pieces: result, offre: num});
+      }
+      else {
+        res.redirect("/auth/login");
+      }
+      
     }
     else {
       res.redirect("/auth/login");
@@ -238,7 +268,7 @@ router.get('/voir-offre/:id', async function (req, res, next) {
         const user = await candModel.readByEmail(session.usermail)
         const id = user.id_candidat
         await recrModel.createRecr(id, siren)
-        res.render('candidat/confirmation_candidat');
+        res.render('user/redirect');
       } else {
         res.render('candidat/new_recr');
       }
@@ -250,15 +280,24 @@ router.get('/voir-offre/:id', async function (req, res, next) {
     
   });
 
-  router.post('/confirm_orga', (req, res) => {
-    // db.query('SELECT * FROM Organisation WHERE siren = ?', [siren], (err, results) => {
-    //     if (results.length > 0) {
-    //         res.render('candidat/confirmation_candidat');
-    //     } else {
-    //         res.render('candidat/new_recr');
-    //     }
-    // });
-    res.render('candidat/confirmation_candidat');
+  router.post('/confirm_orga', async (req, res) => {
+    const session = req.session;
+    if(session.usermail && session.type_user === "candidat") {
+      const verif = await orgaModel.read(req.body.siren)
+      console.log(verif)
+      if(!verif){
+        const adresse = await adresseModel.create(req.body.num, req.body.rue, req.body.ville, req.body.code_postal);
+        const type_orga = await typeOrgaModel.create(req.body.type);
+        const orga = await orgaModel.create(req.body.siren, req.body.nom, adresse, type_orga, req.body.logo);
+        const recruteur = await recrModel.createRecr(session.user, orga)
+        res.render('user/redirect');
+      } else {
+        res.render('candidat/candidat_create_orga')
+      }
+    }
+    else {
+      res.redirect("/auth/login");
+    }
   });
 
   router.post('/confirm_modif_cand', (req, res) => {
@@ -308,15 +347,24 @@ router.get('/voir-offre/:id', async function (req, res, next) {
     }
   });
 
-  router.post('/valide_cand', (req, res) => {
-    // db.query('SELECT * FROM Organisation WHERE siren = ?', [siren], (err, results) => {
-    //     if (results.length > 0) {
-    //         res.render('candidat/confirmation_candidat');
-    //     } else {
-    //         res.render('candidat/new_recr');
-    //     }
-    // });
-    res.render('candidat/confirmation_candidat');
+  
+  router.post('/valide_cand', upload.array('piece'), async (req, res) => {
+    const session = req.session;
+    if (session.usermail && session.type_user === "candidat") {
+      const files = req.files;
+      const types = req.body.type;
+      const offre = req.body.offre
+      console.log(files);
+      const candidature = await candidatureModel.create(offre, session.user);
+      for(let ele in files){
+        const file = files[ele];
+        const type = types[ele];
+        await piecesModel.create(type, candidature, file.originalname);
+      }
+      res.render('candidat/confirmation_candidat');
+    } else {
+      res.redirect("/auth/login");
+    }
   });
 
   router.get('/suppression_candidature/:id', async function (req, res) {

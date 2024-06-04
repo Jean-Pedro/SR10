@@ -19,6 +19,7 @@
                                 <label for="CV"><%= piece.type%></label> <br>
                             </div>
                             <div id="input_form">
+                                <a href="/uploads/<%= piece.fichier%>" download>Télécharger <%= piece.type%></a>
                                 <input type="file" id="CV" name="CV" placeholder="<%= piece.fichier%>" required>
                             </div>
                             <% }) %>

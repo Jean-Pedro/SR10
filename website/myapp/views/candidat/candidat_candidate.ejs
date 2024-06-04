@@ -8,17 +8,20 @@
         <div id="container_2">
             <div id="titre">
                 <h1>Candidater</h1>
+                <h2>Offre : <%=offre%></h2>
             </div>
             <div id="case">
                 <div id="column_g">
                     <div id="formulaire">
-                        <form action="/candidat/valide_cand" method="post">
+                        <form action="/candidat/valide_cand" method="post" enctype="multipart/form-data">
+                            <input type="hidden" id="offre" name="offre" value="<%= offre %>">
                             <% pieces.forEach((piece)=> { %>
                                 <div id="label_form">
-                                    <label for="CV"><%= piece%></label> <br>
+                                    <label for="piece"><%= piece%></label> <br>
                                 </div>
                                 <div id="input_form">
-                                    <input type="file" id="CV" name="CV" placeholder="<%= piece.fichier%>" required>
+                                    <input type="file" id="piece" name="piece" placeholder="<%= piece.fichier%>" required>
+                                    <input type="hidden" id="type" name="type" value="<%= piece %>">
                                 </div>
                                 <% }) %>
                             <button id="submit" type="submit">Candidater</button>
