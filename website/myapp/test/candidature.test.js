@@ -76,6 +76,7 @@ describe("Model Tests", () => {
         const typeOrga = await typeOrgaModel.create(newTypeOrga);
         const orga = await organisationModel.create(newOrga[0], newOrga[1], adresse, typeOrga, newOrga[2]);
         const user = await userModel.create(newRecr[0], newRecr[1], newRecr[2], newRecr[3], newRecr[4]);
+        await userModel.updateRecruteur(user);
         const recruteur = await recruteurModel.createRecr(user, orga);
         const fiche = await ficheModel.create(newFiche[0], newFiche[1], newFiche[2], newFiche[3], newFiche[4], newFiche[5], newFiche[6], typeMetier, statutPoste, adresse, orga, recruteur);
         const offre = await offreModel.create(newOffre[0], newOffre[1], fiche, newOffre[2]);
@@ -107,6 +108,7 @@ describe("Model Tests", () => {
         const typeOrga = await typeOrgaModel.create(newTypeOrga);
         const orga = await organisationModel.create(newOrga[0], newOrga[1], adresse, typeOrga, newOrga[2]);
         const user = await userModel.create(newRecr[0], newRecr[1], newRecr[2], newRecr[3], newRecr[4]);
+        await userModel.updateRecruteur(user);
         const recruteur = await recruteurModel.createRecr(user, orga);
         const fiche = await ficheModel.create(newFiche[0], newFiche[1], newFiche[2], newFiche[3], newFiche[4], newFiche[5], newFiche[6], typeMetier, statutPoste, adresse, orga, recruteur);
         const offre = await offreModel.create(newOffre[0], newOffre[1], fiche, newOffre[2]);
@@ -137,6 +139,7 @@ describe("Model Tests", () => {
         const typeOrga = await typeOrgaModel.create(newTypeOrga);
         const orga = await organisationModel.create(newOrga[0], newOrga[1], adresse, typeOrga, newOrga[2]);
         const user = await userModel.create(newRecr[0], newRecr[1], newRecr[2], newRecr[3], newRecr[4]);
+        await userModel.updateRecruteur(user);
         const recruteur = await recruteurModel.createRecr(user, orga);
         const fiche = await ficheModel.create(newFiche[0], newFiche[1], newFiche[2], newFiche[3], newFiche[4], newFiche[5], newFiche[6], typeMetier, statutPoste, adresse, orga, recruteur);
         const offre = await offreModel.create(newOffre[0], newOffre[1], fiche, newOffre[2]);

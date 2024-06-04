@@ -35,7 +35,8 @@ describe("Model Tests", () => {
             "c'estletestRecr",
             27332
         ];
-        const id = await userModel.create(newRecr[0], newRecr[1], newRecr[2], newRecr[3], newRecr[4])
+        const id = await userModel.create(newRecr[0], newRecr[1], newRecr[2], newRecr[3], newRecr[4]);
+        await userModel.updateRecruteur(id);
         const result = await recrModel.createRecr(id, newRecr[5]);
         expect(result).not.toBe(undefined);
         await recrModel.fired(id);
@@ -52,7 +53,8 @@ describe("Model Tests", () => {
             "c'estletestRecr",
             27332
         ];
-        const id = await userModel.create(newRecr[0], newRecr[1], newRecr[2], newRecr[3], newRecr[4])
+        const id = await userModel.create(newRecr[0], newRecr[1], newRecr[2], newRecr[3], newRecr[4]);
+        await userModel.updateRecruteur(id);
         await recrModel.createRecr(id, newRecr[5]);
         const result = await recrModel.readByStatut("en attente")
         expect(result).not.toBe(undefined);
