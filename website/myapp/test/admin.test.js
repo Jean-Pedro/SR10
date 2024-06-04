@@ -24,6 +24,7 @@ describe("Model Tests", () => {
 
     test("create admin", async () => {
         const user = await userModel.create(newAdmin[0], newAdmin[1], newAdmin[2], newAdmin[3], newAdmin[4]);
+        await userModel.updateAdministrateur(user);
         const admin = await adminModel.create(user);
         const result = await adminModel.read(admin);
         expect(result.id_administrateur).toBe(user);
@@ -33,6 +34,7 @@ describe("Model Tests", () => {
 
     test("read by email", async () => {
         const user = await userModel.create(newAdmin[0], newAdmin[1], newAdmin[2], newAdmin[3], newAdmin[4]);
+        await userModel.updateAdministrateur(user);
         const admin = await adminModel.create(user);
         const result = await adminModel.readByEmail(newAdmin[0]);
         expect(result.id_administrateur).toBe(user);
