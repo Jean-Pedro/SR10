@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">18.47% </span>
+                <span class="strong">17.52% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>17/92</span>
+                <span class='fraction'>17/97</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">10% </span>
+                <span class="strong">9.37% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>3/30</span>
+                <span class='fraction'>3/32</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">20% </span>
+                <span class="strong">18.75% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>9/45</span>
+                <span class='fraction'>9/48</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">18.47% </span>
+                <span class="strong">17.52% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>17/92</span>
+                <span class='fraction'>17/97</span>
             </div>
         
             
@@ -408,7 +408,19 @@
 <a name='L343'></a><a href='#L343'>343</a>
 <a name='L344'></a><a href='#L344'>344</a>
 <a name='L345'></a><a href='#L345'>345</a>
-<a name='L346'></a><a href='#L346'>346</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">3x</span>
+<a name='L346'></a><a href='#L346'>346</a>
+<a name='L347'></a><a href='#L347'>347</a>
+<a name='L348'></a><a href='#L348'>348</a>
+<a name='L349'></a><a href='#L349'>349</a>
+<a name='L350'></a><a href='#L350'>350</a>
+<a name='L351'></a><a href='#L351'>351</a>
+<a name='L352'></a><a href='#L352'>352</a>
+<a name='L353'></a><a href='#L353'>353</a>
+<a name='L354'></a><a href='#L354'>354</a>
+<a name='L355'></a><a href='#L355'>355</a>
+<a name='L356'></a><a href='#L356'>356</a>
+<a name='L357'></a><a href='#L357'>357</a>
+<a name='L358'></a><a href='#L358'>358</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -424,6 +436,18 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -780,6 +804,18 @@ module.exports = {
         });
     },
 &nbsp;
+    readByRecr: <span class="fstat-no" title="function not covered" >as</span>ync (recr) =&gt; {
+<span class="cstat-no" title="statement not covered" >        return new Promise(<span class="fstat-no" title="function not covered" >(r</span>esolve, reject) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >            db.query("select * from Fiche_Poste where recruteur= ?", recr, <span class="fstat-no" title="function not covered" >(e</span>rr, results) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >                if (err) {</span>
+<span class="cstat-no" title="statement not covered" >                    reject(err);</span>
+                } else {
+<span class="cstat-no" title="statement not covered" >                    resolve(results);</span>
+                }
+            });
+        });
+    },
+&nbsp;
     create: async (intitule, resp_hierarchique, rythme_travail, teletravail, salaire_min, salaire_max, description, type, statut, lieu, organisation, recruteur) =&gt; {
         return new Promise((resolve, reject) =&gt; {
             const sql = "INSERT INTO Fiche_Poste (id_fiche, intitule, resp_hierarchique, rythme_travail, teletravail, salaire_min, salaire_max, description, type, statut, lieu, organisation, recruteur) \
@@ -1105,7 +1141,7 @@ module.exports = {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-05-22T10:24:41.768Z
+                at 2024-06-04T22:14:52.395Z
             </div>
         <script src="prettify.js"></script>
         <script>

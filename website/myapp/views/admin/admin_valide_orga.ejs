@@ -38,25 +38,13 @@
                         <p></p> -->
                     </div>
                     <div class="offer_button">
-                        <!-- <button onclick="candidater(this)">Candidater</button> -->
-                        <a href="/admin/confirmation_admin"><button id="accepter">Accepter</button></a>
+                        <a href="/admin/validation_orga/<%= orga.siren %>"><button id="accepter">Accepter</button></a>
                     </div>
                     <div class="offer_button">
-                        <a href="/admin/confirmation_admin"><button id="accepter">Refuse</button></a>
+                        <a href="/admin/refus_orga/<%= orga.siren %>"><button id="accepter">Refuser</button></a>
                     </div>
                 </div>
             </div>
         </div>
-
-        <script>
-            function candidater(button) {
-                var offreDiv = button.closest('.desc_offre');
-                var idCandidatureElement = offreDiv.querySelector('.entreprise > p:last-child');
-                var idCandidatureText = idCandidatureElement.textContent.trim();
-                var id_fiche = idCandidatureText.split('Numéro de fiche de poste : ')[1];
-                console.log(`/candidat/candidater/${id_fiche}`);
-                window.location.href = `/candidat/candidater/${id_fiche}`;
-            };
-        </script>
     </body>
 </html>

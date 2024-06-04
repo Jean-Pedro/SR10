@@ -112,5 +112,31 @@ module.exports = {
                 }
             })
         })
+    },
+
+    validationDemande: async (id) => {
+        return new Promise((resolve, reject) => {
+            const sql = "UPDATE Recruteur SET etat_demande = 'acceptée' WHERE id_recruteur =?";
+            db.query(sql, [id], (err, result) => {
+                if(err) {
+                    reject(err);
+                } else {
+                    resolve(true);
+                }
+            })
+        })
+    },
+
+    refusDemande: async (id) => {
+        return new Promise((resolve, reject) => {
+            const sql = "UPDATE Recruteur SET etat_demande = 'refusée' WHERE id_recruteur =?";
+            db.query(sql, [id], (err, result) => {
+                if(err) {
+                    reject(err);
+                } else {
+                    resolve(true);
+                }
+            })
+        })
     }
 };

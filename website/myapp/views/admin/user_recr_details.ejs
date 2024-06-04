@@ -21,15 +21,16 @@
                         <p>Numéro de Téléphone : <%= user.num_tel %></p>
                     </div>
                     <div class="siege_social">
+                        <p>Organisation : <%=orga%></p>
                         <p>Date de création : <%= user.date_creation %></p>
                         <p>Dernière connexion : <%= user.last_login %></p>
                     </div>
                     <div class="offer_button">
                         <!-- <button onclick="candidater(this)">Candidater</button> -->
-                        <a href="/admin/confirmation_admin"><button id="accepter">Accepter</button></a>
+                        <a href="/admin/passage_recr/<%=user.id_utilisateur%>/"><button id="accepter">Accepter</button></a>
                     </div>
                     <div class="offer_button">
-                        <a href="/admin/confirmation_admin"><button id="accepter">Refuse</button></a>
+                        <a href="/admin/refus_recr/<%=user.id_utilisateur%>"><button id="accepter">Refuser</button></a>
                     </div>
                 </div>
             </div>

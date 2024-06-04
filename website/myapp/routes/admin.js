@@ -4,6 +4,8 @@ const candidatModel = require('../model/candidat')
 var adminModel = require('../model/admin')
 var recruteurModel = require('../model/recruteur')
 var organisationModel = require('../model/organisation')
+const piecesModel = require('../model/piece_dossier')
+const candidatureModel = require('../model/candidature')
 var router = express.Router();
 
 
@@ -49,7 +51,7 @@ router.get('/admin_account', function (req, res, next) {
 router.get('/admin_modif_mail', function (req, res, next) {
     const session = req.session;
     if(session.usermail && session.type_user === "admin") {
-        res.render('admin/admin_modif_mail');
+        res.render('admin/admin_modif_mail', {title: "Modif mail", email: req.session.usermail});
     } else {
         res.redirect("/auth/login");
     }
@@ -87,25 +89,37 @@ router.get('/confirmation_admin', function (req, res, next) {
 
 });
 
-router.get('/confirmation_passage_admin/:id', async function (req, res, next) {
-    const session = req.session;
-    if(session.usermail && session.type_user === "admin") {
-        const id = req.params.id;
-        // const role = await userModel.checkRole(id)
-        // console.log(role.role)
-        // if(role.role === "Candidat"){
-        //     await candidatModel.delete(id);
-        // } else if(role.role === "Recruteur"){
-        //     await recruteurModel.fired(id);
-        // }
-        await userModel.updateAdministrateur(id);
-        await adminModel.create(id)
-        res.render('user/redirect');
-    } else {
-        res.redirect("/auth/login");
-    }
+// router.get('/confirmation_passage_admin/:id', async function (req, res, next) {
+//     const session = req.session;
+//     if(session.usermail && session.type_user === "admin") {
+//         const id = req.params.id;
+//         const role = await userModel.checkRole(id)
+//         console.log(role.role)
+//         if(role.role === "Candidat"){
+//             const candidature = await candidatureModel.readByIdCandidat(id)
+//             for(let ele in candidature){
+//                 const pieces = await candidatureModel.readPieces(candidature[ele].id_c)
+//                 for(let ele2 in pieces){
+//                     await piecesModel.delete(pieces[ele2].id_piece);
+//                 }
+//                 await candidatureModel.delete(candidature[ele].id_c)
+//             }
+//             await candidatModel.delete(id);
+//         } else if(role.role === "Recruteur"){
+//             await recruteurModel.fired(id);
+//             const test = await candidatModel.read(id)
+//             if(test){
+//                 await candidatModel.delete(id);
+//             }
+//         }
+//         await userModel.updateAdministrateur(id);
+//         await adminModel.create(id)
+//         res.render('user/redirect');
+//     } else {
+//         res.redirect("/auth/login");
+//     }
 
-});
+// });
 
 router.get('/admin_enr_orga', async function (req, res, next) {
     const session = req.session;
@@ -137,7 +151,9 @@ router.get('/user_recr_details/:email', async function (req, res, next) {
         email.toString()
         const result = await userModel.read(email);
         console.log(result)
-        res.render('admin/user_recr_details', {title: 'Admin - Visu Account', user: result})
+        let orga = await recruteurModel.read(email);
+        orga = orga.organisation;
+        res.render('admin/user_recr_details', {title: 'Admin - Visu Account', user: result, orga: orga})
     } else {
         res.redirect("/auth/login");
     }
@@ -211,6 +227,55 @@ router.post('/update_mail', async (req, res) => {
       res.redirect("/auth/login");
     }
   });
+
+
+  router.get('/passage_recr/:id', async function (req, res, next) {
+    const session = req.session;
+    if(session.usermail && session.type_user === "admin") {
+        const id = req.params.id
+        await recruteurModel.validationDemande(id);
+        res.render('user/redirect');
+    } else {
+        res.redirect("/auth/login");
+    }
+
+});
+
+router.get('/refus_recr/:id', async function (req, res, next) {
+    const session = req.session;
+    if(session.usermail && session.type_user === "admin") {
+        const id = req.params.id
+        await recruteurModel.refusDemande(id);
+        res.render('user/redirect');
+    } else {
+        res.redirect("/auth/login");
+    }
+
+});
+
+router.get('/validation_orga/:siren', async function (req, res, next) {
+    const session = req.session;
+    if(session.usermail && session.type_user === "admin") {
+        const siren = req.params.siren;
+        await organisationModel.updateEtatDemande(siren, 'acceptée');
+        res.render('user/redirect');
+    } else {
+        res.redirect("/auth/login");
+    }
+
+});
+
+router.get('/refus_orga/:siren', async function (req, res, next) {
+    const session = req.session;
+    if(session.usermail && session.type_user === "admin") {
+        const siren = req.params.siren;
+        await organisationModel.updateEtatDemande(siren, 'refusée');
+        res.render('user/redirect');
+    } else {
+        res.redirect("/auth/login");
+    }
+
+});
 
 
 //   router.get('/desc_account', async function (req, res, next) {

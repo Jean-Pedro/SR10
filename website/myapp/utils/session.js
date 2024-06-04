@@ -3,7 +3,7 @@ const session = require("express-session");
 module.exports = {
     init: () => {
         return session({
-            secret: "hjvgkjhctfjyghfhifui",
+            secret: "idsvhdsovbodsubv",
             saveUninitialized: true,
             cookie: {maxAge: 3600 * 1000}, // 1heure
             resave: false,

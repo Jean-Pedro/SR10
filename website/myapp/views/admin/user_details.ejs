@@ -46,7 +46,7 @@
                 var accepterButton = document.getElementById('accepter');
                 accepterButton.addEventListener('click', function(event) {
                     event.preventDefault();
-                    var confirmation = confirm('Êtes-vous sûr de vouloir passer cet utilisateur en administrateur ?');
+                    var confirmation = confirm('Êtes-vous sûr de vouloir passer cet utilisateur en administrateur ? Les candidatures de cet utilisateur seront définitivement supprimées.');
                     if (confirmation) {
                         window.location.href = '/admin/confirmation_passage_admin/<%=user.id_utilisateur%>';
                     }
