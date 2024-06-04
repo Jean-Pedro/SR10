@@ -13,9 +13,13 @@ router.get('/', function (req, res, next) {
 //   });
 //   });
 
-  router.get('/admin_visu_acc', async function (req, res, next) {
-    const result = await userModel.readall();
-    res.render('admin_visu_acc', { title: 'List des utilisateurs', users: result });
-    });
+router.get('/admin_visu_acc', async function (req, res, next) {
+  const result = await userModel.readall();
+  res.render('admin_visu_acc', { title: 'List des utilisateurs', users: result });
+});
+
+
+
+
 
   module.exports = router;

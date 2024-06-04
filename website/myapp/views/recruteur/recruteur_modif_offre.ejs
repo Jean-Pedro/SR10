@@ -13,12 +13,13 @@
             <div id="case">
                 <div id="column_g">
                     <div id="formulaire">
-                        <form action="/recruteur/confirm_modif_offre" method="post">
+                        <form action="/recruteur/confirm_modif_offre/<%=num%>" method="post">
                             <div id="label_form">
                                 <label for="date">Date Validité</label> <br>
                             </div>
                             <div id="input_form">
-                                <input type="datetime" id="date" name="date" value="<%= offre.date_validite%>" required>
+                                <p>Date de validité actuelle : <%= offre.date_validite%></p>
+                                <input type="date" id="date" name="date" required>
                             </div>
                             <div id="label_form">
                                 <label for="indications">Indications</label> <br>

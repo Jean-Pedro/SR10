@@ -21,7 +21,7 @@
                         <label for="candidat">Mes candidatures</label>
                     </div>
                     <% offres.forEach((offre)=> { %>
-                    <div id="off">
+                    <div id="off" data-num="<%= offre.num %>">
                         <div id="off_img">
                             <img src="../LOGO-META.webp" alt="Logo de l'entreprise">
                         </div>
@@ -29,6 +29,7 @@
                             <h1><%= offre.nom%></h1>
                             <p>Siren : <%= offre.siren%></p>
                             <p>ID Candidature : <%= offre.id_c%></p>
+                            <p>Numéro de l'offre : <%= offre.num%></p>
                         </div>
                         <div class="desc">
                             <p><%= offre.type + ' - ' + offre.statut%></p>
@@ -50,11 +51,12 @@
         <script>
             function modifCand(button) {
                 var offreDiv = button.closest('#off');
-                var idCandidatureElement = offreDiv.querySelector('.entreprise > p:last-child');
+                var idCandidatureElement = offreDiv.querySelector('.entreprise > p:nth-child(3)');
                 var idCandidatureText = idCandidatureElement.textContent.trim();
                 var id_c = idCandidatureText.split('ID Candidature : ')[1];
+                var offreNum = offreDiv.getAttribute('data-num');
                 console.log(`/candidat/modif-cand/${id_c}`);
-                window.location.href = `/candidat/modif-cand/${id_c}`;
+                window.location.href = `/candidat/modif-cand/${id_c}/${offreNum}`;
             };
 
             // function supprCand(button) {

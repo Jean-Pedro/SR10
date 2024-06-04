@@ -25,6 +25,18 @@ module.exports = {
         });
     },
 
+    readByRecr: async (recr) => {
+        return new Promise((resolve, reject) => {
+            db.query("select * from Fiche_Poste where recruteur= ?", recr, (err, results) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(results);
+                }
+            });
+        });
+    },
+
     create: async (intitule, resp_hierarchique, rythme_travail, teletravail, salaire_min, salaire_max, description, type, statut, lieu, organisation, recruteur) => {
         return new Promise((resolve, reject) => {
             const sql = "INSERT INTO Fiche_Poste (id_fiche, intitule, resp_hierarchique, rythme_travail, teletravail, salaire_min, salaire_max, description, type, statut, lieu, organisation, recruteur) \

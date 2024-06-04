@@ -21,6 +21,15 @@ var router = express.Router();
 //     fs.mkdirSync(uploadDir, { recursive: true });
 // }
 
+function assureTableau(variable) {
+  if (!Array.isArray(variable)) {
+    // Si la variable n'est pas un tableau, on la convertit en tableau
+    return [variable];
+  }
+  // Sinon, on retourne la variable telle quelle car elle est déjà un tableau
+  return variable;
+}
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, 'public/uploads/'); // Directory to save uploaded files
@@ -220,14 +229,16 @@ router.get('/voir-offre/:id', async function (req, res, next) {
     //   res.render('candidat/candidature_c', {title : 'Candidat - Candidatures', offres: result})
   });
 
-  router.get('/modif-cand/:id', async function (req, res, next) {
+  router.get('/modif-cand/:id/:offre', async function (req, res, next) {
     const session = req.session;
     if(session.usermail && session.type_user === "candidat") {
       const id = req.params.id;
+      const offre = req.params.offre;
       console.log(id)
+      console.log(offre);
       const result = await candidatureModel.readPieces(id);
       console.log(result)
-      res.render('candidat/candidat_modif_cand', { title: 'Candidat - Modification candidature', pieces: result});
+      res.render('candidat/candidat_modif_cand', { title: 'Candidat - Modification candidature', pieces: result, offre: offre});
     }
     else {
       res.redirect("/auth/login");
@@ -300,15 +311,41 @@ router.get('/voir-offre/:id', async function (req, res, next) {
     }
   });
 
-  router.post('/confirm_modif_cand', (req, res) => {
-    // db.query('SELECT * FROM Organisation WHERE siren = ?', [siren], (err, results) => {
-    //     if (results.length > 0) {
-    //         res.render('candidat/confirmation_candidat');
-    //     } else {
-    //         res.render('candidat/new_recr');
-    //     }
-    // });
-    res.render('candidat/confirmation_candidat');
+  router.post('/confirm_modif_cand', upload.array('piece'), async (req, res) => {
+    const session = req.session;
+    if(session.usermail && session.type_user === "candidat") {
+      const offre = req.body.offre;
+      const files = req.files;
+      const types = assureTableau(req.body.type);
+      const candidature = assureTableau(req.body.candidature);
+      const id_pieces = assureTableau(req.body.id_piece);
+
+      for(let ele in files){
+        let file = files[ele];
+        let type = types[ele];
+        let cand = candidature[ele];
+        let id_piece = id_pieces[ele];
+        let old_piece = await piecesModel.read(id_piece);
+        old_piece = old_piece.fichier;
+        console.log(old_piece)
+
+        // const filePath = path.join(__dirname, 'public/uploads/', old_piece); // Ajustez le chemin selon votre structure de dossier
+        // fs.unlink(filePath, err => {
+        //   if(err) {
+        //     console.error(`Erreur lors de la suppression du fichier ${filePath}:`, err);
+        //     res.status(500).send('Erreur lors de la suppression des fichiers.');
+        //   } else {
+        //     console.log(`Fichier ${filePath} supprimé avec succès.`);
+        //   }
+        // });
+
+        await piecesModel.updateFichier(id_piece, file.originalname);
+      }
+      res.render('candidat/confirmation_candidat');
+    }
+    else {
+      res.redirect("/auth/login");
+    }
   });
 
   router.post('/update_mail', async (req, res) => {
@@ -337,7 +374,6 @@ router.get('/voir-offre/:id', async function (req, res, next) {
       const new_pwd2 = req.body.new_password2
       const result = await userModel.arevalid(mail, old_pwd);
       if(result && (new_pwd == new_pwd2)) {
-        console.log("zebi")
         await userModel.updatePassword(mail, new_pwd)
         res.render('user/redirect');
       }

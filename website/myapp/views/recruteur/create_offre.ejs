@@ -14,6 +14,16 @@
                     <div id="column_g">
                         <div id="formulaire">
                             <div id="label_form">
+                                <label for="fiche">Fiche de poste</label> <br>
+                            </div>
+                            <div id="input_form">
+                                    <select id="fiche" name="fiche">
+                                        <% fiches.forEach(function(fiche) { %>
+                                            <option value="<%= fiche.id_fiche %>"><%= fiche.intitule %> - <%= fiche.resp_hierarchique%></option>
+                                        <% }); %>
+                                    </select>
+                            </div>
+                            <div id="label_form">
                                 <label for="indications">Indications</label> <br>
                             </div>
                             <div id="input_form">
