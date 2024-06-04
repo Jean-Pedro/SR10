@@ -9,7 +9,7 @@
             <div id="titre">
                 <h1>Création Offre d'Emploi</h1>
             </div>
-            <form action="/recruteur/confirm_fiche" method="post">
+            <form action="/recruteur/confirm_offre" method="post">
                 <div id="case">
                     <div id="column_g">
                         <div id="formulaire">
@@ -30,10 +30,10 @@
                                 <input type="text" id="indications" name="indications" placeholder="CV, lettre de motivation, ..." required>
                             </div>
                             <div id="label_form">
-                                <label for="fiche">Fiche de poste</label> <br>
+                                <label for="date">Date de validité</label> <br>
                             </div>
                             <div id="input_form">
-                                <input type="text" id="fiche" name="fiche" placeholder="Entrez le numéro de la fiche" required>
+                                <input type="date" id="date" name="date" required>
                             </div>
                             <button id="submit" type="submit">Valider</button>
                         </div>

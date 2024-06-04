@@ -8,6 +8,10 @@ const orgaModel = require('../model/organisation')
 const typeMetierModel = require('../model/type_metier')
 const statutModel = require('../model/statut_poste')
 const ficheModel = require('../model/fiche_poste')
+const piecesModel = require('../model/piece_dossier');
+const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
 var router = express.Router();
 
 function assureTableau(variable) {
@@ -18,6 +22,17 @@ function assureTableau(variable) {
   // Sinon, on retourne la variable telle quelle car elle est déjà un tableau
   return variable;
 }
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'public/uploads/'); // Directory to save uploaded files
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  }
+});
+
+const upload = multer({ storage: storage });
 
   router.get('/recruteur_main', async function (req, res, next) {
     const session = req.session;
@@ -69,10 +84,11 @@ function assureTableau(variable) {
     
   });
 
-  router.get('/verif_suppr', function (req, res, next) {
+  router.get('/verif_suppr/:id', function (req, res, next) {
     const session = req.session;
     if(session.usermail && session.type_user === "recruteur") {
-      res.render('recruteur/verif_suppr');
+      const id = req.params.id
+      res.render('recruteur/verif_suppr', {title: 'Verif suppr', id:id});
     } else {
       res.redirect('/auth/login')
     }
@@ -83,7 +99,6 @@ function assureTableau(variable) {
     const session = req.session;
     if(session.usermail && session.type_user === "recruteur") {
       const id = req.params.id;
-      console.log(id);
       const result = await offreModel.allinfoID(id);
       console.log(result)
       res.render('recruteur/recruteur_desc_offre', { title: 'Recruteur - description offre', offre: result[0] });
@@ -132,14 +147,20 @@ function assureTableau(variable) {
     
   })
 
-  router.get('/candidater/:id', async function (req, res, next) {
+  router.get('/candidater/:id/:num', async function (req, res, next) {
     const session = req.session;
     if(session.usermail && session.type_user === "recruteur") {
       const id = req.params.id;
+      const num = req.params.num;
       console.log(id)
-      const result = await candidatureModel.readPiecesByFiche(id);
-      console.log(result)
-      res.render('recruteur/recruteur_candidate', { title: 'Recruteur - Candidater', pieces: result});
+      const verif = await candidatureModel.readByIdCandidatOffre(session.user, num)
+      if(!verif){
+        const result = await candidatureModel.readPiecesByFiche(id);
+        res.render('recruteur/recruteur_candidate', { title: 'Recruteur - Candidater', pieces: result, offre: num});
+      }
+      else {
+        res.redirect("/auth/login");
+      }
     } else {
       res.redirect('/auth/login')
     }
@@ -185,14 +206,16 @@ function assureTableau(variable) {
 
   });
 
-  router.get('/modif-cand/:id', async function (req, res, next) {
+  router.get('/modif-cand/:id/:offre', async function (req, res, next) {
     const session = req.session;
     if(session.usermail && session.type_user === "recruteur") {
       const id = req.params.id;
+      const offre = req.params.offre;
       console.log(id)
+      console.log(offre);
       const result = await candidatureModel.readPieces(id);
       console.log(result)
-      res.render('recruteur/recruteur_modif_cand', { title: 'Recruteur - Modification candidature', pieces: result});
+      res.render('recruteur/recruteur_modif_cand', { title: 'Recruteur - Modification candidature', pieces: result, offre: offre});
     } else {
       res.redirect('/auth/login')
     }
@@ -213,15 +236,41 @@ function assureTableau(variable) {
 
   });
   
-  router.post('/confirm_modif_cand', (req, res) => {
-    // db.query('SELECT * FROM Organisation WHERE siren = ?', [siren], (err, results) => {
-    //     if (results.length > 0) {
-    //         res.render('candidat/confirmation_candidat');
-    //     } else {
-    //         res.render('candidat/new_recr');
-    //     }
-    // });
-    res.render('recruteur/confirmation_recruteur');
+  router.post('/confirm_modif_cand', upload.array('piece'), async (req, res) => {
+    const session = req.session;
+    if(session.usermail && session.type_user === "recruteur") {
+      const offre = req.body.offre;
+      const files = req.files;
+      const types = assureTableau(req.body.type);
+      const candidature = assureTableau(req.body.candidature);
+      const id_pieces = assureTableau(req.body.id_piece);
+
+      for(let ele in files){
+        let file = files[ele];
+        let type = types[ele];
+        let cand = candidature[ele];
+        let id_piece = id_pieces[ele];
+        let old_piece = await piecesModel.read(id_piece);
+        old_piece = old_piece.fichier;
+        console.log(old_piece)
+
+        // const filePath = path.join(__dirname, 'public/uploads/', old_piece); // Ajustez le chemin selon votre structure de dossier
+        // fs.unlink(filePath, err => {
+        //   if(err) {
+        //     console.error(`Erreur lors de la suppression du fichier ${filePath}:`, err);
+        //     res.status(500).send('Erreur lors de la suppression des fichiers.');
+        //   } else {
+        //     console.log(`Fichier ${filePath} supprimé avec succès.`);
+        //   }
+        // });
+
+        await piecesModel.updateFichier(id_piece, file.originalname);
+      }
+      res.render('user/redirect');
+    }
+    else {
+      res.redirect("/auth/login");
+    }
   });
 
 
@@ -232,6 +281,20 @@ function assureTableau(variable) {
       const type_metier = await typeMetierModel.create(req.body.type);
       const statut = await statutModel.create(req.body.statut);
       const result = await ficheModel.create(req.body.intitule, req.body.resp, req.body.rythme, req.body.teletravail, req.body.sal_min, req.body.sal_max, req.body.desc, type_metier, statut, adresse, req.body.orga, session.user);
+      res.render('user/redirect');
+    }
+    else {
+      res.redirect("/auth/login");
+    }
+  });
+
+  router.post('/confirm_offre', async (req, res) => {
+    const session = req.session;
+    if(session.usermail && session.type_user === "recruteur") {
+      const fiche = req.body.fiche;
+      const indications = req.body.indications;
+      const date_validite = req.body.date;
+      await offreModel.create(date_validite, indications, fiche, "publiée")
       res.render('user/redirect');
     }
     else {
@@ -290,15 +353,23 @@ function assureTableau(variable) {
     }
   });
 
-  router.post('/valide_cand', (req, res) => {
-    // db.query('SELECT * FROM Organisation WHERE siren = ?', [siren], (err, results) => {
-    //     if (results.length > 0) {
-    //         res.render('candidat/confirmation_candidat');
-    //     } else {
-    //         res.render('candidat/new_recr');
-    //     }
-    // });
-    res.render('recruteur/confirmation_recruteur');
+  router.post('/valide_cand', upload.array('piece'), async (req, res) => {
+    const session = req.session;
+    if (session.usermail && session.type_user === "recruteur") {
+      const files = req.files;
+      const types = req.body.type;
+      const offre = req.body.offre
+      console.log(files);
+      const candidature = await candidatureModel.create(offre, session.user);
+      for(let ele in files){
+        const file = files[ele];
+        const type = types[ele];
+        await piecesModel.create(type, candidature, file.originalname);
+      }
+      res.render('user/redirect');
+    } else {
+      res.redirect("/auth/login");
+    }
   });
 
   router.get('/recruteur_menu_offres', async function (req, res, next) {
@@ -385,6 +456,25 @@ function assureTableau(variable) {
       res.render('user/redirect');
     } else {
       res.redirect('/auth/login')
+    }
+  })
+
+  router.get('/suppression_candidature/:id', async function (req, res) {
+    const session = req.session;
+    if(session.usermail && session.type_user === "recruteur") {
+      const id = req.params.id;
+      console.log(`id = ${id}`)
+      let pieces = await candidatureModel.readPieces(id);
+      console.log(pieces)
+      for(let ele in pieces){
+        console.log(pieces[ele].id_piece)
+        await piecesModel.delete(pieces[ele].id_piece)
+      }
+      await candidatureModel.delete(id);
+      res.render('user/redirect');
+    }
+    else {
+      res.redirect("/auth/login");
     }
   })
 
