@@ -341,7 +341,7 @@ router.get('/voir-offre/:id', async function (req, res, next) {
 
         await piecesModel.updateFichier(id_piece, file.originalname);
       }
-      res.render('candidat/confirmation_candidat');
+      res.render('user/redirect');
     }
     else {
       res.redirect("/auth/login");
@@ -397,7 +397,7 @@ router.get('/voir-offre/:id', async function (req, res, next) {
         const type = types[ele];
         await piecesModel.create(type, candidature, file.originalname);
       }
-      res.render('candidat/confirmation_candidat');
+      res.render('user/redirect');
     } else {
       res.redirect("/auth/login");
     }

@@ -1,7 +1,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Candidat</title>
+        <title>Mes Candidatures</title>
         <link rel="stylesheet" href="/stylesheets/main.css">
     </head>
     <body>
@@ -70,7 +70,7 @@
 
             function supprCand(button) {
                 var offreDiv = button.closest('#off');
-                var idCandidatureElement = offreDiv.querySelector('.entreprise > p:last-child');
+                var idCandidatureElement = offreDiv.querySelector('.entreprise > p:nth-child(3)');
                 var idCandidatureText = idCandidatureElement.textContent.trim();
                 var id_c = idCandidatureText.split('ID Candidature : ')[1];
                 console.log(`/candidat/verif_suppr/${id_c}`);
