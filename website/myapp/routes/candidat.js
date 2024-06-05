@@ -254,6 +254,7 @@ router.get('/voir-offre/:id', async function (req, res, next) {
       const num = req.params.num;
       console.log(id)
       const verif = await candidatureModel.readByIdCandidatOffre(session.user, num)
+      console.log(verif)
       if(!verif){
         const result = await candidatureModel.readPiecesByFiche(id);
         res.render('candidat/candidat_candidate', { title: 'Candidat - Candidater', pieces: result, offre: num});

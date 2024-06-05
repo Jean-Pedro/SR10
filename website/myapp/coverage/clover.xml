@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1717541458042" clover="3.2.0">
-  <project timestamp="1717541458042" name="All files">
-    <metrics statements="1458" coveredstatements="878" conditionals="596" coveredconditionals="281" methods="429" coveredmethods="295" elements="2483" coveredelements="1454" complexity="0" loc="1458" ncloc="1458" packages="4" files="22" classes="22"/>
+<coverage generated="1717576239650" clover="3.2.0">
+  <project timestamp="1717576239651" name="All files">
+    <metrics statements="1494" coveredstatements="885" conditionals="612" coveredconditionals="281" methods="438" coveredmethods="295" elements="2544" coveredelements="1461" complexity="0" loc="1494" ncloc="1494" packages="4" files="22" classes="22"/>
     <package name="myapp">
       <metrics statements="42" coveredstatements="35" conditionals="4" coveredconditionals="0" methods="4" coveredmethods="0"/>
       <file name="app.js" path="/home/jpontoire/Documents/UTC/GI02/SR10/website/myapp/app.js">
@@ -51,7 +51,7 @@
       </file>
     </package>
     <package name="myapp.model">
-      <metrics statements="708" coveredstatements="436" conditionals="258" coveredconditionals="104" methods="338" coveredmethods="244"/>
+      <metrics statements="720" coveredstatements="436" conditionals="262" coveredconditionals="104" methods="344" coveredmethods="244"/>
       <file name="admin.js" path="/home/jpontoire/Documents/UTC/GI02/SR10/website/myapp/model/admin.js">
         <metrics statements="31" coveredstatements="21" conditionals="10" coveredconditionals="4" methods="15" coveredmethods="12"/>
         <line num="1" count="4" type="stmt"/>
@@ -547,15 +547,15 @@
         <line num="76" count="1" type="stmt"/>
       </file>
       <file name="recruteur.js" path="/home/jpontoire/Documents/UTC/GI02/SR10/website/myapp/model/recruteur.js">
-        <metrics statements="33" coveredstatements="28" conditionals="10" coveredconditionals="5" methods="15" coveredmethods="15"/>
+        <metrics statements="45" coveredstatements="28" conditionals="14" coveredconditionals="5" methods="21" coveredmethods="15"/>
         <line num="1" count="7" type="stmt"/>
         <line num="2" count="7" type="stmt"/>
         <line num="4" count="7" type="stmt"/>
-        <line num="6" count="2" type="stmt"/>
-        <line num="7" count="2" type="stmt"/>
-        <line num="8" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="6" count="3" type="stmt"/>
+        <line num="7" count="3" type="stmt"/>
+        <line num="8" count="3" type="cond" truecount="1" falsecount="1"/>
         <line num="9" count="0" type="stmt"/>
-        <line num="11" count="2" type="stmt"/>
+        <line num="11" count="3" type="stmt"/>
         <line num="18" count="1" type="stmt"/>
         <line num="19" count="1" type="stmt"/>
         <line num="20" count="1" type="stmt"/>
@@ -581,6 +581,18 @@
         <line num="108" count="9" type="cond" truecount="1" falsecount="1"/>
         <line num="109" count="0" type="stmt"/>
         <line num="111" count="9" type="stmt"/>
+        <line num="118" count="0" type="stmt"/>
+        <line num="119" count="0" type="stmt"/>
+        <line num="120" count="0" type="stmt"/>
+        <line num="121" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="122" count="0" type="stmt"/>
+        <line num="124" count="0" type="stmt"/>
+        <line num="131" count="0" type="stmt"/>
+        <line num="132" count="0" type="stmt"/>
+        <line num="133" count="0" type="stmt"/>
+        <line num="134" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="135" count="0" type="stmt"/>
+        <line num="137" count="0" type="stmt"/>
       </file>
       <file name="statut_poste.js" path="/home/jpontoire/Documents/UTC/GI02/SR10/website/myapp/model/statut_poste.js">
         <metrics statements="23" coveredstatements="19" conditionals="10" coveredconditionals="6" methods="10" coveredmethods="10"/>
@@ -804,9 +816,9 @@
       </file>
     </package>
     <package name="myapp.routes">
-      <metrics statements="697" coveredstatements="398" conditionals="330" coveredconditionals="177" methods="82" coveredmethods="47"/>
+      <metrics statements="721" coveredstatements="405" conditionals="342" coveredconditionals="177" methods="85" coveredmethods="47"/>
       <file name="admin.js" path="/home/jpontoire/Documents/UTC/GI02/SR10/website/myapp/routes/admin.js">
-        <metrics statements="107" coveredstatements="74" conditionals="64" coveredconditionals="40" methods="14" coveredmethods="10"/>
+        <metrics statements="131" coveredstatements="81" conditionals="76" coveredconditionals="40" methods="17" coveredmethods="10"/>
         <line num="1" count="3" type="stmt"/>
         <line num="2" count="3" type="stmt"/>
         <line num="3" count="3" type="stmt"/>
@@ -814,63 +826,48 @@
         <line num="5" count="3" type="stmt"/>
         <line num="6" count="3" type="stmt"/>
         <line num="7" count="3" type="stmt"/>
-        <line num="27" count="3" type="stmt"/>
-        <line num="28" count="2" type="stmt"/>
-        <line num="29" count="2" type="cond" truecount="4" falsecount="0"/>
-        <line num="30" count="1" type="stmt"/>
-        <line num="31" count="1" type="stmt"/>
+        <line num="8" count="3" type="stmt"/>
+        <line num="9" count="3" type="stmt"/>
+        <line num="29" count="3" type="stmt"/>
+        <line num="30" count="2" type="stmt"/>
+        <line num="31" count="2" type="cond" truecount="4" falsecount="0"/>
+        <line num="32" count="1" type="stmt"/>
         <line num="33" count="1" type="stmt"/>
-        <line num="39" count="3" type="stmt"/>
-        <line num="40" count="2" type="stmt"/>
-        <line num="41" count="2" type="cond" truecount="4" falsecount="0"/>
-        <line num="42" count="1" type="stmt"/>
+        <line num="35" count="1" type="stmt"/>
+        <line num="41" count="3" type="stmt"/>
+        <line num="42" count="2" type="stmt"/>
+        <line num="43" count="2" type="cond" truecount="4" falsecount="0"/>
         <line num="44" count="1" type="stmt"/>
-        <line num="49" count="3" type="stmt"/>
-        <line num="50" count="2" type="stmt"/>
-        <line num="51" count="2" type="cond" truecount="4" falsecount="0"/>
-        <line num="52" count="1" type="stmt"/>
+        <line num="46" count="1" type="stmt"/>
+        <line num="51" count="3" type="stmt"/>
+        <line num="52" count="2" type="stmt"/>
+        <line num="53" count="2" type="cond" truecount="4" falsecount="0"/>
         <line num="54" count="1" type="stmt"/>
-        <line num="59" count="3" type="stmt"/>
-        <line num="60" count="2" type="stmt"/>
-        <line num="61" count="2" type="cond" truecount="4" falsecount="0"/>
-        <line num="62" count="1" type="stmt"/>
+        <line num="56" count="1" type="stmt"/>
+        <line num="61" count="3" type="stmt"/>
+        <line num="62" count="2" type="stmt"/>
+        <line num="63" count="2" type="cond" truecount="4" falsecount="0"/>
         <line num="64" count="1" type="stmt"/>
-        <line num="69" count="3" type="stmt"/>
-        <line num="70" count="2" type="stmt"/>
-        <line num="71" count="2" type="cond" truecount="4" falsecount="0"/>
-        <line num="72" count="1" type="stmt"/>
+        <line num="66" count="1" type="stmt"/>
+        <line num="71" count="3" type="stmt"/>
+        <line num="72" count="2" type="stmt"/>
+        <line num="73" count="2" type="cond" truecount="4" falsecount="0"/>
         <line num="74" count="1" type="stmt"/>
-        <line num="80" count="3" type="stmt"/>
-        <line num="81" count="2" type="stmt"/>
-        <line num="82" count="2" type="cond" truecount="4" falsecount="0"/>
-        <line num="83" count="1" type="stmt"/>
+        <line num="76" count="1" type="stmt"/>
+        <line num="82" count="3" type="stmt"/>
+        <line num="83" count="2" type="stmt"/>
+        <line num="84" count="2" type="cond" truecount="4" falsecount="0"/>
         <line num="85" count="1" type="stmt"/>
-        <line num="90" count="3" type="stmt"/>
-        <line num="91" count="0" type="stmt"/>
-        <line num="92" count="0" type="cond" truecount="0" falsecount="4"/>
-        <line num="93" count="0" type="stmt"/>
-        <line num="101" count="0" type="stmt"/>
-        <line num="102" count="0" type="stmt"/>
-        <line num="103" count="0" type="stmt"/>
-        <line num="105" count="0" type="stmt"/>
-        <line num="110" count="3" type="stmt"/>
-        <line num="111" count="2" type="stmt"/>
-        <line num="112" count="2" type="cond" truecount="4" falsecount="0"/>
-        <line num="113" count="1" type="stmt"/>
-        <line num="114" count="1" type="stmt"/>
-        <line num="116" count="1" type="stmt"/>
-        <line num="121" count="3" type="stmt"/>
-        <line num="122" count="2" type="stmt"/>
-        <line num="123" count="2" type="cond" truecount="4" falsecount="0"/>
-        <line num="124" count="1" type="stmt"/>
-        <line num="125" count="1" type="stmt"/>
-        <line num="126" count="1" type="stmt"/>
+        <line num="87" count="1" type="stmt"/>
+        <line num="124" count="3" type="stmt"/>
+        <line num="125" count="2" type="stmt"/>
+        <line num="126" count="2" type="cond" truecount="4" falsecount="0"/>
+        <line num="127" count="1" type="stmt"/>
         <line num="128" count="1" type="stmt"/>
-        <line num="133" count="3" type="stmt"/>
-        <line num="134" count="2" type="stmt"/>
-        <line num="135" count="2" type="cond" truecount="4" falsecount="0"/>
-        <line num="136" count="1" type="stmt"/>
-        <line num="137" count="1" type="stmt"/>
+        <line num="130" count="1" type="stmt"/>
+        <line num="135" count="3" type="stmt"/>
+        <line num="136" count="2" type="stmt"/>
+        <line num="137" count="2" type="cond" truecount="4" falsecount="0"/>
         <line num="138" count="1" type="stmt"/>
         <line num="139" count="1" type="stmt"/>
         <line num="140" count="1" type="stmt"/>
@@ -883,37 +880,76 @@
         <line num="152" count="1" type="stmt"/>
         <line num="153" count="1" type="stmt"/>
         <line num="154" count="1" type="stmt"/>
+        <line num="155" count="1" type="stmt"/>
         <line num="156" count="1" type="stmt"/>
-        <line num="169" count="3" type="stmt"/>
-        <line num="170" count="0" type="stmt"/>
-        <line num="171" count="0" type="cond" truecount="0" falsecount="4"/>
-        <line num="172" count="0" type="stmt"/>
-        <line num="173" count="0" type="stmt"/>
-        <line num="175" count="0" type="stmt"/>
-        <line num="180" count="3" type="stmt"/>
-        <line num="181" count="0" type="stmt"/>
-        <line num="182" count="0" type="cond" truecount="0" falsecount="4"/>
-        <line num="183" count="0" type="stmt"/>
-        <line num="184" count="0" type="stmt"/>
-        <line num="185" count="0" type="stmt"/>
-        <line num="186" count="0" type="cond" truecount="0" falsecount="4"/>
-        <line num="187" count="0" type="stmt"/>
+        <line num="158" count="1" type="stmt"/>
+        <line num="163" count="3" type="stmt"/>
+        <line num="164" count="2" type="stmt"/>
+        <line num="165" count="2" type="cond" truecount="4" falsecount="0"/>
+        <line num="166" count="1" type="stmt"/>
+        <line num="167" count="1" type="stmt"/>
+        <line num="168" count="1" type="stmt"/>
+        <line num="169" count="1" type="stmt"/>
+        <line num="170" count="1" type="stmt"/>
+        <line num="172" count="1" type="stmt"/>
+        <line num="185" count="3" type="stmt"/>
+        <line num="186" count="0" type="stmt"/>
+        <line num="187" count="0" type="cond" truecount="0" falsecount="4"/>
         <line num="188" count="0" type="stmt"/>
         <line num="189" count="0" type="stmt"/>
-        <line num="193" count="0" type="stmt"/>
-        <line num="197" count="3" type="stmt"/>
-        <line num="198" count="0" type="stmt"/>
-        <line num="199" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="191" count="0" type="stmt"/>
+        <line num="196" count="3" type="stmt"/>
+        <line num="197" count="0" type="stmt"/>
+        <line num="198" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="199" count="0" type="stmt"/>
         <line num="200" count="0" type="stmt"/>
         <line num="201" count="0" type="stmt"/>
-        <line num="202" count="0" type="stmt"/>
+        <line num="202" count="0" type="cond" truecount="0" falsecount="4"/>
         <line num="203" count="0" type="stmt"/>
         <line num="204" count="0" type="stmt"/>
-        <line num="205" count="0" type="cond" truecount="0" falsecount="4"/>
-        <line num="206" count="0" type="stmt"/>
-        <line num="207" count="0" type="stmt"/>
-        <line num="211" count="0" type="stmt"/>
-        <line num="220" count="3" type="stmt"/>
+        <line num="205" count="0" type="stmt"/>
+        <line num="209" count="0" type="stmt"/>
+        <line num="213" count="3" type="stmt"/>
+        <line num="214" count="0" type="stmt"/>
+        <line num="215" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="216" count="0" type="stmt"/>
+        <line num="217" count="0" type="stmt"/>
+        <line num="218" count="0" type="stmt"/>
+        <line num="219" count="0" type="stmt"/>
+        <line num="220" count="0" type="stmt"/>
+        <line num="221" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="222" count="0" type="stmt"/>
+        <line num="223" count="0" type="stmt"/>
+        <line num="227" count="0" type="stmt"/>
+        <line num="232" count="3" type="stmt"/>
+        <line num="233" count="0" type="stmt"/>
+        <line num="234" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="235" count="0" type="stmt"/>
+        <line num="236" count="0" type="stmt"/>
+        <line num="237" count="0" type="stmt"/>
+        <line num="239" count="0" type="stmt"/>
+        <line num="244" count="3" type="stmt"/>
+        <line num="245" count="0" type="stmt"/>
+        <line num="246" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="247" count="0" type="stmt"/>
+        <line num="248" count="0" type="stmt"/>
+        <line num="249" count="0" type="stmt"/>
+        <line num="251" count="0" type="stmt"/>
+        <line num="256" count="3" type="stmt"/>
+        <line num="257" count="0" type="stmt"/>
+        <line num="258" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="259" count="0" type="stmt"/>
+        <line num="260" count="0" type="stmt"/>
+        <line num="261" count="0" type="stmt"/>
+        <line num="263" count="0" type="stmt"/>
+        <line num="268" count="3" type="stmt"/>
+        <line num="269" count="0" type="stmt"/>
+        <line num="270" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="271" count="0" type="stmt"/>
+        <line num="272" count="0" type="stmt"/>
+        <line num="273" count="0" type="stmt"/>
+        <line num="275" count="0" type="stmt"/>
+        <line num="285" count="3" type="stmt"/>
       </file>
       <file name="auth.js" path="/home/jpontoire/Documents/UTC/GI02/SR10/website/myapp/routes/auth.js">
         <metrics statements="62" coveredstatements="34" conditionals="30" coveredconditionals="11" methods="7" coveredmethods="4"/>
