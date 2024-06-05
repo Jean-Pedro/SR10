@@ -20,6 +20,7 @@
                         <h1><%= offre.nom %></h1>
                         <p>Numéro de Siren : <%= offre.siren %></p>
                         <p>Numéro de fiche de poste : <%= offre.id_fiche %></p>
+                        <p>Numéro de l'offre : <%= offre.num %></p>
                     </div>
                     <div class="description">
                         <p>Type de l'entreprise : <%= offre.type %></p>
@@ -41,12 +42,12 @@
 
         <script>
             function candidater(button) {
-                var offreDiv = button.closest('.desc_offre');
-                var idCandidatureElement = offreDiv.querySelector('.entreprise > p:last-child');
-                var idCandidatureText = idCandidatureElement.textContent.trim();
-                var id_fiche = idCandidatureText.split('Numéro de fiche de poste : ')[1];
-                console.log(`/candidat/candidater/${id_fiche}`);
-                window.location.href = `/candidat/candidater/${id_fiche}/<%= offre.num %>`;
+                // var offreDiv = button.closest('.desc_offre');
+                // var idCandidatureElement = offreDiv.querySelector('.entreprise > p:last-child');
+                // var idCandidatureText = idCandidatureElement.textContent.trim();
+                // var id_fiche = idCandidatureText.split('Numéro de fiche de poste : ')[1];
+                // console.log(`/candidat/candidater/${id_fiche}`);
+                window.location.href = `/candidat/candidater/<%= offre.id_fiche %>/<%= offre.num %>`;
             };
         </script>
     </body>

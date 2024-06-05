@@ -182,13 +182,13 @@ router.get('/candidat_main', async function (req, res, next) {
   })
 
 
-router.get('/voir-offre/:id', async function (req, res, next) {
+router.get('/voir-offre/:num', async function (req, res, next) {
   const session = req.session;
     if(session.usermail && session.type_user === "candidat") {
-      const id = req.params.id;
-      const result = await offreModel.allinfoID(id);
+      const num = req.params.num;
+      const result = await offreModel.allinfoOffre(num);
       console.log(result)
-      res.render('candidat/candidat_desc_offre', { title: 'Candidat - description offre', offre: result[0] });
+      res.render('candidat/candidat_desc_offre', { title: 'Candidat - description offre', offre: result });
     }
     else {
       res.redirect("/auth/login");
@@ -256,7 +256,8 @@ router.get('/voir-offre/:id', async function (req, res, next) {
       const verif = await candidatureModel.readByIdCandidatOffre(session.user, num)
       console.log(verif)
       if(!verif){
-        const result = await candidatureModel.readPiecesByFiche(id);
+        const result = await offreModel.readPieces(num);
+        console.log(result)
         res.render('candidat/candidat_candidate', { title: 'Candidat - Candidater', pieces: result, offre: num});
       }
       else {

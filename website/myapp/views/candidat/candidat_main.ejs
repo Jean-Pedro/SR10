@@ -96,9 +96,8 @@
                 var offreDiv = button.closest('#off');
                 var idCandidatureElement = offreDiv.querySelector('.entreprise > p:last-child');
                 var idCandidatureText = idCandidatureElement.textContent.trim();
-                var id_fiche = idCandidatureText.split('Numéro de fiche de poste : ')[1];
-                console.log(`/candidat/voir-offre/${id_fiche}`);
-                window.location.href = `/candidat/voir-offre/${id_fiche}`;
+                var num = idCandidatureText.split("Numéro de l'offre : ")[1];
+                window.location.href = `/candidat/voir-offre/${num}`;
             };
 
             let post_search = document.querySelector('#post_search');

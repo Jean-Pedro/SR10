@@ -25,6 +25,24 @@ module.exports = {
         });
     },
 
+    readPieces: async (num) => {
+        return new Promise((resolve, reject) => {
+            db.query("select indications from Offre_Emploi where num= ?", num, (err, results) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    if (results.length > 0) {
+                        const indications = results[0].indications;
+                        const indicationsArray = indications.split(',').map(indication => indication.trim());
+                        resolve(indicationsArray);
+                    } else {
+                        resolve([]);
+                    }
+                }
+            });
+        });
+    },
+
     create: async (date_validite, indications, fiche, etat) => {
         return new Promise((resolve, reject) => {
                 var date = new Date();
@@ -72,6 +90,18 @@ module.exports = {
                     reject(err);
                 } else {
                     resolve(results);
+                }
+            });
+        });
+    },
+
+    allinfoOffre: async (num) => {
+        return new Promise((resolve, reject) => {
+            db.query("select * from Fiche_Poste JOIN Offre_Emploi on Fiche_Poste.id_fiche = Offre_Emploi.fiche join Organisation on Fiche_Poste.organisation = Organisation.siren where Offre_Emploi.num = ?;", num, (err, results) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(results[0]);
                 }
             });
         });
