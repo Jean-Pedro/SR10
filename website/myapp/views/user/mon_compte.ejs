@@ -1,7 +1,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Administrateur</title>
+        <title>Mon compte</title>
         <link rel="stylesheet" href="/stylesheets/main.css">
     </head>
     <body>
@@ -11,19 +11,20 @@
                     <a href="/auth/login"><button id="menu">Menu</button></a>
                 </div>
                 <div id="account">
-                    <a href="/users/mon_compte"><button>Mon compte</button></a>
+                    <a href="/users/mes_candidatures"><button id="cand">Mes candidatures</button></a>
+                    <a href="/users/mon_compte"><button id="account">Mon compte</button></a>
                 </div>
             </div>
     
             <div id="admin_container">
                 <div id="div_center">
-                    <a href="/admin/admin_enr_orga"><button id="save_orga">Voir les demandes d'enregistrement d'organisation</button></a>
+                    <a href="/users/modif_mail"><button>Modifier l'adresse mail</button></a>
                 </div>
                 <div id="div_center">
-                    <a href="/admin/admin_enr_recr"><button id="ins_recr_orga">Voir les demandes pour rejoindre une organisation <br> en tant que recruteur</button></a>
+                    <a href="/users/modif_mdp"><button>Modifier le mot de passe</button></a>
                 </div>
                 <div id="div_center">
-                    <a href="/admin/admin_visu_acc"><button id="view_comptes">Visualiser les comptes</button></a>
+                    <a href="/auth/logout"><button>Se déconnecter</button></a>
                 </div>
                 
             </div>

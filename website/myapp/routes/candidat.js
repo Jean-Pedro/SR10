@@ -113,7 +113,7 @@ router.get('/candidat_main', async function (req, res, next) {
     
   });
 
-  router.get('/new_recr', async function (req, res, next) {
+  router.get('/devenir_recruteur', async function (req, res, next) {
     const session = req.session;
     if(session.usermail && session.type_user === "candidat") {
         //const sirens = await orgaModel.readAllSiren();

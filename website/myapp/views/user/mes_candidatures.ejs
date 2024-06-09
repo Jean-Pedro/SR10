@@ -8,7 +8,7 @@
         <div id="page">
             <div id="top_bar">
                 <div id="home_button">
-                    <a href="/candidat/candidat_main"><button id="menu">Menu</button></a>                
+                    <a href="/auth/login"><button id="menu">Menu</button></a>                
                 </div>
                 <div id="account">
                     <a href="/candidat/candidat_account"><button id="account">Mon compte</button></a>
@@ -37,12 +37,8 @@
                         </div>
                         <div class="offer_button">
                             <button onclick="modifCand(this)">Modifier</button>
-                            <!-- <button onclick="supprCand(this)">Supprimer</button> -->
                             <button onclick="supprCand(this)">Supprimer</button>
-                            <!-- <a href="/candidat/verif_suppr"><button>Supprimer</button></a> -->
-                            
                         </div>
-                        
                     </div>
                     <% }) %>
                 </div>
@@ -55,26 +51,17 @@
                 var idCandidatureText = idCandidatureElement.textContent.trim();
                 var id_c = idCandidatureText.split('ID Candidature : ')[1];
                 var offreNum = offreDiv.getAttribute('data-num');
-                console.log(`/candidat/modif-cand/${id_c}`);
-                window.location.href = `/candidat/modif-cand/${id_c}/${offreNum}`;
+                console.log(`/users/modif-cand/${id_c}`);
+                window.location.href = `/users/modif-cand/${id_c}/${offreNum}`;
             };
-
-            // function supprCand(button) {
-            //     var offreDiv = button.closest('#off');
-            //     var idCandidatureElement = offreDiv.querySelector('.entreprise > p:last-child');
-            //     var idCandidatureText = idCandidatureElement.textContent.trim();
-            //     var id_c = idCandidatureText.split('ID Candidature : ')[1];
-            //     console.log(`/candidat/suppression_candidature/${id_c}`);
-            //     window.location.href = `/candidat/suppression_candidature/${id_c}`;
-            // }
 
             function supprCand(button) {
                 var offreDiv = button.closest('#off');
                 var idCandidatureElement = offreDiv.querySelector('.entreprise > p:nth-child(3)');
                 var idCandidatureText = idCandidatureElement.textContent.trim();
                 var id_c = idCandidatureText.split('ID Candidature : ')[1];
-                console.log(`/candidat/verif_suppr/${id_c}`);
-                window.location.href = `/candidat/verif_suppr/${id_c}`;
+                console.log(`/users/verif_suppr/${id_c}`);
+                window.location.href = `/users/verif_suppr/${id_c}`;
             }
         </script>
     </body>

@@ -8,14 +8,14 @@
         <div id="page">
             <div id="top_bar">
                 <div id="home_button">
-                    <a href="/candidat/candidat_main"><button id="menu">Menu</button></a>
+                    <a href="/auth/login"><button id="menu">Menu</button></a>
                 </div>
                 <div id="recr">
-                    <a href="/candidat/new_recr"><button id="recruteur">Devenir recruteur</button></a>
+                    <a href="/candidat/devenir_recruteur"><button id="recruteur">Devenir recruteur</button></a>
                 </div>
                 <div id="account">
-                    <a href="/candidat/mes_candidatures"><button id="cand">Mes candidatures</button></a>
-                    <a href="/candidat/candidat_account"><button id="account">Mon compte</button></a>
+                    <a href="/users/mes_candidatures"><button id="cand">Mes candidatures</button></a>
+                    <a href="/users/mon_compte"><button id="account">Mon compte</button></a>
                 </div>
             </div>
     
@@ -27,7 +27,7 @@
                     <% offres.forEach((offre)=> { %>
                         <div id="off">
                             <div id="off_img">
-                                <img src="../LOGO-META.webp" alt="Logo de l'entreprise">
+                                <img src="/uploads/<%=offre.logo%>" alt="Logo de l'entreprise">
                             </div>
                             <div class="entreprise">
                                 <h1><%= offre.nom%></h1>
