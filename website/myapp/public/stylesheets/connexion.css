@@ -32,7 +32,7 @@ body{
 }
 
 #input_form input[type="radio"]{
-    background-color: #FFA3BE;
+    background-color: #b9b9b9;
     width: 545px;
     height: 47px;
     border: none;
@@ -100,7 +100,7 @@ body{
 }
 
 #input_form input{
-    background-color: #FFA3BE;
+    background-color: #b9b9b9;
     width: 545px;
     height: 47px;
     border: none;
@@ -134,7 +134,7 @@ body{
 
 input[type=file]::file-selector-button {
     margin-right: 8px;
-  background: #ffa3be;
+  background: #b9b9b9;
   color: #fff;
   cursor: pointer;
 }

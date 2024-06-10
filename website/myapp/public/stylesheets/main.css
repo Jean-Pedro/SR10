@@ -2,10 +2,25 @@
     border: black solid 2px;
 */
 
+html, body {
+    margin: 0;
+    padding: 0;
+    height: auto;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
 #page{
     background-color: #F9E6E6;
     font-family: 'Inter';
-    height: 100%;
+    flex: 1; /* Ceci permet à #page de remplir l'espace disponible */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Pour garantir que le contenu peut croître */
 }
 
 #top_bar{
@@ -213,4 +228,13 @@ select{
 
 .description{
     padding: 60px;
+}
+
+#offres{
+    flex: 1;
+    position: relative;
+}
+
+#fiches{
+    flex: 1;
 }

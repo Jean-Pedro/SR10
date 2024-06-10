@@ -78,6 +78,19 @@ module.exports = {
         })
     },
 
+    updateResp: async (id_fiche, new_resp) => {
+        return new Promise((resolve, reject) => {
+            const sql = "UPDATE Fiche_Poste SET resp_hierarchique = ? WHERE id_fiche =?";
+            db.query(sql, [new_resp, id_fiche], (err, results) => {
+                if(err) {
+                    reject(err);
+                } else {
+                    resolve(true);
+                }
+            })
+        })
+    },
+
     updateRythme: async (id_fiche, new_rythme) => {
         return new Promise((resolve, reject) => {
             const sql = "UPDATE Fiche_Poste SET rythme_travail = ? WHERE id_fiche = ?";

@@ -15,10 +15,16 @@
                     <div id="formulaire">
                         <form action="/users/update_mail" method="post">
                             <div id="label_form">
+                                <label for="mail">Ancienne adresse mail</label> <br>
+                            </div>
+                            <div id="input_form">
+                                <input type="email" id="old_mail" name="old_mail" required>
+                            </div>
+                            <div id="label_form">
                                 <label for="mail">Nouvelle adresse mail</label> <br>
                             </div>
                             <div id="input_form">
-                                <input type="email" id="mail" name="mail" value="<%=email%>" required>
+                                <input type="email" id="new_mail" name="new_mail" required>
                             </div>
                             <div id="label_form">
                                 <label for="password">Mot de passe</label> <br>

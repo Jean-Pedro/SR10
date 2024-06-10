@@ -145,7 +145,7 @@ router.get('/suppression_candidature/:id', async function (req, res) {
 router.get('/mon_compte', function (req, res, next) {
   const session = req.session;
   if(session.usermail) {
-    res.render('user/mon_compte');
+    res.render('user/mon_compte', {type_user: session.type_user});
   }
   else {
     res.redirect("/auth/login");
@@ -179,12 +179,15 @@ router.post('/update_mail', async (req, res) => {
   const session = req.session;
   if(session.usermail) {
     const old_mail = session.usermail;
-    const result = await userModel.arevalid(old_mail, req.body.password);
-    const verif = await userModel.read(req.body.mail);
-    if(result && !verif) {
-      await userModel.updateMail(old_mail, req.body.mail)
-      req.session.usermail = req.body.mail;
-      res.render('user/redirect');
+    const old_mail_form = req.body.old_mail
+    if(old_mail === old_mail_form){
+      const result = await userModel.arevalid(old_mail, req.body.password);
+      const verif = await userModel.read(req.body.new_mail);
+      if(result && !verif) {
+        await userModel.updateMail(old_mail, req.body.new_mail)
+        req.session.usermail = req.body.new_mail;
+        res.render('user/redirect');
+      }
     }
   }
   else {

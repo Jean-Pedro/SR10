@@ -11,7 +11,7 @@
                     <a href="/auth/login"><button id="menu">Menu</button></a>
                 </div>
                 <div id="account">
-                    <a href="/users/mes_candidatures"><button id="cand">Mes candidatures</button></a>
+                    <a id="cand_link" href="/users/mes_candidatures"><button id="cand">Mes candidatures</button></a>
                     <a href="/users/mon_compte"><button id="account">Mon compte</button></a>
                 </div>
             </div>
@@ -29,5 +29,13 @@
                 
             </div>
         </div>
+        <script>
+            const cond = "<%=type_user%>";
+
+            if (cond === "admin") {
+                var candLink = document.getElementById('cand_link');
+                candLink.style.display = 'none';
+            }
+        </script>
     </body>
 </html>

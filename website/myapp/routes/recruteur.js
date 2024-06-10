@@ -34,6 +34,12 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
+router.get('/', async function (req, res, next) {
+  res.redirect('/auth/login')
+});
+
+
+
   router.get('/recruteur_main', async function (req, res, next) {
     const session = req.session;
     if(session.usermail && session.type_user === "recruteur") {
@@ -184,8 +190,9 @@ const upload = multer({ storage: storage });
     if(session.usermail && session.type_user === "recruteur") {
       const id = session.user
       const result = await offreModel.allinfoByRecruteur(id);
+      const fiches = await ficheModel.readByRecr(id);
       console.log(result);
-      res.render('recruteur/recruteur_recr', { title: 'List des offres', offres: result });
+      res.render('recruteur/recruteur_recr', {offres: result, fiches: fiches});
     } else {
       res.redirect('/auth/login')
     }
@@ -230,6 +237,21 @@ const upload = multer({ storage: storage });
       const result = await offreModel.read(offre);
       console.log(result)
       res.render('recruteur/recruteur_modif_offre', { title: 'Recruteur - Modification offre', offre: result, num:offre});
+    } else {
+      res.redirect('/auth/login')
+    }
+
+  });
+
+  router.get('/modif-fiche/:id_fiche', async function (req, res, next) {
+    const session = req.session;
+    if(session.usermail && session.type_user === "recruteur") {
+      const id_fiche = req.params.id_fiche;
+      const result = await ficheModel.read(id_fiche)
+      const adresse = await adresseModel.read(result.lieu)
+      console.log(result)
+      console.log(adresse)
+      res.render('recruteur/recruteur_modif_fiche', {fiche: result, id_fiche: id_fiche, adresse: adresse});
     } else {
       res.redirect('/auth/login')
     }
@@ -311,6 +333,33 @@ const upload = multer({ storage: storage });
       const offre = req.params.offre;
       await offreModel.updateDate_validite(offre, date);
       await offreModel.updateIndications(offre, indications);
+      res.render('user/redirect');
+    }
+    else {
+      res.redirect("/auth/login");
+    }
+  });
+
+  router.post('/confirm_modif_fiche/:fiche', async (req, res) => {
+    const session = req.session;
+    if(session.usermail && session.type_user === "recruteur") {
+      const fiche = req.params.fiche;
+      const id_adresse = req.body.adresse;
+      await adresseModel.updateNum(id_adresse, req.body.num);
+      await adresseModel.updateRue(id_adresse, req.body.rue);
+      await adresseModel.updateVille(id_adresse, req.body.ville);
+      await adresseModel.updateCodePostal(id_adresse, req.body.code_postal);
+      await ficheModel.updateIntitule(fiche, req.body.intitule);
+      await ficheModel.updateResp(fiche, req.body.resp);
+      await ficheModel.updateRythme(fiche, req.body.rythme);
+      await ficheModel.updateTeletravail(fiche, req.body.teletravail);
+      await ficheModel.updateSalaire_min(fiche, req.body.sal_min);
+      await ficheModel.updateSalaire_max(fiche, req.body.sal_max);
+      await ficheModel.updateDescription(fiche, req.body.desc);
+      const type = await typeMetierModel.create(req.body.type);
+      await ficheModel.updateType(fiche, type);
+      const statut = await statutModel.create(req.body.statut);
+      await ficheModel.updateStatut(fiche, statut);
       res.render('user/redirect');
     }
     else {
