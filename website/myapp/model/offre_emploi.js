@@ -83,6 +83,22 @@ module.exports = {
         });
     },
 
+
+    allinfoValide: async () => {
+        return new Promise((resolve, reject) => {
+            const now = new Date();
+            db.query("select * from Fiche_Poste JOIN Offre_Emploi on Fiche_Poste.id_fiche = Offre_Emploi.fiche join Organisation on Fiche_Poste.organisation = Organisation.siren where Offre_Emploi.date_validite > ? ORDER BY Offre_Emploi.date_depot DESC", [now], (err, results) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(results);
+                }
+            });
+        });
+    },
+
+
+
     allinfoID: async (id) => {
         return new Promise((resolve, reject) => {
             db.query("select * from Fiche_Poste JOIN Offre_Emploi on Fiche_Poste.id_fiche = Offre_Emploi.fiche join Organisation on Fiche_Poste.organisation = Organisation.siren where Fiche_Poste.id_fiche = ?;", id, (err, results) => {

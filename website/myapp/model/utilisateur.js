@@ -256,6 +256,20 @@ module.exports = {
         })
     },
 
+    updateLastLogin : async (id) => {
+        return new Promise((resolve, reject) => {
+            const now = new Date();
+            const sql = "UPDATE Utilisateur SET last_login = ? WHERE id_utilisateur =?";
+            db.query(sql, [now, id], (err, result) => {
+                if(err) {
+                    reject(err);
+                } else {
+                    resolve(true);
+                }
+            })
+        })
+    },
+
     delete : async (email) => {
         return new Promise((resolve, reject) => {
             const sql = "UPDATE Utilisateur SET statut = 0 WHERE email = ?";

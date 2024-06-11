@@ -3,6 +3,9 @@
         <meta charset="utf-8">
         <title>Candidat</title>
         <link rel="stylesheet" href="/stylesheets/main.css">
+        <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/min/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/locale/fr.js"></script>
+
     </head>
     <body>
         <div id="page">
@@ -38,6 +41,8 @@
                             <div class="desc">
                                 <p><%= offre.type + ' - ' + offre.intitule%></p>
                                 <p><%= offre.description%></p>
+                                <p id="datetime"><%= offre.date_validite%></p>
+                                <p id="date_hidden" style="display: none;"><%= offre.date_validite%></p>
                             </div>
                             
                             <div class="offer_button">
@@ -85,6 +90,10 @@
                         <div id="input_search">
                             <input type="number" id="salaire_min" name="salaire_min" placeholder="Salaire minimum">
                         </div>
+                        <div id="input_search">
+                            <input type="checkbox" id="notValide" name="notValide">
+                            <p>Afficher également les offres expirées</p>
+                        </div>
                     </div>
     
                 </div>
@@ -92,6 +101,7 @@
         </div>
 
         <script>
+            document.addEventListener('DOMContentLoaded', formatDates, filterExpiredOffers);
             function openOffre(button) {
                 var offreDiv = button.closest('#off');
                 var idCandidatureElement = offreDiv.querySelector('.entreprise > p:last-child');
@@ -142,9 +152,46 @@
                     }
                 }
             });
+
+            
             
 
-            //console.log(t_search);
+            let notValide = document.querySelector('#notValide');
+            notValide.addEventListener('change', (event) => {
+                filterExpiredOffers();
+            });
+
+            function filterExpiredOffers() {
+                const dateElements = document.querySelectorAll('#date_hidden');
+                dateElements.forEach(element => {
+                    const datetimeString = element.textContent.trim();
+                    const currentDate = moment();
+                    const offerDate = moment(datetimeString);
+                    if (notValide.checked) {
+                        // Si la case à cocher est cochée, afficher toutes les offres, y compris les expirées
+                        element.closest('#off').style.display = 'block';
+                    } else {
+                        // Sinon, masquer les offres expirées
+                        if (offerDate.isBefore(currentDate, 'day')) {
+                            element.closest('#off').style.display = 'none';
+                        }
+                    }
+                });
+            }
+
+            function formatDates() {
+                moment.locale('fr');
+                const dateElements = document.querySelectorAll('#datetime');
+                console.log(dateElements)
+                dateElements.forEach(element => {
+                    console.log(element)
+                    const datetimeString = element.textContent.trim();
+                    const formattedDate = moment(datetimeString).format('LLLL');
+                    element.textContent = formattedDate;
+                });
+            }
+
+            
         </script>
     </body>
 </html>

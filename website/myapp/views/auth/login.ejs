@@ -1,48 +1,51 @@
 <html lang="fr">
-    <head>
-        <meta charset="utf-8">
-        <title>Connexion</title>
-        <link rel="stylesheet" href="/stylesheets/connexion.css">
-    </head>
-    <body>
-        <div id="container">
-            <div id="titre">
-                <h1>Connexion</h1>
-                <p>Se connecter</p>
-            </div>
-            <div id="case">
-                <div id="column_g">
-                    <div id="formulaire">
-
-                        <form action="/auth/login" method="post">
-                            <div id="label_form">
-                                <label for="email">Email</label> <br>
-                            </div>
-                            <div id="input_form">
-                                <input type="email" id="email" name="email" placeholder="Entrez votre email" required>
-                            </div>
-                            <div id="label_form">
-                                <label for="password">Mot de passe</label>
-                            </div>
-                            <div id="input_form">
-                                <input type="password" id="password" name="password" placeholder="Entrez votre mot de passe" required>
-                            </div>
-                            <button id="submit" type="submit">Se connecter</button>
-                        </form>
-                        <div id="inscription">
-                            <p>C'est votre première visite ? <a href="/auth/inscription">Créer un compte</a></p>
+<head>
+    <meta charset="utf-8">
+    <title>Connexion</title>
+    <link rel="stylesheet" href="/stylesheets/connexion.css">
+</head>
+<body>
+    <div id="container">
+        <div id="titre">
+            <h1>Connexion</h1>
+            <p>Se connecter</p>
+        </div>
+        <div id="case">
+            <div id="column_g">
+                <div id="formulaire">
+                    <form action="/auth/login" method="post">
+                        <div id="label_form">
+                            <label for="email">Email</label> <br>
                         </div>
+                        <div id="input_form">
+                            <input type="email" id="email" name="email" placeholder="Entrez votre email" required>
+                        </div>
+                        <div class="error">
+                            <p><%= error_mail %></p>
+                        </div>
+                        <div id="label_form">
+                            <label for="password">Mot de passe</label>
+                        </div>
+                        <div id="input_form">
+                            <input type="password" id="password" name="password" placeholder="Entrez votre mot de passe" required>
+                        </div>
+                        <div class="error">
+                            <p><%= error_password %></p>
+                        </div>
+                        <div class="error">
+                            <p><%= error_login %></p>
+                        </div>
+                        <button id="submit" type="submit">Se connecter</button>
+                    </form>
+                    <div id="inscription">
+                        <p>C'est votre première visite ? <a href="/auth/inscription">Créer un compte</a></p>
                     </div>
                 </div>
-        
-                <div id="column_d">
-                    <img src="/pictures/connexion.png" alt="Image d'illustration">
-                </div>
+            </div>
+            <div id="column_d">
+                <img src="/pictures/connexion.png" alt="Image d'illustration">
             </div>
         </div>
-
-        
-    
-    
-    </body>
+    </div>
+</body>
 </html>

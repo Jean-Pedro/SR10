@@ -23,46 +23,52 @@ router.get('/', function (req, res, next) {
 });
 
 
-router.get('/login', function (req, res, next) {
+router.get('/login', function(req, res, next) {
     const session = req.session;
     if (session.usermail) {
         if(session.type_user === "candidat") {
-            res.redirect("/candidat/candidat_main")
+            res.redirect("/candidat/candidat_main");
         } else if(session.type_user === "recruteur") {
-            res.redirect('/recruteur/recruteur_main')
+            res.redirect('/recruteur/recruteur_main');
         } else {
-            res.redirect('/admin/admin_main')
+            res.redirect('/admin/admin_main');
         }
-    }
-    else {
-        res.render('auth/login')
+    } else {
+        const error_mail = session.error_mail || '';
+        const error_password = session.error_password || '';
+        const error_login = session.error_login || '';
+        session.error_mail = null;
+        session.error_password = null;
+        session.error_login = null;
+        res.render('auth/login', { error_mail, error_password, error_login });
     }
 });
 
 
 router.post('/login', async function(req, res, next) {
-    var email = req.body.email
-    var password = req.body.password
+    var email = req.body.email;
+    var password = req.body.password;
+
     if (email == null || email == "") {
-        req.session.msg = "Email Invalide";
-        return res.redirect('/login');
+        req.session.error_mail = "Email invalide.";
+        return res.redirect('login');
     } else if (password == null || password == "") {
-        req.session.msg = "Mot de passe Invalide";
-        return res.redirect('auth');
+        req.session.error_password = "Mot de passe invalide.";
+        return res.redirect('login');
     }
+
     const result = await userModel.arevalid(email, password);
     if (result == true) {
-        const user = await userModel.read(email)
-        const type = await userModel.checkType(email)
+        const user = await userModel.read(email);
+        const type = await userModel.checkType(email);
         session.createSession(req.session, email, type, user.id_utilisateur);
-        res.redirect("/auth")
-        // req.session.loggedin = true;
-        // req.session.username = email;
-        // req.session.type_user = type;
+        await userModel.updateLastLogin(req.session.user);
+        res.redirect("/auth");
     } else {
-        return res.redirect('/auth/login')
+        req.session.error_login = "Email ou mot de passe incorrect.";
+        return res.redirect('login');
     }
-})
+});
 
 
 const registerValidate = [

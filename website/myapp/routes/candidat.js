@@ -57,6 +57,18 @@ router.get('/candidat_main', async function (req, res, next) {
 });
 
 
+router.get('/all_offres', async function (req, res, next) {
+  const session = req.session;
+  if(session.usermail && session.type_user === "candidat") {
+    const result = await offreModel.allinfo();
+    res.render('candidat/candidat_main', {offres: result });
+  }
+  else {
+    res.redirect("/auth/login");
+  }
+});
+
+
   router.get('/candidat_account', function (req, res, next) {
     const session = req.session;
     if(session.usermail && session.type_user === "candidat") {
