@@ -1,7 +1,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Candidat Offre</title>
+        <title>Description Offre</title>
         <link rel="stylesheet" href="/stylesheets/main.css">
         <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/min/moment.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/locale/fr.js"></script>
@@ -10,10 +10,10 @@
         <div id="page">
             <div id="top_bar">
                 <div id="home_button">
-                    <a href="/candidat/candidat_main"><button id="menu">Menu</button></a>
+                    <a href="/auth/login"><button id="menu">Menu</button></a>
                 </div>
                 <div id="account">
-                    <a href="/candidat/candidat_account"><button id="account">Mon compte</button></a>
+                    <a href="/users/mon_compte"><button id="account">Mon compte</button></a>
                 </div>
             </div>
             <div class="container_val">
@@ -30,9 +30,9 @@
                         <p>Statut : <%= offre.statut %></p>
                         <p>Descirption du poste : <%= offre.description %></p>
                         <p>Indications : <%= offre.indications %></p>
-                        <p>Rythme de travail : <%= offre.rythme_travail %></p>
-                        <p>Télétravail : <%= offre.teletravail %></p>
-                        <p>Salaire : <%= offre.salaire_min %> - <%= offre.salaire_max %></p>
+                        <p>Rythme de travail : <%= offre.rythme_travail %>h/semaine</p>
+                        <p id="teletravail">Télétravail : <%= offre.teletravail %></p>
+                        <p>Salaire : <%= offre.salaire_min %>€ - <%= offre.salaire_max %>€</p>
                         <p id="datetime">Date de validité : <%= offre.date_validite%></p>
                         <p id="date_hidden" style="display: none;"><%= offre.date_validite%></p>
                         <p id="verif_hidden" style="display: none;"><%= verif %></p>
@@ -49,6 +49,7 @@
                 formatDates();
                 filterExpired();
                 checkVerif();
+                formatTeletravail();
             });
 
             function checkVerif() {
@@ -68,6 +69,18 @@
                 const datetimeString = dateElement.textContent.trim();
                 const formattedDate = moment(datetimeString.replace('Date de validité : ', '')).format('LLLL');
                 dateElement.textContent = formattedDate;
+
+            }
+
+            function formatTeletravail() {
+                const element = document.querySelector('#teletravail');
+                const elementString = element.textContent.trim().replace('Télétravail : ', '');
+                
+                if (elementString === '1') {
+                    element.textContent = 'Télétravail : oui';
+                } else if (elementString === '0') {
+                    element.textContent = 'Télétravail : non';
+                }
             }
 
             function filterExpired() {
@@ -85,11 +98,6 @@
 
 
             function candidater(button) {
-                // var offreDiv = button.closest('.desc_offre');
-                // var idCandidatureElement = offreDiv.querySelector('.entreprise > p:last-child');
-                // var idCandidatureText = idCandidatureElement.textContent.trim();
-                // var id_fiche = idCandidatureText.split('Numéro de fiche de poste : ')[1];
-                // console.log(`/candidat/candidater/${id_fiche}`);
                 window.location.href = `/candidat/candidater/<%= offre.id_fiche %>/<%= offre.num %>`;
             };
         </script>

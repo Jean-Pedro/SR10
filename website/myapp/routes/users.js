@@ -2,6 +2,7 @@ var express = require('express');
 var userModel = require('../model/utilisateur')
 const candidatureModel = require('../model/candidature')
 const piecesModel = require('../model/piece_dossier')
+const offreModel = require('../model/offre_emploi')
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
@@ -36,10 +37,130 @@ router.get('/', function (req, res, next) {
   });
 
 
-// router.get('/admin_visu_acc', async function (req, res, next) {
-//   const result = await userModel.readall();
-//   res.render('admin_visu_acc', { title: 'List des utilisateurs', users: result });
-// });
+  router.get('/main', async function (req, res, next) {
+    const session = req.session;
+    if(session.usermail && (session.type_user === "candidat" || session.type_user === "recruteur")) {
+      const result = await offreModel.allinfo();
+      res.render('user/main', {offres: result, role: session.type_user });
+    }
+    else {
+      res.redirect("/auth/login");
+    }
+  });
+
+
+  router.get('/voir-offre/:num', async function (req, res, next) {
+    const session = req.session;
+      if(session.usermail && (session.type_user === "candidat" || session.type_user === "recruteur")) {
+        const num = req.params.num;
+        const result = await offreModel.allinfoOffre(num);
+        console.log(result)
+        const verif = await candidatureModel.readByIdCandidatOffre(session.user, num);
+        console.log(verif)
+        res.render('user/description_offre', {offre: result , verif: verif});
+      }
+      else {
+        res.redirect("/auth/login");
+      }
+      
+    });
+
+
+    router.get('/candidater/:id/:num', async function (req, res, next) {
+      const session = req.session;
+      if(session.usermail && (session.type_user === "candidat" || session.type_user === "recruteur")) {
+        const id = req.params.id;
+        const num = req.params.num;
+        console.log(id)
+        const verif = await candidatureModel.readByIdCandidatOffre(session.user, num)
+        console.log(verif)
+        if(!verif){
+          const result = await offreModel.readPieces(num);
+          console.log(result)
+          res.render('user/candidater', {pieces: result, offre: num});
+        } else {
+          res.redirect("/auth/login");
+        }
+      } else {
+        res.redirect("/auth/login");
+      }
+    });
+
+    router.post('/valide_cand', upload.array('piece'), async (req, res) => {
+      const session = req.session;
+      if (session.usermail && (session.type_user === "candidat" || session.type_user === "recruteur")) {
+        const files = req.files;
+        const types = req.body.type;
+        const offre = req.body.offre
+        console.log(files);
+        const candidature = await candidatureModel.create(offre, session.user);
+        for(let ele in files){
+          const file = files[ele];
+          const type = types[ele];
+          await piecesModel.create(type, candidature, file.originalname);
+        }
+        res.render('user/redirect');
+      } else {
+        res.redirect("/auth/login");
+      }
+    });
+
+
+    router.get('/search/:text', async function (req, res, next) {
+      const session = req.session;
+      if(session.usermail && (session.type_user === "candidat" || session.type_user === "recruteur")) {
+        const text =req.params.text;
+        const result = await offreModel.allinfosearch(text);
+        console.log(result);
+        res.render('user/main', {offres: result, role: session.type_user})
+      }
+      else {
+        res.redirect("/auth/login");
+      }
+      
+    })
+
+
+    router.get('/localisation/:text', async function (req, res, next) {
+      const session = req.session;
+      if(session.usermail && (session.type_user === "candidat" || session.type_user === "recruteur")) {
+        const text =req.params.text;
+        const result = await offreModel.allinfoLocate(text)
+        console.log(result);
+        res.render('user/main', {offres: result, role: session.type_user})
+      }
+      else {
+        res.redirect("/auth/login");
+      }
+      
+    })
+
+
+    router.get('/salaire_min/:text', async function (req, res, next) {
+      const session = req.session;
+      if(session.usermail && (session.type_user === "candidat" || session.type_user === "recruteur")) {
+        const text =req.params.text;
+        const result = await offreModel.allinfoSalaire(text);
+        console.log(result);
+        res.render('user/main', {offres: result, role: session.type_user})
+      }
+      else {
+        res.redirect("/auth/login");
+      }
+      
+    })
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 router.get('/mes_candidatures', async (req, res, next) => {

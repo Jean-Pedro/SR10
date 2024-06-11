@@ -85,7 +85,7 @@ module.exports = {
 
     allinfo: async () => {
         return new Promise((resolve, reject) => {
-            db.query("select * from Fiche_Poste JOIN Offre_Emploi on Fiche_Poste.id_fiche = Offre_Emploi.fiche join Organisation on Fiche_Poste.organisation = Organisation.siren ORDER BY Offre_Emploi.date_depot DESC", (err, results) => {
+            db.query("select f.salaire_min, o.logo, o.nom, o.siren, off.date_depot, f.id_fiche, off.num, o.type, f.intitule, f.description, off.date_validite, a.ville from Fiche_Poste as f JOIN Offre_Emploi as off on f.id_fiche = off.fiche join Organisation as o on f.organisation = o.siren join Adresse as a on o.siege_social = a.id_lieu ORDER BY off.date_depot DESC", (err, results) => {
                 if (err) {
                     reject(err);
                 } else {
@@ -173,7 +173,7 @@ module.exports = {
     
     allinfoLocate: async (search) => {
         return new Promise((resolve, reject) => {
-            db.query("select * from Fiche_Poste JOIN Offre_Emploi on Fiche_Poste.id_fiche = Offre_Emploi.fiche join Organisation on Fiche_Poste.organisation = Organisation.siren join Adresse ON Adresse.id_lieu = Organisation.siege_social where Adresse.ville like ?", ['%'+search+'%'], (err, results) => {
+            db.query("select o.logo, o.nom, o.siren, o.date_depot, f.id_fiche, off.num, o.type, f.intitule, f.description, off.date_validite from Fiche_Poste as f JOIN Offre_Emploi as off on f.id_fiche = off.fiche join Organisation as o on f.organisation = o.siren join Adresse as a ON a.id_lieu = o.siege_social where a.ville like ?", ['%'+search+'%'], (err, results) => {
                 if (err) {
                     reject(err);
                 } else {
@@ -185,7 +185,7 @@ module.exports = {
     
     allinfoSalaire: async (search) => {
         return new Promise((resolve, reject) => {
-            db.query("select * from Fiche_Poste JOIN Offre_Emploi on Fiche_Poste.id_fiche = Offre_Emploi.fiche join Organisation on Fiche_Poste.organisation = Organisation.siren join Adresse ON Adresse.id_lieu = Organisation.siege_social where Fiche_Poste.salaire_min >= ?", search, (err, results) => {
+            db.query("select * from Fiche_Poste JOIN Offre_Emploi on Fiche_Poste.id_fiche = Offre_Emploi.fiche join Organisation on Fiche_Poste.organisation = Organisation.siren where Fiche_Poste.salaire_min >= ?", search, (err, results) => {
                 if (err) {
                     reject(err);
                 } else {

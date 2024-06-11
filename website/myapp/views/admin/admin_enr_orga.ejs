@@ -1,17 +1,17 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Administrateur</title>
+        <title>Validation d'organisation</title>
         <link rel="stylesheet" href="/stylesheets/main.css">
     </head>
     <body>
         <div id="page">
             <div id="top_bar">
                 <div id="home_button">
-                    <a href="/admin/admin_main"><button id="menu">Menu</button></a>
+                    <a href="/auth/login"><button id="menu">Menu</button></a>
                 </div>
                 <div id="account">
-                    <a href="/admin/admin_account"><button id="account">Mon compte</button></a>
+                    <a href="/users/mon_compte"><button id="account">Mon compte</button></a>
                 </div>
             </div>
     
@@ -33,43 +33,15 @@
                                 <p><%= orga.type%></p>
                             </div>
                             <div class="offer_button">
-                                <!--<a href="/admin/valide_orga"><button id="accepter">Plus de détails</button></a>-->
                                 <button onclick="openDemandeOrga(this)">Plus de détails</button>
                             </div>
                         </div>
                     <% }) %>
                 </div>
-                <!--
-                <div id="box">
-                    <div id="toolbox">
-                        <div id="search">
-                            <div id="label">
-                                <label for="search">Rechercher</label> <br>
-                            </div>
-                            <div id="input_search">
-                                <input type="search" id="search" name="search" placeholder="Rechercher..." required>
-                            </div>
-                        </div>
-                        <div id="label">
-                                <label for="sort">Trier</label>
-                        </div>
-                        <select name="date" id="date">
-                            <option value="" disabled selected hidden>Date</option>
-                            <option value="recent">Récent</option>
-                            <option value="ancien">Ancien</option>
-                        </select>
-                        <div id="label">
-                            <label for="filter">Filtrer</label>
-                        </div>
-                    </div>
-    
-                </div>
-                -->
             </div>
         </div>
         <script>
             function openDemandeOrga(button) {
-                console.log("test");
                 var offreDiv = button.closest('#off');
                 var idCandidatureElement = offreDiv.querySelector('.entreprise > p:last-child');
                 var siren = idCandidatureElement.textContent.trim();

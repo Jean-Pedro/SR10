@@ -9,10 +9,8 @@ const {body, validationResult} = require('express-validator');
 
 router.get('/', function (req, res, next) {
     if (req.session.usermail) {
-        if(req.session.type_user === "candidat") {
-            res.redirect('candidat/candidat_main')
-        } else if (req.session.type_user === "recruteur") {
-            res.redirect('recruteur/recruteur_main')
+        if(req.session.type_user === "candidat" || req.session.type_user === "recruteur") {
+            res.redirect("/users/main");
         } else {
             res.redirect('admin/admin_main')
         }
@@ -26,10 +24,8 @@ router.get('/', function (req, res, next) {
 router.get('/login', function(req, res, next) {
     const session = req.session;
     if (session.usermail) {
-        if(session.type_user === "candidat") {
-            res.redirect("/candidat/candidat_main");
-        } else if(session.type_user === "recruteur") {
-            res.redirect('/recruteur/recruteur_main');
+        if(session.type_user === "candidat" || session.type_user === "recruteur") {
+            res.redirect("/users/main");
         } else {
             res.redirect('/admin/admin_main');
         }

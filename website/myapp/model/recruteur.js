@@ -41,7 +41,7 @@ module.exports = {
 
     readByStatut: async (statut) => {
         return new Promise((resolve, reject) => {
-            const sql = "select * from Recruteur join Utilisateur ON Recruteur.id_recruteur = Utilisateur.id_utilisateur where etat_demande = ?";
+            const sql = "select u.id_utilisateur, u.prenom, u.nom, o.nom as orga, o.siren, u.email, u.num_tel from Recruteur as r join Utilisateur as u ON r.id_recruteur = u.id_utilisateur join Organisation as o on r.organisation = o.siren where r.etat_demande = ?";
             db.query(sql, statut, (err, results) => {
                 if (err) {
                     reject(err);

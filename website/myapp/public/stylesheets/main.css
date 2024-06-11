@@ -93,7 +93,23 @@ button{
     align-items: center;
 }
 
+.off{
+    background-color: #b9b9b9;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    margin: 10px;
+    display: flex;
+    align-items: center;
+}
+
 #off_img img{
+    width: 200px;
+    height: auto;
+    flex: 1;
+}
+
+.off_img img{
     width: 200px;
     height: auto;
     flex: 1;
@@ -265,4 +281,9 @@ select{
     margin: 0;
     padding: 0;
     font-weight: bold;
+}
+
+.sort_offers{
+    color: #474BCA;
+    background-color: white;
 }

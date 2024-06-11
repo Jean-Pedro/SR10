@@ -8,6 +8,7 @@ const piecesModel = require('../model/piece_dossier')
 const candidatureModel = require('../model/candidature')
 const ficheModel = require('../model/fiche_poste')
 const offreModel = require('../model/offre_emploi')
+const adresseModel = require('../model/adresse')
 var router = express.Router();
 
 
@@ -157,7 +158,8 @@ router.get('/valide_orga/:siren', async function (req, res, next) {
     if(session.usermail && session.type_user === "admin") {
         const siren = req.params.siren;
         const result = await organisationModel.read(siren);
-        res.render('admin/admin_valide_orga', { title: 'Admin - Validation Organisation', orga: result});
+        const adresse = await adresseModel.read(result.siege_social)
+        res.render('admin/admin_valide_orga', {orga: result, adresse: adresse});
     } else {
         res.redirect("/auth/login");
     }
@@ -204,7 +206,7 @@ router.get('/admin_enr_recr', async function (req, res, next) {
     const session = req.session;
     if(session.usermail && session.type_user === "admin") {
         const result = await recruteurModel.readByStatut('en attente');
-        res.render('admin/admin_enr_recr', { title: 'Admin - Validation Recruteur', users: result });
+        res.render('admin/admin_enr_recr', {users: result});
     } else {
         res.redirect("/auth/login");
     }

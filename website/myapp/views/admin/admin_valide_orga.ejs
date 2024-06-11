@@ -1,41 +1,33 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Demande Creation Orga</title>
+        <title>Demande Creation Organisation</title>
         <link rel="stylesheet" href="/stylesheets/main.css">
     </head>
     <body>
         <div id="page">
             <div id="top_bar">
                 <div id="home_button">
-                    <a href="/admin/admin_main"><button id="menu">Menu</button></a>
+                    <a href="/auth/login"><button id="menu">Menu</button></a>
                 </div>
                 <div id="account">
-                    <a href="/admin/admin_account"><button id="account">Mon compte</button></a>
+                    <a href="/users/mon_compte"><button id="account">Mon compte</button></a>
                 </div>
             </div>
             <div class="container_val">
                 <div class="desc_offre">
                     <div class="entreprise">
-                        <div id="off_img">
-                            <img src="<%= orga.logo %>" alt="Logo de l'entreprise">
-                        </div>
                         <h1><%= orga.nom %></h1>
+                        <div id="off_img">
+                            <img src="/uploads/<%=orga.logo%>" alt="Logo de l'entreprise">
+                        </div>
                         <p>Numéro de Siren : <%= orga.siren %></p>
                         <p>Type d'organisation : <%= orga.type %></p>
                     </div>
                     <div class="siege_social">
-                        <!--TEMPORAIRE PARCE QU'ON A PAS LA FONCTION ALLINFO-->
-                        <p>Id : <%= orga.siege_social %></p>
-                        <!-- <p>Type de l'entreprise : <%# offre.type %></p>
-                        <p>Intitulé du poste : <%# offre.intitule %></p>
-                        <p>Statut : <%# offre.statut %></p>
-                        <p>Descirption du poste : <%# offre.description %></p>
-                        <p>Indications : <%# offre.indications %></p>
-                        <p>Rythme de travail : <%# offre.rythme_travail %></p>
-                        <p>Télétravail : <%# offre.teletravail %></p>
-                        <p>Salaire : <%# offre.salaire_min %> - <%# offre.salaire_max %></p>
-                        <p></p> -->
+                        <p>Adresse : <%= adresse.num %> <%=adresse.rue%></p>
+                        <p><%= adresse.code_postal%> <%= adresse.ville%></p>
+                        
                     </div>
                     <div class="offer_button">
                         <a href="/admin/validation_orga/<%= orga.siren %>"><button id="accepter">Accepter</button></a>

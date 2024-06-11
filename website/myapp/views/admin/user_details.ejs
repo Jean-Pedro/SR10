@@ -28,6 +28,7 @@
                     </div>
                     <div class="offer_button" id="admin-button">
                         <button id="accepter">Passer en administrateur</button>
+                        <button id="suppr">Supprimer</button>
                     </div>
                 </div>
             </div>
@@ -44,9 +45,18 @@
                 var accepterButton = document.getElementById('accepter');
                 accepterButton.addEventListener('click', function(event) {
                     event.preventDefault();
-                    var confirmation = confirm('Êtes-vous sûr de vouloir passer cet utilisateur en administrateur ? Les candidatures de cet utilisateur seront définitivement supprimées.');
+                    var confirmation = confirm('Êtes-vous sûr de vouloir passer cet utilisateur en administrateur ? Toutes les informations liées à cet utilisateur seront supprimées.');
                     if (confirmation) {
                         window.location.href = '/admin/confirmation_passage_admin/<%=user.id_utilisateur%>';
+                    }
+                });
+
+                var supprButton = document.getElementById('suppr');
+                supprButton.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    var confirmation = confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ? Toutes les informations liées à cet utilisateur seront supprimées.');
+                    if (confirmation) {
+                        window.location.href = '/users/redirect';
                     }
                 });
 

@@ -314,20 +314,24 @@ router.get('/voir-offre/:num', async function (req, res, next) {
     
   });
 
-  router.post('/confirm_orga', async (req, res) => {
+  router.post('/confirm_orga', upload.single('logo'), async (req, res) => {
     const session = req.session;
     if(session.usermail && session.type_user === "candidat") {
-      const verif = await orgaModel.read(req.body.siren)
-      console.log(verif)
-      if(!verif){
-        const adresse = await adresseModel.create(req.body.num, req.body.rue, req.body.ville, req.body.code_postal);
-        const type_orga = await typeOrgaModel.create(req.body.type);
-        const orga = await orgaModel.create(req.body.siren, req.body.nom, adresse, type_orga, req.body.logo);
-        const recruteur = await recrModel.createRecr(session.user, orga)
-        res.render('user/redirect');
-      } else {
-        req.session.error_siren = "L'organisation existe déjà !";
-        res.redirect('create_orga')
+      const user_verif = await recrModel.readByID(session.user)
+      if(!user_verif){
+        const verif = await orgaModel.read(req.body.siren)
+        console.log(verif)
+        if(!verif){
+          const file = req.file;
+          const adresse = await adresseModel.create(req.body.num, req.body.rue, req.body.ville, req.body.code_postal);
+          const type_orga = await typeOrgaModel.create(req.body.type);
+          const orga = await orgaModel.create(req.body.siren, req.body.nom, adresse, type_orga, file.originalname);
+          const recruteur = await recrModel.createRecr(session.user, orga)
+          res.render('user/redirect');
+        } else {
+          req.session.error_siren = "L'organisation existe déjà !";
+          res.redirect('create_orga')
+        }
       }
     }
     else {
