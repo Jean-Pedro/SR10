@@ -48,6 +48,18 @@ module.exports = {
             });
         });
     },
+
+    readByOffre: async (offre) => {
+        return new Promise((resolve, reject) => {
+            db.query("SELECT * from Candidature where offre = ?", [offre], (err, results) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(results);
+                }
+            });
+        });
+    },
     
     readTest: async () => {
         return new Promise((resolve, reject) => {

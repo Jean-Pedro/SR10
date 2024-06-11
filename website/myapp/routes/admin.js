@@ -26,6 +26,10 @@ var router = express.Router();
     // });
     // });
 
+    router.get('/', async function (req, res, next) {
+        res.redirect('/auth/login')
+      });
+
     router.get('/admin_visu_acc', async function (req, res, next) {
         const session = req.session;
         if(session.usermail && session.type_user === "admin") {

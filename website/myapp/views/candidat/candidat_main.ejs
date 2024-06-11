@@ -4,7 +4,7 @@
         <title>Candidat</title>
         <link rel="stylesheet" href="/stylesheets/main.css">
         <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/min/moment.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/locale/fr.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/locale/fr.js"></script>
 
     </head>
     <body>
@@ -101,7 +101,10 @@
         </div>
 
         <script>
-            document.addEventListener('DOMContentLoaded', formatDates, filterExpiredOffers);
+            document.addEventListener('DOMContentLoaded', function() {
+                formatDates();
+                filterExpiredOffers();
+            });
             function openOffre(button) {
                 var offreDiv = button.closest('#off');
                 var idCandidatureElement = offreDiv.querySelector('.entreprise > p:last-child');
@@ -162,22 +165,22 @@
             });
 
             function filterExpiredOffers() {
-                const dateElements = document.querySelectorAll('#date_hidden');
-                dateElements.forEach(element => {
-                    const datetimeString = element.textContent.trim();
-                    const currentDate = moment();
-                    const offerDate = moment(datetimeString);
-                    if (notValide.checked) {
-                        // Si la case à cocher est cochée, afficher toutes les offres, y compris les expirées
-                        element.closest('#off').style.display = 'block';
-                    } else {
-                        // Sinon, masquer les offres expirées
-                        if (offerDate.isBefore(currentDate, 'day')) {
-                            element.closest('#off').style.display = 'none';
-                        }
+            const dateElements = document.querySelectorAll('#date_hidden');
+            dateElements.forEach(element => {
+                const datetimeString = element.textContent.trim();
+                const currentDate = moment();
+                const offerDate = moment(datetimeString);
+                if (notValide.checked) {
+                    // Si la case à cocher est cochée, afficher toutes les offres, y compris les expirées
+                    element.parentElement.parentElement.style.display = '';
+                } else {
+                    // Sinon, masquer les offres expirées
+                    if (offerDate.isBefore(currentDate, 'day')) {
+                        element.parentElement.parentElement.style.display = 'none';
                     }
-                });
-            }
+                }
+            });
+}
 
             function formatDates() {
                 moment.locale('fr');

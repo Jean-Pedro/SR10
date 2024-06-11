@@ -243,6 +243,32 @@ router.get('/', async function (req, res, next) {
 
   });
 
+  router.get('/suppr-offre/:offre', async function (req, res, next) {
+    const session = req.session;
+    if(session.usermail && session.type_user === "recruteur") {
+      const offre = req.params.offre;
+      console.log(offre)
+      const result = await offreModel.read(offre);
+      console.log(result)
+
+      let candidatures = await candidatureModel.readByOffre(offre);
+      for(let ele in candidatures) {
+        let candidature = candidatures[ele];
+        let pieces = await candidatureModel.readPieces(candidature.id_c)
+        for(let ele2 in pieces){
+          await piecesModel.delete(pieces[ele2].id_piece)
+        }
+        await candidatureModel.delete(candidature.id_c)
+      }
+      await offreModel.delete(offre);
+
+      res.render('user/redirect');
+    } else {
+      res.redirect('/auth/login')
+    }
+
+  });
+
   router.get('/modif-fiche/:id_fiche', async function (req, res, next) {
     const session = req.session;
     if(session.usermail && session.type_user === "recruteur") {
@@ -479,12 +505,28 @@ router.get('/', async function (req, res, next) {
       const offre = req.params.id_offre;
       let id_candidat = await candidatureModel.read(id_candidature);
       id_candidat = id_candidat.candidat;
+
+      let pieces = await candidatureModel.readPieces(id_candidature);
+      for(let ele in pieces){
+        await piecesModel.delete(pieces[ele].id_piece)
+      }
       await candidatureModel.delete(id_candidature)
+      let candidat = await userModel.readByID(id_candidat)
 
-      // faire une fonction pour envoyer un mail d'acceptation
+      const to = candidat.email
+      const subject = 'Candidature acceptée';
+      const body = 
+      `Bonjour,
+Je vous informe que nous avons accepté votre candidature à notre offre. Nous vous recontacterons dans les plus brefs délais.
+Cordialement,
+La direction`;
+
+      // Générer le lien mailto
+      const mailtoLink = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
 
-      res.render('user/redirect');
+      res.render('user/send_mail', { mailtoLink });
+
     } else {
       res.redirect('/auth/login')
     }
@@ -497,6 +539,11 @@ router.get('/', async function (req, res, next) {
       const offre = req.params.id_offre;
       let id_candidat = await candidatureModel.read(id_candidature);
       id_candidat = id_candidat.candidat;
+
+      let pieces = await candidatureModel.readPieces(id_candidature);
+      for(let ele in pieces){
+        await piecesModel.delete(pieces[ele].id_piece)
+      }
       await candidatureModel.delete(id_candidature)
 
       // faire une fonction pour envoyer un mail de refus

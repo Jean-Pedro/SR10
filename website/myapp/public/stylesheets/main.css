@@ -238,3 +238,11 @@ select{
 #fiches{
     flex: 1;
 }
+
+.error p {
+    color: red;
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+}

@@ -41,7 +41,7 @@
                         <div class="offer_button">
                             <button onclick="openCandidatures(this)">Voir les candidatures</button>
                             <button onclick="modifOffre(this)">Modifier l'offre</button>
-                            <!-- <a href="recruteur_modif_offre"><button>Modifier</button></a> -->
+                            <button onclick="supprOffre(this)">Supprimer l'offre</button>
                         </div>
                          
                     </div>
@@ -102,6 +102,14 @@
                 var idFicheText = idFicheElement.textContent.trim();
                 var id_fiche = idFicheText.split("Id fiche : ")[1];
                 window.location.href = `/recruteur/modif-fiche/${id_fiche}`;
+            };
+
+            function supprOffre(button) {
+                var offreDiv = button.closest('#off');
+                var idCandidatureElement = offreDiv.querySelector('.entreprise > p:last-child');
+                var idCandidatureText = idCandidatureElement.textContent.trim();
+                var num_offre = idCandidatureText.split("Numéro de l'offre : ")[1];
+                window.location.href = `/recruteur/suppr-offre/${num_offre}`;
             };
 
         </script>

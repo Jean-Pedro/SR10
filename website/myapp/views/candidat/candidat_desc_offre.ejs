@@ -3,6 +3,8 @@
         <meta charset="utf-8">
         <title>Candidat Offre</title>
         <link rel="stylesheet" href="/stylesheets/main.css">
+        <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/min/moment.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/locale/fr.js"></script>
     </head>
     <body>
         <div id="page">
@@ -31,7 +33,9 @@
                         <p>Rythme de travail : <%= offre.rythme_travail %></p>
                         <p>Télétravail : <%= offre.teletravail %></p>
                         <p>Salaire : <%= offre.salaire_min %> - <%= offre.salaire_max %></p>
-                        <p></p>
+                        <p id="datetime">Date de validité : <%= offre.date_validite%></p>
+                        <p id="date_hidden" style="display: none;"><%= offre.date_validite%></p>
+                        <p id="verif_hidden" style="display: none;"><%= verif %></p>
                     </div>
                     <div class="offer_button">
                         <button onclick="candidater(this)">Candidater</button>
@@ -41,6 +45,45 @@
         </div>
 
         <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                formatDates();
+                filterExpired();
+                checkVerif();
+            });
+
+            function checkVerif() {
+                const verifElement = document.querySelector('#verif_hidden');
+                const verifString = verifElement.textContent.trim();
+                
+                if (verifString !== '') {
+                    const candidatureButton = document.querySelector('.offer_button button');
+                    candidatureButton.style.display = 'none'; // Cache le bouton de candidature
+                }
+            };
+
+
+            function formatDates() {
+                moment.locale('fr');
+                const dateElement = document.querySelector('#datetime');
+                const datetimeString = dateElement.textContent.trim();
+                const formattedDate = moment(datetimeString.replace('Date de validité : ', '')).format('LLLL');
+                dateElement.textContent = formattedDate;
+            }
+
+            function filterExpired() {
+                const currentDate = moment(); // Obtiens la date actuelle
+                const hiddenDateElement = document.querySelector('#date_hidden');
+                const hiddenDateString = hiddenDateElement.textContent.trim();
+                const hiddenDate = moment(hiddenDateString); // Convertis la date cachée en objet moment
+                
+                // Comparaison des dates
+                if (hiddenDate.isBefore(currentDate)) {
+                    const candidatureButton = document.querySelector('.offer_button button');
+                    candidatureButton.style.display = 'none'; // Cache le bouton de candidature
+                }
+            }
+
+
             function candidater(button) {
                 // var offreDiv = button.closest('.desc_offre');
                 // var idCandidatureElement = offreDiv.querySelector('.entreprise > p:last-child');

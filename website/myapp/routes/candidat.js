@@ -41,9 +41,9 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-// router.get('/', function (req, res, next) {
-//   res.send('respond with a resource');
-//   });
+router.get('/', async function (req, res, next) {
+  res.redirect('/auth/login')
+});
 
 router.get('/candidat_main', async function (req, res, next) {
   const session = req.session;
@@ -83,7 +83,11 @@ router.get('/all_offres', async function (req, res, next) {
   router.get('/candidat_modif_mail', function (req, res, next) {
     const session = req.session;
     if(session.usermail && session.type_user === "candidat") {
-      res.render('candidat/candidat_modif_mail', {title: "Modif mail", email: req.session.usermail});
+      const error_mail_mdp = session.error_mail_mdp || '';
+      const error_new_mail = session.error_new_mail || '';
+      session.error_mail_mdp = '';
+      session.error_new_mail = '';
+      res.render('candidat/candidat_modif_mail', {error_mail_mdp, error_new_mail});
     }
     else {
       res.redirect("/auth/login");
@@ -128,9 +132,9 @@ router.get('/all_offres', async function (req, res, next) {
   router.get('/devenir_recruteur', async function (req, res, next) {
     const session = req.session;
     if(session.usermail && session.type_user === "candidat") {
-        //const sirens = await orgaModel.readAllSiren();
-        res.render('candidat/new_recr');
-        // res.render('candidat/new_recr', { title: 'List des sirens', sirens: sirens });
+      const error_siren = session.error_siren || '';
+      session.error_siren = null;
+      res.render('candidat/new_recr', {error_siren});
     }
     else {
       res.redirect("/auth/login");
@@ -142,7 +146,9 @@ router.get('/all_offres', async function (req, res, next) {
   router.get('/create_orga', function (req, res, next) {
     const session = req.session;
     if(session.usermail && session.type_user === "candidat") {
-      res.render('candidat/candidat_create_orga');
+      const error_siren = session.error_siren || '';
+      session.error_siren = null;
+      res.render('candidat/candidat_create_orga', {error_siren});
     }
     else {
       res.redirect("/auth/login");
@@ -200,7 +206,9 @@ router.get('/voir-offre/:num', async function (req, res, next) {
       const num = req.params.num;
       const result = await offreModel.allinfoOffre(num);
       console.log(result)
-      res.render('candidat/candidat_desc_offre', { title: 'Candidat - description offre', offre: result });
+      const verif = await candidatureModel.readByIdCandidatOffre(session.user, num);
+      console.log(verif)
+      res.render('candidat/candidat_desc_offre', {offre: result , verif: verif});
     }
     else {
       res.redirect("/auth/login");
@@ -295,7 +303,8 @@ router.get('/voir-offre/:num', async function (req, res, next) {
         await recrModel.createRecr(id, siren)
         res.render('user/redirect');
       } else {
-        res.render('candidat/new_recr');
+        session.error_siren = "L'organisation entrée n'existe pas !";
+        res.redirect('devenir_recruteur');
       }
     }
     else {
@@ -317,7 +326,8 @@ router.get('/voir-offre/:num', async function (req, res, next) {
         const recruteur = await recrModel.createRecr(session.user, orga)
         res.render('user/redirect');
       } else {
-        res.render('candidat/candidat_create_orga')
+        req.session.error_siren = "L'organisation existe déjà !";
+        res.redirect('create_orga')
       }
     }
     else {
@@ -368,10 +378,20 @@ router.get('/voir-offre/:num', async function (req, res, next) {
       const old_mail = session.usermail;
       const result = await userModel.arevalid(old_mail, req.body.password);
       const verif = await userModel.read(req.body.mail);
-      if(result && !verif) {
-        await userModel.updateMail(old_mail, req.body.mail)
-        req.session.usermail = req.body.mail;
-        res.render('user/redirect');
+      if(result) {
+        if(!verif) {
+          await userModel.updateMail(old_mail, req.body.mail)
+          req.session.usermail = req.body.mail;
+          res.render('user/redirect');
+        } else {
+          req.session.error_new_mail = "Un compte est déjà associé à cette adresse mail !";
+          res.redirect('candidat_modif_mail');
+        }
+        
+      } else {
+        console.log("chibre")
+        req.session.error_mail_mdp = "L'ancien mail ou le mot de passe est erroné !"
+        res.redirect('candidat_modif_mail')
       }
     }
     else {

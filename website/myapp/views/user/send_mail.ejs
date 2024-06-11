@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Envoi de mail</title>
+</head>
+<body>
+    <p>Envoi de l'email en cours, veuillez patienter...</p>
+    <script>
+        // Récupérer le lien mailto depuis les données rendues
+        const mailtoLink = "<%= mailtoLink %>";
+
+        // Ouvrir le lien mailto dans une nouvelle fenêtre ou un nouvel onglet
+        window.location.href = mailtoLink;
+
+        // Rediriger vers la page souhaitée après un délai
+        setTimeout(() => {
+            window.location.href = "/users/redirect"; // Remplacez par le chemin de la vue souhaitée
+        }, 1000); // Délai en millisecondes (1 seconde ici)
+    </script>
+</body>
+</html>

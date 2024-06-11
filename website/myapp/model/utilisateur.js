@@ -14,6 +14,18 @@ module.exports = {
         });
     },
 
+    readByID: async (id) => {
+        return new Promise((resolve, reject) => {
+            db.query("SELECT * FROM Utilisateur WHERE id_utilisateur = ?", id, (err, results) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(results[0]);
+                }
+            });
+        });
+    },
+
     
 
     readall: async () => {
