@@ -1,10 +1,11 @@
-@startuml
+@startuml mcd
 
 note "Tous les attributs sont NOT NULL" as note
 
 class Organisation{
   <primary> Siren : int
   nom : str
+  logo : str
 }
 
 class Type_Organisation{
@@ -14,13 +15,17 @@ class Type_Organisation{
 class Offre_emploi {
   <primary> num : int
   date_validite : datetime
-  indications : text
+  indications : str
+  date_depot : datetime
 }
 
 class etat_offre{
-  <primary> etat : text
+  <primary> etat : str
 }
 
+class Etat_demande {
+  <primary> demande : str
+}
 
 class fiche_poste {
   intitule : str
@@ -29,12 +34,11 @@ class fiche_poste {
   teletravail : bool
   salaire_min : float
   salaire_max : float
-  descirption : text  
-  
+  description : text  
 }
 
 class statut_poste{
-  <primary> statut : text
+  <primary> statut : str
 }
 
 class type_metier{
@@ -53,8 +57,9 @@ class Utilisateur{
   email : str UNIQUE
   nom : str
   prenom : str
-  num_tel : str
+  num_tel : str UNIQUE
   date_creation : datetime
+  last_login : datetime
   statut : bool
   password : str (hash)
 }
@@ -77,25 +82,32 @@ class Candidature{
 
 class Piece_dossier{
   type : str
+  fichier : str
 }
 
+class Role {
+  <primary> role : str
+}
 
 Organisation "*" -- "1" Type_Organisation
-Organisation "1" --- "*" fiche_poste : "Posséder>"
+Organisation "1" --- "*" fiche_poste : "Posséder >"
+Organisation "*" -- "1" Etat_demande
 Offre_emploi "*" -- "1" etat_offre
 fiche_poste "*" -- "1" statut_poste
 fiche_poste "*" -- "1" type_metier
 fiche_poste "*" -- "1" adresse
 Offre_emploi "*" --- "1" fiche_poste : "Correspondre à >"
 Administrateur --> Utilisateur
-Recruteur --> Utilisateur
+Recruteur --> Candidat
 Candidat ---> Utilisateur
-Recruteur "1..*" --- "*" fiche_poste : "Creer >"
+Recruteur "1" --- "*" fiche_poste : "Creer >"
 Candidature "1" -- "*" Piece_dossier
 Candidature "*" -- "1" Offre_emploi : "Porter sur >"
 Candidat "1" -- "*" Candidature : "Modifier >"
 Recruteur "*" -- "1" Organisation : "Travailler pour >"
-Organisation "*" -- "1" adresse
+Organisation "*" -- "1" adresse : "Se situer >"
+Recruteur "*" -- "1" Etat_demande
+Utilisateur "*" -- "1" Role
 
 
 @enduml
