@@ -12,6 +12,18 @@ module.exports = {
         });
     },
 
+    readByFiche: async (fiche) => {
+        return new Promise((resolve, reject) => {
+            db.query("select * from Offre_Emploi where fiche= ?", fiche, (err, results) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(results);
+                }
+            });
+        });
+    },
+
     readall: async () => {
         return new Promise((resolve, reject) => {
             const sql = "select * from Offre_Emploi"

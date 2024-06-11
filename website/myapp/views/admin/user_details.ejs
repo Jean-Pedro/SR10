@@ -3,6 +3,8 @@
         <meta charset="utf-8">
         <title>Details Utilisateurs</title>
         <link rel="stylesheet" href="/stylesheets/main.css">
+        <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/min/moment.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/locale/fr.js"></script>
     </head>
     <body>
         <div id="page">
@@ -21,16 +23,12 @@
                         <p>Numéro de Téléphone : <%= user.num_tel %></p>
                     </div>
                     <div class="siege_social">
-                        <p>Date de création : <%= user.date_creation %></p>
-                        <p>Dernière connexion : <%= user.last_login %></p>
+                        <p class="datetime">Date de création : <%= user.date_creation %></p>
+                        <p class="datetime">Dernière connexion : <%= user.last_login %></p>
                     </div>
                     <div class="offer_button" id="admin-button">
-                        <!-- <a href="/admin/confirmation_admin"><button id="accepter">Passer en administrateur</button></a> -->
                         <button id="accepter">Passer en administrateur</button>
                     </div>
-                    <!-- <div class="offer_button">
-                        <a href="/admin/confirmation_admin"><button id="accepter">Refuse</button></a>
-                    </div> -->
                 </div>
             </div>
         </div>
@@ -51,17 +49,26 @@
                         window.location.href = '/admin/confirmation_passage_admin/<%=user.id_utilisateur%>';
                     }
                 });
+
+
+                function formatDates() {
+                    moment.locale('fr');
+                    const dateElements = document.querySelectorAll('.datetime');
+                    dateElements.forEach(element => {
+                        const datetimeString = element.textContent.trim().replace('Date de création : ', '').replace('Dernière connexion : ', '');
+                        const formattedDate = moment(datetimeString).format('LLLL');
+                        if (element.textContent.includes('Date de création')) {
+                            element.textContent = 'Date de création : ' + formattedDate;
+                        } else if (element.textContent.includes('Dernière connexion')) {
+                            element.textContent = 'Dernière connexion : ' + formattedDate;
+                        }
+                    });
+                }
+
+                formatDates();
+
             });
 
-
-            // function candidater(button) {
-            //     var offreDiv = button.closest('.desc_offre');
-            //     var idCandidatureElement = offreDiv.querySelector('.entreprise > p:last-child');
-            //     var idCandidatureText = idCandidatureElement.textContent.trim();
-            //     var id_fiche = idCandidatureText.split('Numéro de fiche de poste : ')[1];
-            //     console.log(`/candidat/candidater/${id_fiche}`);
-            //     window.location.href = `/candidat/candidater/${id_fiche}`;
-            // };
         </script>
     </body>
 </html>

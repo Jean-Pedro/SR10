@@ -6,6 +6,8 @@ var recruteurModel = require('../model/recruteur')
 var organisationModel = require('../model/organisation')
 const piecesModel = require('../model/piece_dossier')
 const candidatureModel = require('../model/candidature')
+const ficheModel = require('../model/fiche_poste')
+const offreModel = require('../model/offre_emploi')
 var router = express.Router();
 
 
@@ -93,37 +95,51 @@ router.get('/confirmation_admin', function (req, res, next) {
 
 });
 
-// router.get('/confirmation_passage_admin/:id', async function (req, res, next) {
-//     const session = req.session;
-//     if(session.usermail && session.type_user === "admin") {
-//         const id = req.params.id;
-//         const role = await userModel.checkRole(id)
-//         console.log(role.role)
-//         if(role.role === "Candidat"){
-//             const candidature = await candidatureModel.readByIdCandidat(id)
-//             for(let ele in candidature){
-//                 const pieces = await candidatureModel.readPieces(candidature[ele].id_c)
-//                 for(let ele2 in pieces){
-//                     await piecesModel.delete(pieces[ele2].id_piece);
-//                 }
-//                 await candidatureModel.delete(candidature[ele].id_c)
-//             }
-//             await candidatModel.delete(id);
-//         } else if(role.role === "Recruteur"){
-//             await recruteurModel.fired(id);
-//             const test = await candidatModel.read(id)
-//             if(test){
-//                 await candidatModel.delete(id);
-//             }
-//         }
-//         await userModel.updateAdministrateur(id);
-//         await adminModel.create(id)
-//         res.render('user/redirect');
-//     } else {
-//         res.redirect("/auth/login");
-//     }
-
-// });
+router.get('/confirmation_passage_admin/:id', async function (req, res, next) {
+    const session = req.session;
+    if(session.usermail && session.type_user === "admin") {
+        const id = req.params.id;
+        const role = await userModel.checkRole(id)
+        console.log(role.role)
+        if(role.role === "Recruteur"){
+            const fiches = await ficheModel.readByRecr(id);
+            for(let ite1 in fiches){
+                const fiche = fiches[ite1];
+                const offres = await offreModel.readByFiche(fiche.id_fiche)
+                for(let ite2 in offres){
+                    const offre = offres[ite2];
+                    const candidatures = await candidatureModel.readByOffre(offre.num);
+                    for(let ite3 in candidatures){
+                        const candidature = candidatures[ite3];
+                        const pieces = await candidatureModel.readPieces(candidature.id_c);
+                        for(let ite4 in pieces){
+                            const piece = pieces[ite4];
+                            await piecesModel.delete(piece.id_piece);
+                        }
+                        await candidatureModel.delete(candidature.id_c)
+                    }
+                    await offreModel.delete(offre.num);
+                }
+                await ficheModel.delete(fiche.id_fiche);
+            }
+            await recruteurModel.fired(id);
+        }
+        const candidature = await candidatureModel.readByIdCandidat(id)
+        for(let ele in candidature){
+            const pieces = await candidatureModel.readPieces(candidature[ele].id_c)
+            for(let ele2 in pieces){
+                await piecesModel.delete(pieces[ele2].id_piece);
+            }
+            await candidatureModel.delete(candidature[ele].id_c)
+        }
+        await candidatModel.delete(id);
+        await userModel.updateAdministrateur(id);
+        await adminModel.create(id)
+        res.render('user/redirect');
+    } else {
+        res.redirect("/auth/login");
+    }
+});
 
 router.get('/admin_enr_orga', async function (req, res, next) {
     const session = req.session;
@@ -148,28 +164,26 @@ router.get('/valide_orga/:siren', async function (req, res, next) {
 
 });
 
-router.get('/user_recr_details/:email', async function (req, res, next) {
+router.get('/user_recr_details/:id', async function (req, res, next) {
     const session = req.session;
     if(session.usermail && session.type_user === "admin") {
-        var email = req.params.email;
-        email.toString()
-        const result = await userModel.read(email);
+        var id = req.params.id;
+        const result = await userModel.readByID(id);
         console.log(result)
-        let orga = await recruteurModel.read(email);
+        let orga = await recruteurModel.readByID(id);
         orga = orga.organisation;
-        res.render('admin/user_recr_details', {title: 'Admin - Visu Account', user: result, orga: orga})
+        res.render('admin/user_recr_details', {user: result, orga: orga})
     } else {
         res.redirect("/auth/login");
     }
 
 });
 
-router.get('/user_details/:email', async function (req, res, next) {
+router.get('/user_details/:id', async function (req, res, next) {
     const session = req.session;
     if(session.usermail && session.type_user === "admin") {
-        var email = req.params.email;
-        email.toString()
-        const result = await userModel.read(email);
+        var id = req.params.id;
+        const result = await userModel.readByID(id);
         console.log(result)
         res.render('admin/user_details', {title: 'Admin - Visu Account', user: result})
     } else {
@@ -238,6 +252,7 @@ router.post('/update_mail', async (req, res) => {
     if(session.usermail && session.type_user === "admin") {
         const id = req.params.id
         await recruteurModel.validationDemande(id);
+        await userModel.updateRecruteur(id);
         res.render('user/redirect');
     } else {
         res.redirect("/auth/login");
@@ -281,9 +296,5 @@ router.get('/refus_orga/:siren', async function (req, res, next) {
 
 });
 
-
-//   router.get('/desc_account', async function (req, res, next) {
-//     const type = await userModel.checkType()
-//   })
 
 module.exports = router;

@@ -31,45 +31,18 @@
                             <p><%= user.num_tel%></p>
                         </div>
                         <div class="offer_button">
-                            <!-- <a href="admin_desc_acc.html"><button id="accepter">Plus de détails</button></a> -->
-                            <button onclick="details(this)" data-email="<%= user.email %>">Plus de détails</button>
+                            <button onclick="details(this)" data-id="<%= user.id_utilisateur %>">Plus de détails</button>
                         </div>
                     </div>
                     <% }) %>
                 </div>
-                <!--
-                <div id="box">
-                    <div id="toolbox">
-                        <div id="search">
-                            <div id="label">
-                                <label for="search">Rechercher</label> <br>
-                            </div>
-                            <div id="input_search">
-                                <input type="search" id="search" name="search" placeholder="Rechercher..." required>
-                            </div>
-                        </div>
-                        <div id="label">
-                                <label for="sort">Trier</label>
-                        </div>
-                        <select name="date" id="date">
-                            <option value="" disabled selected hidden>Date</option>
-                            <option value="recent">Récent</option>
-                            <option value="ancien">Ancien</option>
-                        </select>
-                        <div id="label">
-                            <label for="filter">Filtrer</label>
-                        </div>
-                    </div>
-    
-                </div>
-                -->
             </div>
         </div>
         <script>
             function details(button) {
-                var email = button.getAttribute('data-email');
-                console.log(`Email de l'utilisateur : ${email}`);
-                window.location.href = `/admin/user_details/${email}`;
+                var id = button.getAttribute('data-id');
+                console.log(`Id de l'utilisateur : ${id}`);
+                window.location.href = `/admin/user_details/${id}`;
             };
         </script>
     </body>

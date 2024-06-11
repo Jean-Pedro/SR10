@@ -269,6 +269,40 @@ router.get('/', async function (req, res, next) {
 
   });
 
+
+  router.get('/suppr-fiche/:fiche', async function (req, res, next) {
+    const session = req.session;
+    if(session.usermail && session.type_user === "recruteur") {
+      const fiche = req.params.fiche;
+      console.log(fiche)
+
+      let offres = await offreModel.readByFiche(fiche)
+      for(let cpt in offres) {
+        let offre = offres[cpt]
+        let candidatures = await candidatureModel.readByOffre(offre.num);
+        for(let ele in candidatures) {
+          let candidature = candidatures[ele];
+          let pieces = await candidatureModel.readPieces(candidature.id_c)
+          for(let ele2 in pieces){
+            await piecesModel.delete(pieces[ele2].id_piece)
+          }
+          await candidatureModel.delete(candidature.id_c)
+        }
+        await offreModel.delete(offre.num);
+      }
+      await ficheModel.delete(fiche);
+      
+
+      res.render('user/redirect');
+    } else {
+      res.redirect('/auth/login')
+    }
+
+  });
+
+
+
+
   router.get('/modif-fiche/:id_fiche', async function (req, res, next) {
     const session = req.session;
     if(session.usermail && session.type_user === "recruteur") {

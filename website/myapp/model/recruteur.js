@@ -14,6 +14,18 @@ module.exports = {
         });
     },
 
+    readByID: async (id) => {
+        return new Promise((resolve, reject) => {
+            db.query("SELECT * from Recruteur JOIN Utilisateur ON id_recruteur=id_utilisateur WHERE id_recruteur= ?", id, (err, results) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(results[0]);
+                }
+            });
+        });
+    },
+
     readall: async () => {
         return new Promise((resolve, reject) => {
             const sql = "select * from Recruteur JOIN Utilisateur ON id_recruteur=id_utilisateur";
@@ -39,53 +51,6 @@ module.exports = {
             });
         });
     },
-
-    // read: function (email, callback) {
-    //     db.query("SELECT * from Recruteur JOIN Utilisateur ON id_recruteur=id_utilisateur WHERE email= ?",email, function (err, results) {
-    //         if (err) throw err;
-    //         callback(results);
-    //     });
-    // },
-
-    // readall: function (callback) {
-    //     db.query("select * from Recruteur JOIN Utilisateur ON id_recruteur=id_utilisateur", function (err, results) {
-    //         if (err) throw err;
-    //         callback(results);
-    //     });
-    // },
-
-
-    // readByStatut: function (statut, callback) {
-    //     db.query("select * from Recruteur join Utilisateur ON Recruteur.id_recruteur = Utilisateur.id_utilisateur where etat_demande = ?", statut, function(err, results) {
-    //         if (err) {
-    //             callback(err);
-    //         } else {
-    //             callback(null, results);
-    //         }
-    //     })
-    // },
-
-    // create: async (email, nom, prenom, num_tel, password, organisation) => {
-    //     return new Promise((resolve, reject) => {
-    //         user.create(email, nom, prenom, num_tel, password, (err, id) => {
-    //             if(err) {
-    //                 return reject(err);
-    //             } else {
-    //                 console.log("ID : " + id)
-    //                 const etat = "en attente";
-    //                 const sql = "INSERT INTO Recruteur VALUES (?, ?, ?);"
-    //                 db.query(sql, [id, organisation, etat], (err, results) => {
-    //                 if (err) {
-    //                     reject(err);
-    //                 } else {
-    //                     resolve(results);
-    //                 }
-    //             })
-    //             }
-                
-    //         })
-    //     });
-    // },
 
     createRecr: async (id, organisation) => {
         return new Promise((resolve, reject) => {

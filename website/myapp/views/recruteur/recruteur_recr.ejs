@@ -8,13 +8,13 @@
         <div id="page">
             <div id="top_bar">
                 <div id="home_button">
-                    <a href="/recruteur/recruteur_main"><button id="menu">Menu</button></a>
+                    <a href="/auth/login"><button id="menu">Menu</button></a>
                 </div>
                 <div id="recr">
                     <a href="/recruteur/recruteur_menu_offres"><button>Gérer les Offres/Fiches de Poste</button></a>    
                 </div>
                 <div id="account">
-                    <a href="/recruteur/recruteur_account"><button id="account">Mon compte</button></a>
+                    <a href="/users/mon_compte"><button id="account">Mon compte</button></a>
                 </div>
             </div>
     
@@ -69,7 +69,7 @@
                         </div>
                         <div class="offer_button">
                             <button onclick="modifFiche(this)">Modifier</button>
-                            <button onclick="SupprFiche(this)">Supprimer</button>
+                            <button onclick="supprFiche(this)">Supprimer</button>
                         </div>
                             
                     </div>
@@ -102,6 +102,14 @@
                 var idFicheText = idFicheElement.textContent.trim();
                 var id_fiche = idFicheText.split("Id fiche : ")[1];
                 window.location.href = `/recruteur/modif-fiche/${id_fiche}`;
+            };
+
+            function supprFiche(button) {
+                var offreDiv = button.closest('#off');
+                var idFicheElement = offreDiv.querySelector('.entreprise > p:last-child');
+                var idFicheText = idFicheElement.textContent.trim();
+                var id_fiche = idFicheText.split("Id fiche : ")[1];
+                window.location.href = `/recruteur/suppr-fiche/${id_fiche}`;
             };
 
             function supprOffre(button) {

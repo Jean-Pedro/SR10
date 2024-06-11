@@ -3,6 +3,8 @@
         <meta charset="utf-8">
         <title>Demande Creation Orga</title>
         <link rel="stylesheet" href="/stylesheets/main.css">
+        <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/min/moment.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/locale/fr.js"></script>
     </head>
     <body>
         <div id="page">
@@ -22,11 +24,10 @@
                     </div>
                     <div class="siege_social">
                         <p>Organisation : <%=orga%></p>
-                        <p>Date de création : <%= user.date_creation %></p>
-                        <p>Dernière connexion : <%= user.last_login %></p>
+                        <p class="datetime">Date de création : <%= user.date_creation %></p>
+                        <p class="datetime">Dernière connexion : <%= user.last_login %></p>
                     </div>
                     <div class="offer_button">
-                        <!-- <button onclick="candidater(this)">Candidater</button> -->
                         <a href="/admin/passage_recr/<%=user.id_utilisateur%>/"><button id="accepter">Accepter</button></a>
                     </div>
                     <div class="offer_button">
@@ -37,6 +38,10 @@
         </div>
 
         <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                formatDates();
+            });
+
             function candidater(button) {
                 var offreDiv = button.closest('.desc_offre');
                 var idCandidatureElement = offreDiv.querySelector('.entreprise > p:last-child');
@@ -45,6 +50,20 @@
                 console.log(`/candidat/candidater/${id_fiche}`);
                 window.location.href = `/candidat/candidater/${id_fiche}`;
             };
+
+            function formatDates() {
+                    moment.locale('fr');
+                    const dateElements = document.querySelectorAll('.datetime');
+                    dateElements.forEach(element => {
+                        const datetimeString = element.textContent.trim().replace('Date de création : ', '').replace('Dernière connexion : ', '');
+                        const formattedDate = moment(datetimeString).format('LLLL');
+                        if (element.textContent.includes('Date de création')) {
+                            element.textContent = 'Date de création : ' + formattedDate;
+                        } else if (element.textContent.includes('Dernière connexion')) {
+                            element.textContent = 'Dernière connexion : ' + formattedDate;
+                        }
+                    });
+                }
         </script>
     </body>
 </html>
