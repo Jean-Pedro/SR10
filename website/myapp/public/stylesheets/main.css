@@ -1,7 +1,3 @@
-/*
-    border: black solid 2px;
-*/
-
 html, body {
     margin: 0;
     padding: 0;
@@ -14,40 +10,38 @@ body {
     min-height: 100vh;
 }
 
-#page{
+#page {
     background-color: #F9E6E6;
     font-family: 'Inter';
-    flex: 1; /* Ceci permet à #page de remplir l'espace disponible */
+    flex: 1;
     display: flex;
     flex-direction: column;
-    min-height: 100vh; /* Pour garantir que le contenu peut croître */
+    min-height: 100vh;
 }
 
-#top_bar{
+#top_bar {
     display: flex;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding: 10px;
 }
 
-#container{
+#container {
     display: flex;
+    flex-wrap: wrap;
 }
 
-#home_button{
+#home_button, #recr, #account {
     flex: 1;
 }
 
-#recr{
-    flex: 1;
+#recr {
     text-align: center;
 }
 
-#account{
-    flex: 1;
+#account {
     text-align: right;
 }
 
-button{
+button {
     background-color: #474BCA;
     color: white;
     border: none;
@@ -55,35 +49,28 @@ button{
     font-family: 'Inter';
     font-size: large;
     font-weight: bold;
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding: 10px 20px;
     margin: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-#label2{
-    padding-left: 20px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+#label2 {
+    padding: 10px 20px;
     font-weight: bold;
     font-size: xx-large;
 }
 
-
-#offers{
+#offers {
     flex: 1.1;
     position: relative;
-    padding-left: 20px;
-    padding-bottom: 20px;
+    padding: 20px;
 }
 
-#box{
+#box {
     flex: 0.9;
 }
 
-#off{
+#off, .off {
     background-color: #b9b9b9;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -91,50 +78,25 @@ button{
     margin: 10px;
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
 }
 
-.off{
-    background-color: #b9b9b9;
-    padding: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    margin: 10px;
-    display: flex;
-    align-items: center;
-}
-
-#off_img img{
+#off_img img, .off_img img {
     width: 200px;
     height: auto;
     flex: 1;
 }
 
-.off_img img{
-    width: 200px;
-    height: auto;
-    flex: 1;
-}
-
-.entreprise{
+.entreprise, .desc, .offer_button {
     flex: 1;
     text-align: center;
 }
 
-.desc{
-    flex: 1;
-    text-align: center;
-}
-
-.offer_button{
-    flex: 1;
-    text-align: center;
-}
-
-.offer_button button{
+.offer_button button {
     vertical-align: center;
 }
 
-#toolbox{
+#toolbox {
     background-color: #474BCA;
     margin: 100px;
     padding: 20px;
@@ -143,20 +105,19 @@ button{
     border-radius: 50px;
 }
 
-#label{
-    padding-top: 10px;
-    padding-bottom: 10px;
+#label {
+    padding: 10px;
     font-weight: bold;
     font-size: xx-large;
 }
 
-#input_search{
-    padding-top: 10px;
-    padding-bottom: 30px;
+#input_search {
+    padding: 10px 0 30px;
 }
 
-#input_search input{
-    width: 200px;
+#input_search input {
+    width: 100%;
+    max-width: 200px;
     height: 47px;
     border: none;
     border-radius: 5px;
@@ -164,8 +125,9 @@ button{
     text-indent: 20px;
 }
 
-select{
-    width: 200px;
+select {
+    width: 100%;
+    max-width: 200px;
     height: 47px;
     border: none;
     border-radius: 5px;
@@ -173,18 +135,17 @@ select{
     margin: 10px;
 }
 
-#admin_container{
+#admin_container {
     text-align: center;
 }
 
-
-#div_center{
+#div_center {
     margin: 70px;
     text-align: center;
     align-items: center;
 }
 
-#div_center button{
+#div_center button {
     padding: 30px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -192,7 +153,7 @@ select{
 .pagination {
     padding: 10px;
     display: inline-block;
-    position:relative;
+    position: relative;
     left: 50%;
     transform: translateX(-50%);
 }
@@ -230,48 +191,31 @@ select{
     color: #aaa;
 }
 
-.new_org{
+.new_org {
     align-items: center;
     text-align: center;
 }
 
-
-
-
-
-
-
-
-.container_val{
+.container_val {
     text-align: center;
     align-items: center;
-    padding-left: 100px;
-    padding-right: 100px;
+    padding: 0 100px;
 }
 
-.desc_offre{
+.desc_offre {
     background-color: #b9b9b9;
     border-radius: 10px;
     padding: 10px;
-    margin-left: 100px;
-    margin-right: 100px;
+    margin: 0 100px;
 }
 
-.description{
+.description {
     padding: 60px;
 }
 
-#offres{
+#offres, #fiches {
     flex: 1;
-    position: relative;
-    padding-left: 20px;
-    padding-bottom: 20px;
-}
-
-#fiches{
-    flex: 1;
-    padding-right: 20px;
-    padding-bottom: 20px;
+    padding: 0 20px 20px;
     position: relative;
 }
 
@@ -283,7 +227,82 @@ select{
     font-weight: bold;
 }
 
-.sort_offers{
+.sort_offers {
     color: #474BCA;
     background-color: white;
+}
+
+/* Responsive Styles */
+@media (max-width: 1200px) {
+    #toolbox {
+        margin: 50px;
+    }
+
+    .container_val, .desc_offre {
+        padding-left: 50px;
+        padding-right: 50px;
+        margin-left: 50px;
+        margin-right: 50px;
+    }
+}
+
+@media (max-width: 992px) {
+    #container {
+        flex-direction: column;
+    }
+
+    #toolbox {
+        margin: 20px;
+    }
+
+    .container_val, .desc_offre {
+        padding-left: 20px;
+        padding-right: 20px;
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    #div_center {
+        margin: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    #top_bar {
+        flex-direction: column;
+    }
+
+    #home_button, #recr, #account {
+        text-align: center;
+    }
+
+    .offer_button button {
+        width: 100%;
+        max-width: 200px;
+    }
+
+    #input_search input, select {
+        width: 100%;
+    }
+}
+
+@media (max-width: 576px) {
+    #label2, #label {
+        font-size: large;
+    }
+
+    button {
+        font-size: medium;
+    }
+
+    .offer_button button {
+        font-size: medium;
+    }
+
+    .desc_offre, .container_val {
+        margin-left: 10px;
+        margin-right: 10px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
 }

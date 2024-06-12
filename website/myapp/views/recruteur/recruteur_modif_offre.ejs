@@ -3,9 +3,11 @@
         <meta charset="utf-8">
         <title>Modifier Offre</title>
         <link rel="stylesheet" href="/stylesheets/connexion.css">
+        <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/min/moment.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/locale/fr.js"></script>
     </head>
     <body>
-        <div id="container_2">
+        <div id="container">
             <div id="titre">
                 <h1>Modifier Offre</h1>
             </div>
@@ -18,7 +20,7 @@
                                 <label for="date">Date Validité</label> <br>
                             </div>
                             <div id="input_form">
-                                <p>Date de validité actuelle : <%= offre.date_validite%></p>
+                                <p id="datetime">Date de validité actuelle : <%= offre.date_validite%></p>
                                 <input type="date" id="date" name="date" required>
                             </div>
                             <div id="label_form">
@@ -31,7 +33,25 @@
                         </form>
                     </div>
                 </div>  
+                <div id="column_d">
+                    <img src="/pictures/connexion.png" alt="Image d'illustration">
+                </div>
             </div>
         </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                formatDates();
+            });
+
+            function formatDates() {
+            moment.locale('fr');
+            const dateElement = document.querySelector('#datetime');
+            const datetimeString = dateElement.textContent.trim();
+            const formattedDate = moment(datetimeString.replace('Date de validité actuelle : ', '')).format('LLLL');
+            dateElement.textContent = "Date de validité actuelle : " + formattedDate;
+
+        }
+        </script>
+        
     </body>
 </html>
