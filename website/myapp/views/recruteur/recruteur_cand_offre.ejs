@@ -1,0 +1,48 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Candidatures offre</title>
+        <link rel="stylesheet" href="/stylesheets/main.css">
+    </head>
+    <body>
+        <div id="page">
+            <div id="top_bar">
+                <div id="home_button">
+                    <a href="/auth/login"><button id="menu">Menu</button></a>
+                </div>
+                <div id="account">
+                    <a href="/recruteur/recruteur_account"><button id="account">Mon compte</button></a>
+                </div>
+            </div>
+    
+            <div id="container">
+                <div id="offers">
+                    <div id="label">
+                        <label for="candidat">Espace Recruteur - Candidatures offre <%= num %></label>
+                    </div>
+                    <% users.forEach((user)=> { %>  
+                        <div id="off">
+                            <div class="entreprise">                                
+                                <h1><%= user.prenom + ' ' + user.nom%></h1>
+                            </div>
+                            <div class="desc">
+                                <p><%= user.email%></p>
+                                <p><%= user.num_tel%></p>
+                            </div>
+                            <div class="offer_button">
+                                <button onclick="details(this)" data-id="<%= user.id_utilisateur %>" data-num="<%= num %>">Plus de détails</button>
+                            </div>
+                        </div>
+                    <% }) %>
+                </div> 
+            </div>
+        </div>
+        <script>
+            function details(button) {
+                var id = button.getAttribute('data-id');
+                var num = button.getAttribute('data-num');
+                window.location.href = `/recruteur/details_candidature_user/${num}/${id}`;
+            };
+        </script>
+    </body>
+</html>

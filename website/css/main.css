@@ -1,0 +1,214 @@
+/*
+    border: black solid 2px;
+*/
+
+#page{
+    background-color: #F9E6E6;
+    font-family: 'Inter';
+    height: 100%;
+}
+
+#top_bar{
+    display: flex;
+}
+
+#container{
+    display: flex;
+}
+
+#home_button{
+    flex: 1;
+}
+
+#recr{
+    flex: 1;
+    text-align: center;
+}
+
+#account{
+    flex: 1;
+    text-align: right;
+}
+
+button{
+    background-color: #474BCA;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-family: 'Inter';
+    font-size: large;
+    font-weight: bold;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#offers{
+    flex: 1.1;
+    position: relative;
+}
+
+#box{
+    flex: 0.9;
+}
+
+#off{
+    background-color: #FFA3BE;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    margin: 10px;
+    display: flex;
+    align-items: center;
+}
+
+#off_img img{
+    width: 200px;
+    height: auto;
+    flex: 1;
+}
+
+.entreprise{
+    flex: 1;
+    text-align: center;
+}
+
+.desc{
+    flex: 1;
+    text-align: center;
+}
+
+.offer_button{
+    flex: 1;
+    text-align: center;
+}
+
+.offer_button button{
+    vertical-align: center;
+}
+
+#toolbox{
+    background-color: #474BCA;
+    margin: 100px;
+    padding: 20px;
+    color: white;
+    text-align: center;
+    border-radius: 50px;
+}
+
+#label{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-weight: bold;
+    font-size: xx-large;
+}
+
+#input_search{
+    padding-top: 10px;
+    padding-bottom: 30px;
+}
+
+#input_search input{
+    width: 200px;
+    height: 47px;
+    border: none;
+    border-radius: 5px;
+    font-family: 'Inter';
+    text-indent: 20px;
+}
+
+select{
+    width: 200px;
+    height: 47px;
+    border: none;
+    border-radius: 5px;
+    font-family: 'Inter';
+    margin: 10px;
+}
+
+#admin_container{
+    text-align: center;
+}
+
+
+#div_center{
+    margin: 70px;
+    text-align: center;
+    align-items: center;
+}
+
+#div_center button{
+    padding: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.pagination {
+    display: inline-block;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.pagination a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color .3s;
+}
+
+.pagination a.active {
+    background-color: #474BCA;
+    color: white;
+    border: 1px solid #474BCA;
+}
+
+.pagination a:hover:not(.active) {
+    background-color: #ddd;
+}
+
+.pagination .prev, .pagination .next {
+    background-color: #f1f1f1;
+    color: black;
+    border: 1px solid #ddd;
+}
+
+.pagination .prev:hover, .pagination .next:hover {
+    background-color: #ddd;
+}
+
+.pagination .disabled {
+    pointer-events: none;
+    color: #aaa;
+}
+
+.new_org{
+    align-items: center;
+    text-align: center;
+}
+
+
+
+
+
+
+
+
+.container_val{
+    text-align: center;
+    align-items: center;
+    padding-left: 100px;
+    padding-right: 100px;
+}
+
+.desc_offre{
+    background-color: #FFA3BE;
+    border-radius: 10px;
+}
+
+.description{
+    padding: 60px;
+}

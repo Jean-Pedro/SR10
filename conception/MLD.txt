@@ -1,0 +1,22 @@
+Utilisateur(#id_Utilisateur : int, email : str, nom : str, prenom : str, num_tel : str, date_creation : datetime, last_login : datetime, statut : bool, password : str (hash), role => Role)
+Role(#role : str);
+
+Candidat(#id_Candidat => Utilisateur);
+Recruteur(#id_Recruteur => Utilisateur, organisation => Organisation, etat_demande => Etat_demande);
+Administrateur(#id_Administrateur => Utilisateur);
+
+Etat_demande(#demande : str)
+Type_Organisation(#name : str);
+Organisation(#Siren : int, nom : str, siege_social => adresse, type => Type_Organisation, logo : str, etat_demande => Etat_demande);
+
+etat_offre(#etat : str);
+Offre_emploi(#num : int, date_validite : datetime, indications : text, date_depot : datetime, fiche => fiche_poste, etat => etat_offre);
+
+statut_poste(#statut : str);
+type_metier(#type : str);
+adresse(#id_lieu : int, num : int, rue : str, ville : str, code_postal : str);
+fiche_poste(#id_fiche : int, intitule : str, responsable_hierarchique : str, rythme_travail : float, teletravail : bool, salaire_min : float, salaire_max : float, descirption : text,
+		type => type_metier, statut => statut_poste, lieu => adresse, organisation => Organisation);
+
+Candidature(#id_c : int, date_candidature : datetime, offre => Offre_emploi, candidat => Candidat);
+Piece_dossier(#id_piece : int, type : str, candidature => Candidature, fichier : str);

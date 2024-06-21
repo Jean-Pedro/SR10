@@ -1,0 +1,48 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Demande Creation Organisation</title>
+        <link rel="stylesheet" href="/stylesheets/main.css">
+    </head>
+    <body>
+        <div id="page">
+            <div id="top_bar">
+                <div id="home_button">
+                    <a href="/auth/login"><button id="menu">Menu</button></a>
+                </div>
+                <div id="account">
+                    <a href="/users/mon_compte"><button id="account">Mon compte</button></a>
+                </div>
+            </div>
+            <div class="container_val">
+                <div class="desc_offre">
+                    <div class="entreprise">
+                        <h1><%= orga.nom %></h1>
+                        <div id="off_img">
+                            <img src="/uploads/<%=orga.logo%>" alt="Logo de l'entreprise">
+                        </div>
+                        <p>Numéro de Siren : <%= orga.siren %></p>
+                        <p>Type d'organisation : <%= orga.type %></p>
+                    </div>
+                    <div class="siege_social">
+                        <p>Adresse : <%= adresse.num %> <%=adresse.rue%></p>
+                        <p><%= adresse.code_postal%> <%= adresse.ville%></p>
+                        
+                    </div>
+                    <div>
+                        <p>Recruteurs :</p>
+                        <% recruteurs.forEach((recr)=> { %>  
+                            <p><%= recr.nom%> <%= recr.prenom%></p>
+                        <% }) %>
+                    </div>
+                    <div class="offer_button">
+                        <a href="/admin/validation_orga/<%= orga.siren %>"><button id="accepter">Accepter</button></a>
+                    </div>
+                    <div class="offer_button">
+                        <a href="/admin/refus_orga/<%= orga.siren %>"><button id="accepter">Refuser</button></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

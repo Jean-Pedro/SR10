@@ -1,0 +1,103 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Description Offre</title>
+        <link rel="stylesheet" href="/stylesheets/main.css">
+        <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/min/moment.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/locale/fr.js"></script>
+    </head>
+    <body>
+        <div id="page">
+            <div id="top_bar">
+                <div id="home_button">
+                    <a href="/auth/login"><button id="menu">Menu</button></a>
+                </div>
+                <div id="account">
+                    <a href="/users/mon_compte"><button id="account">Mon compte</button></a>
+                </div>
+            </div>
+            <div class="container_val">
+                <div class="desc_offre">
+                    <div class="entreprise">
+                        <h1><%= offre.nom %></h1>
+                        <p>Numéro de Siren : <%= offre.siren %></p>
+                        <p>Numéro de fiche de poste : <%= offre.id_fiche %></p>
+                        <p>Numéro de l'offre : <%= offre.num %></p>
+                    </div>
+                    <div class="description">
+                        <p>Type de l'entreprise : <%= offre.type %></p>
+                        <p>Intitulé du poste : <%= offre.intitule %></p>
+                        <p>Statut : <%= offre.statut %></p>
+                        <p>Descirption du poste : <%= offre.description %></p>
+                        <p>Indications : <%= offre.indications %></p>
+                        <p>Rythme de travail : <%= offre.rythme_travail %>h/semaine</p>
+                        <p id="teletravail">Télétravail : <%= offre.teletravail %></p>
+                        <p>Salaire : <%= offre.salaire_min %>€ - <%= offre.salaire_max %>€</p>
+                        <p id="datetime">Date de validité : <%= offre.date_validite%></p>
+                        <p id="date_hidden" style="display: none;"><%= offre.date_validite%></p>
+                        <p id="verif_hidden" style="display: none;"><%= verif %></p>
+                    </div>
+                    <div class="offer_button">
+                        <button onclick="candidater(this)">Candidater</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                formatDates();
+                filterExpired();
+                checkVerif();
+                formatTeletravail();
+            });
+
+            function checkVerif() {
+                const verifElement = document.querySelector('#verif_hidden');
+                const verifString = verifElement.textContent.trim();
+                
+                if (verifString !== '') {
+                    const candidatureButton = document.querySelector('.offer_button button');
+                    candidatureButton.style.display = 'none';
+                }
+            };
+
+
+            function formatDates() {
+                moment.locale('fr');
+                const dateElement = document.querySelector('#datetime');
+                const datetimeString = dateElement.textContent.trim();
+                const formattedDate = moment(datetimeString.replace('Date de validité : ', '')).format('LLLL');
+                dateElement.textContent = "Date limite de validité : " + formattedDate;
+
+            }
+
+            function formatTeletravail() {
+                const element = document.querySelector('#teletravail');
+                const elementString = element.textContent.trim().replace('Télétravail : ', '');
+                
+                if (elementString === '1') {
+                    element.textContent = 'Télétravail : oui';
+                } else if (elementString === '0') {
+                    element.textContent = 'Télétravail : non';
+                }
+            }
+
+            function filterExpired() {
+                const currentDate = moment();
+                const hiddenDateElement = document.querySelector('#date_hidden');
+                const hiddenDateString = hiddenDateElement.textContent.trim();
+                const hiddenDate = moment(hiddenDateString);
+                if (hiddenDate.isBefore(currentDate)) {
+                    const candidatureButton = document.querySelector('.offer_button button');
+                    candidatureButton.style.display = 'none';
+                }
+            }
+
+
+            function candidater(button) {
+                window.location.href = `/users/candidater/<%= offre.id_fiche %>/<%= offre.num %>`;
+            };
+        </script>
+    </body>
+</html>

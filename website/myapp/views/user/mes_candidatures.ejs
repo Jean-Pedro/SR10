@@ -1,0 +1,130 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Mes Candidatures</title>
+        <link rel="stylesheet" href="/stylesheets/main.css">
+        <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/min/moment.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/locale/fr.js"></script>
+    </head>
+    <body>
+        <div id="page">
+            <div id="top_bar">
+                <div id="home_button">
+                    <a href="/auth/login"><button id="menu">Menu</button></a>                
+                </div>
+                <div id="input_search">
+                    <button>
+                        <input type="checkbox" id="notValide" name="notValide">
+                        <p>Afficher également les candidatures expirées</p>
+                    </button>
+                </div>
+                <div id="account">
+                    <a href="/users/mon_compte"><button id="account">Mon compte</button></a>
+                </div>
+            </div>
+    
+            <div id="container">
+                <div id="offers">
+                    <div id="label">
+                        <label for="candidat">Mes candidatures</label>
+                    </div>
+                    <% offres.forEach((offre)=> { %>
+                    <div class="off" data-num="<%= offre.num %>">
+                        <div id="off_img">
+                            <img src="/uploads/<%=offre.logo%>" alt="Logo de l'entreprise">
+                        </div>
+                        <div class="entreprise">
+                            <h1><%= offre.nom%></h1>
+                            <p>Siren : <%= offre.siren%></p>
+                            <p>ID Candidature : <%= offre.id_c%></p>
+                            <p>Numéro de l'offre : <%= offre.num%></p>
+                        </div>
+                        <div class="desc">
+                            <p><%= offre.type + ' - ' + offre.statut%></p>
+                            <p><%= offre.description%></p>
+                            <p class="datetime">Date limite de l'offre : <%= offre.date_validite%></p>
+                            <p class="date_hidden" style="display: none;"><%= offre.date_validite%></p>
+                        </div>
+                        <div class="offer_button">
+                            <button class="modifCand">Modifier</button>
+                            <button class="supprCand">Supprimer</button>
+                        </div>
+                    </div>
+                    <% }) %>
+                </div>
+            </div>
+        </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                formatDates();
+                filterOffers();
+                document.getElementById('notValide').addEventListener('change', filterOffers);
+                document.querySelectorAll('.modifCand').forEach(button => {
+                    button.addEventListener('click', function() {
+                        modifCand(this);
+                    });
+                });
+                document.querySelectorAll('.supprCand').forEach(button => {
+                    button.addEventListener('click', function() {
+                        supprCand(this);
+                    });
+                });
+            });
+
+            function formatDates() {
+                moment.locale('fr');
+                const dateElements = document.querySelectorAll('.datetime');
+                dateElements.forEach(element => {
+                    const datetimeString = element.textContent.trim().replace("Date limite de l'offre : ", '');
+                    const formattedDate = moment(datetimeString).format('LLLL');
+                    element.textContent = `Date limite de l'offre : ${formattedDate}`;
+                });
+            }
+
+
+            function modifCand(button) {
+                var offreDiv = button.closest('.off');
+                var idCandidatureElement = offreDiv.querySelector('.entreprise > p:nth-child(3)');
+                var idCandidatureText = idCandidatureElement.textContent.trim();
+                var id_c = idCandidatureText.split('ID Candidature : ')[1];
+                var offreNum = offreDiv.getAttribute('data-num');
+                console.log(`/users/modif-cand/${id_c}`);
+                window.location.href = `/users/modif-cand/${id_c}/${offreNum}`;
+            };
+
+            function supprCand(button) {
+                var offreDiv = button.closest('.off');
+                var idCandidatureElement = offreDiv.querySelector('.entreprise > p:nth-child(3)');
+                var idCandidatureText = idCandidatureElement.textContent.trim();
+                var id_c = idCandidatureText.split('ID Candidature : ')[1];
+                console.log(`/users/verif_suppr/${id_c}`);
+                window.location.href = `/users/verif_suppr/${id_c}`;
+            }
+
+            function filterOffers() {
+                const notValide = document.getElementById('notValide').checked;
+                const currentDate = moment();
+
+                const offers = document.querySelectorAll('.off');
+
+                offers.forEach(offer => {
+                    const dateValidite = moment(offer.querySelector('.date_hidden').textContent.trim());
+                    const isExpired = dateValidite.isBefore(currentDate, 'day');
+
+                    let isVisible = true;
+
+                    if (!notValide && isExpired) {
+                        isVisible = false;
+                    }
+
+                    offer.style.display = isVisible ? '' : 'none';
+
+                    const buttons = offer.querySelectorAll('.offer_button > button');
+                    buttons.forEach(button => {
+                        button.style.display = isExpired ? 'none' : '';
+                    });
+                });
+            }
+        </script>
+    </body>
+</html>

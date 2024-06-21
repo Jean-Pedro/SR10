@@ -1,0 +1,111 @@
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <title>Modifier Mot de Passe</title>
+        <link rel="stylesheet" href="/stylesheets/connexion.css">
+    </head>
+    <body>
+        <div id="container_2">
+            <div id="titre">
+                <h1>Modifier mot de passe</h1>
+            </div>
+            
+            <div id="case">
+                <div id="column_g">
+                    <div id="formulaire">
+                        <form action="/users/update_mdp" method="post">
+                            <div id="label_form">
+                                <label for="old_password">Ancien mot de passe</label> <br>
+                            </div>
+                            <div id="input_form">
+                                <input type="password" id="old_password" name="old_password" required>
+                            </div>
+                            <div class="error">
+                                <p><%= error_old_pwd %></p>
+                            </div>
+                            <div id="label_form">
+                                <label for="new_password">Nouveau mot de passe</label> <br>
+                            </div>
+                            <div id="input_form">
+                                <input type="password" id="new_password" name="new_password" required>
+                                <div id="new_password-errors" class="error"></div>
+                            </div>
+                            <div id="label_form">
+                                <label for="new_password2">Ré-entrez votre nouveau mot de passe</label> <br>
+                            </div>
+                            <div id="input_form">
+                                <input type="password" id="new_password2" name="new_password2" required>
+                                <div id="new_password2-errors" class="error"></div>
+                            </div>
+                            <div class="error">
+                                <p><%= error_new_pwd %></p>
+                            </div>
+                            <button id="submit" type="submit">Modifier</button>
+                        </form>
+                    </div>
+                </div>
+                <div id="column_d">
+                    <img src="/pictures/connexion.png" alt="Image d'illustration">
+                </div>    
+            </div>
+        </div>
+        <script>
+            function validatePasswordRealTime() {
+                        const password = document.getElementById("new_password").value;
+                        const password2 = document.getElementById("new_password2").value;
+                        const errorContainer = document.getElementById("new_password-errors");
+                        const confirmErrorContainer = document.getElementById("new_password2-errors");
+                        let errorMessages = [];
+                        let confirmErrorMessages = [];
+            
+                        const minLength = 12;
+                        const uppercasePattern = /[A-Z]/;
+                        const lowercasePattern = /[a-z]/;
+                        const numberPattern = /[0-9]/;
+                        const specialCharPattern = /[!@#\$%\^&\*\(\)_\+\-=\[\]\{\};':"\\|,.<>\/?]+/;
+            
+                        if (password.length < minLength) {
+                            errorMessages.push("Le mot de passe doit contenir au moins 12 caractères.");
+                        }
+                        if (!uppercasePattern.test(password)) {
+                            errorMessages.push("Le mot de passe doit contenir au moins une lettre majuscule.");
+                        }
+                        if (!lowercasePattern.test(password)) {
+                            errorMessages.push("Le mot de passe doit contenir au moins une lettre minuscule.");
+                        }
+                        if (!numberPattern.test(password)) {
+                            errorMessages.push("Le mot de passe doit contenir au moins un chiffre.");
+                        }
+                        if (!specialCharPattern.test(password)) {
+                            errorMessages.push("Le mot de passe doit contenir au moins un caractère spécial.");
+                        }
+                        if (password !== password2 && password2 !== "") {
+                            confirmErrorMessages.push("Les mots de passe ne correspondent pas.");
+                        }
+            
+                        errorContainer.innerHTML = errorMessages.join("<br>");
+                        confirmErrorContainer.innerHTML = confirmErrorMessages.join("<br>");
+
+                        updateSubmitButtonState();
+
+                    }
+
+                    function updateSubmitButtonState() {
+                        const errorContainer = document.getElementById("new_password-errors");
+                        const confirmErrorContainer = document.getElementById("new_password2-errors");
+                        const submitButton = document.getElementById("submit");
+
+                        if (errorContainer.innerHTML || confirmErrorContainer.innerHTML) {
+                            submitButton.disabled = true;
+                        } else {
+                            submitButton.disabled = false;
+                        }
+                    }
+            
+                    document.addEventListener("DOMContentLoaded", function() {
+                        document.getElementById("new_password").addEventListener("input", validatePasswordRealTime);
+                        document.getElementById("new_password2").addEventListener("input", validatePasswordRealTime);
+                    });
+        </script>
+    </body>
+</html>

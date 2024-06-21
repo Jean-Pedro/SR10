@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Recrutement</title>
+    <link rel="stylesheet" href="/stylesheets/main.css">
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/min/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/locale/fr.js"></script>
+</head>
+<body>
+    <div id="page">
+        <div id="top_bar">
+            <div id="home_button">
+                <a href="/auth/login"><button id="menu">Menu</button></a>
+            </div>
+            <div id="recr">
+                <a href="/candidat/devenir_recruteur"><button id="devenir_recruteur">Devenir recruteur</button></a>
+                <a href="/recruteur/recruteur_recr"><button id="recrutur">Recruter</button></a>
+            </div>
+            <div id="account">
+                <a href="/users/mes_candidatures"><button id="cand">Mes candidatures</button></a>
+                <a href="/users/mon_compte"><button id="account">Mon compte</button></a>
+            </div>
+        </div>
+
+        <div id="container">
+            <div id="offers">
+                <div id="label">
+                    <label for="candidat">Espace Recrutement</label>
+                </div>
+                <% offres.forEach((offre) => { %>
+                    <div class="off" data-salary="<%= offre.salaire %>">
+                        <div class="off_img">
+                            <img src="/uploads/<%= offre.logo %>" alt="Logo de l'entreprise">
+                        </div>
+                        <div class="entreprise">
+                            <h1><%= offre.nom %></h1>
+                            <p>Siren : <%= offre.siren %></p>
+                            <p class="ville">Ville : <%=offre.ville%></p>
+                            <p>Numéro de fiche de poste : <%= offre.id_fiche %></p>
+                            <p>Numéro de l'offre : <%= offre.num %></p>
+                        </div>
+                        <div class="desc">
+                            <p><%= offre.type + ' - ' + offre.intitule %></p>
+                            <p><%= offre.description %></p>
+                            <p class="datetime"><%= offre.date_validite %></p>
+                            <p class="date_hidden" style="display: none;"><%= offre.date_validite %></p>
+                            <p class="date_depot" style="display: none;"><%= offre.date_depot %></p>
+                            <p class="salaire" style="display: none;"><%=offre.salaire_min%></p>
+                        </div>
+                        <div class="offer_button">
+                            <button onclick="openOffre(this)">Plus d'infos</button>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+
+            <div id="box">
+                <div id="toolbox">
+                    <div id="search">
+                        <div id="label">
+                            <label for="post_search">Rechercher par poste</label><br>
+                        </div>
+                        <div id="input_search">
+                            <input type="text" id="post_search" name="post_search" placeholder="Rechercher..." required>
+                        </div>
+                        <div id="label">
+                            <label for="locate_search">Rechercher par ville</label><br>
+                        </div>
+                        <div id="input_search">
+                            <input type="text" id="locate_search" name="locate_search" placeholder="Paris, ..." required>
+                        </div>
+                    </div>
+                    <div id="label">
+                        <label for="filter">Filtrer par salaire</label>
+                    </div>
+                    <div id="input_search">
+                        <input type="number" id="salaire_min" name="salaire_min" placeholder="Salaire minimum">
+                    </div>
+                    <div id="sort">
+                        <button class="sort_offers" id="sort_validite">Trier par date de validité</button>
+                        <button class="sort_offers" id="sort_depot">Trier par date de dépôt</button>
+                    </div>
+                    <div id="input_search">
+                        <input type="checkbox" id="notValide" name="notValide">
+                        <p>Afficher également les offres expirées</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            formatDates();
+            filterOffers();
+            hideButtonsBasedOnRole();
+            document.getElementById('sort_validite').addEventListener('click', sortOffersByDate);
+            document.getElementById('sort_depot').addEventListener('click', sortOffersByDepositDate);
+            document.getElementById('post_search').addEventListener('input', filterOffers);
+            document.getElementById('locate_search').addEventListener('input', filterOffers);
+            document.getElementById('salaire_min').addEventListener('input', filterOffers);
+            document.getElementById('notValide').addEventListener('change', filterOffers);
+        });
+
+        function openOffre(button) {
+            var offreDiv = button.closest('.off');
+            var idCandidatureElement = offreDiv.querySelector('.entreprise > p:last-child');
+            var idCandidatureText = idCandidatureElement.textContent.trim();
+            var num = idCandidatureText.split("Numéro de l'offre : ")[1];
+            window.location.href = `/users/voir-offre/${num}`;
+        }
+
+        function filterOffers() {
+            const postSearch = document.getElementById('post_search').value.toLowerCase();
+            const locateSearch = document.getElementById('locate_search').value.toLowerCase();
+            const salaireMin = parseFloat(document.getElementById('salaire_min').value);
+            const notValide = document.getElementById('notValide').checked;
+            const currentDate = moment();
+
+            const offers = document.querySelectorAll('.off');
+
+            offers.forEach(offer => {
+                const post = offer.querySelector('.desc').textContent.toLowerCase();
+                const location = offer.querySelector('.ville').textContent.toLowerCase();
+                const salary = offer.querySelector('.salaire').textContent;
+                const dateValidite = moment(offer.querySelector('.date_hidden').textContent.trim());
+                const isExpired = dateValidite.isBefore(currentDate, 'day');
+
+                let isVisible = true;
+
+                if (postSearch && !post.includes(postSearch)) {
+                    isVisible = false;
+                }
+
+                if (locateSearch && !location.includes(locateSearch)) {
+                    isVisible = false;
+                }
+
+                if (!isNaN(salaireMin) && salary < salaireMin) {
+                    isVisible = false;
+                }
+
+                if (!notValide && isExpired) {
+                    isVisible = false;
+                }
+
+                offer.style.display = isVisible ? '' : 'none';
+            });
+        }
+
+        function formatDates() {
+            moment.locale('fr');
+            const dateElements = document.querySelectorAll('.datetime');
+            dateElements.forEach(element => {
+                const datetimeString = element.textContent.trim();
+                const formattedDate = moment(datetimeString).format('LLLL');
+                element.textContent = formattedDate;
+            });
+        }
+
+        function hideButtonsBasedOnRole() {
+            const userRole = '<%= role %>';
+            if (userRole === 'recruteur') {
+                document.querySelector('a[href="/candidat/devenir_recruteur"]').style.display = 'none';
+            } else if (userRole === 'candidat') {
+                document.querySelector('a[href="/recruteur/recruteur_recr"]').style.display = 'none';
+            }
+        }
+
+        function sortOffersByDate() {
+            const offersContainer = document.getElementById('offers');
+            const offers = Array.from(offersContainer.querySelectorAll('.off'));
+            offers.sort((a, b) => {
+                const dateA = moment(a.querySelector('.date_hidden').textContent.trim());
+                const dateB = moment(b.querySelector('.date_hidden').textContent.trim());
+                return dateA - dateB;
+            });
+            offers.forEach(offer => offersContainer.appendChild(offer));
+        }
+
+        function sortOffersByDepositDate() {
+            const offersContainer = document.getElementById('offers');
+            const offers = Array.from(offersContainer.querySelectorAll('.off'));
+            offers.sort((a, b) => {
+                const dateA = moment(a.querySelector('.date_depot').textContent.trim());
+                const dateB = moment(b.querySelector('.date_depot').textContent.trim());
+                return dateA - dateB;
+            });
+            offers.forEach(offer => offersContainer.appendChild(offer));
+        }
+    </script>
+</body>
+</html>

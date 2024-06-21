@@ -1,0 +1,314 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height: auto;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+#page {
+    background-color: #F9E6E6;
+    font-family: 'Inter';
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+#top_bar {
+    display: flex;
+    padding: 10px;
+}
+
+#container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#home_button, #recr, #account {
+    flex: 1;
+}
+
+#recr {
+    text-align: center;
+}
+
+#account {
+    text-align: right;
+}
+
+button {
+    background-color: #474BCA;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-family: 'Inter';
+    font-size: large;
+    font-weight: bold;
+    padding: 10px 20px;
+    margin: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#label2 {
+    padding: 10px 20px;
+    font-weight: bold;
+    font-size: xx-large;
+}
+
+#offers {
+    flex: 1.1;
+    position: relative;
+    padding: 20px;
+}
+
+#box {
+    flex: 0.9;
+}
+
+#off, .off {
+    background-color: #b9b9b9;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    margin: 10px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+#off_img img, .off_img img {
+    width: 200px;
+    height: auto;
+    flex: 1;
+}
+
+.entreprise, .desc, .offer_button {
+    flex: 1;
+    text-align: center;
+}
+
+.offer_button button {
+    vertical-align: center;
+}
+
+#toolbox {
+    background-color: #474BCA;
+    margin: 100px;
+    padding: 20px;
+    color: white;
+    text-align: center;
+    border-radius: 50px;
+}
+
+#label {
+    padding: 10px;
+    font-weight: bold;
+    font-size: xx-large;
+}
+
+#input_search {
+    padding: 10px 0 30px;
+}
+
+#input_search input {
+    width: 100%;
+    max-width: 200px;
+    height: 47px;
+    border: none;
+    border-radius: 5px;
+    font-family: 'Inter';
+    text-indent: 20px;
+}
+
+select {
+    width: 100%;
+    max-width: 200px;
+    height: 47px;
+    border: none;
+    border-radius: 5px;
+    font-family: 'Inter';
+    margin: 10px;
+}
+
+#admin_container {
+    text-align: center;
+}
+
+#div_center {
+    margin: 70px;
+    text-align: center;
+    align-items: center;
+}
+
+#div_center button {
+    padding: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.pagination {
+    padding: 10px;
+    display: inline-block;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.pagination a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color .3s;
+}
+
+.pagination a.active {
+    background-color: #474BCA;
+    color: white;
+    border: 1px solid #474BCA;
+}
+
+.pagination a:hover:not(.active) {
+    background-color: #ddd;
+}
+
+.pagination .prev, .pagination .next {
+    background-color: #f1f1f1;
+    color: black;
+    border: 1px solid #ddd;
+}
+
+.pagination .prev:hover, .pagination .next:hover {
+    background-color: #ddd;
+}
+
+.pagination .disabled {
+    pointer-events: none;
+    color: #aaa;
+}
+
+.new_org {
+    align-items: center;
+    text-align: center;
+}
+
+.container_val {
+    text-align: center;
+    align-items: center;
+    padding: 0 100px;
+}
+
+.desc_offre {
+    background-color: #b9b9b9;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 0 100px;
+}
+
+.description {
+    padding: 60px;
+}
+
+#offres{
+    flex: 1.2;
+    padding: 0 20px 20px;
+    position: relative;
+}
+
+#fiches {
+    flex: 0.8;
+    padding: 0 20px 20px;
+    position: relative;
+}
+
+.error p {
+    color: red;
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+}
+
+.sort_offers {
+    color: #474BCA;
+    background-color: white;
+}
+
+/* Responsive Styles */
+@media (max-width: 1200px) {
+    #toolbox {
+        margin: 50px;
+    }
+
+    .container_val, .desc_offre {
+        padding-left: 50px;
+        padding-right: 50px;
+        margin-left: 50px;
+        margin-right: 50px;
+    }
+}
+
+@media (max-width: 992px) {
+    #container {
+        flex-direction: column;
+    }
+
+    #toolbox {
+        margin: 20px;
+    }
+
+    .container_val, .desc_offre {
+        padding-left: 20px;
+        padding-right: 20px;
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    #div_center {
+        margin: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    #top_bar {
+        flex-direction: column;
+    }
+
+    #home_button, #recr, #account {
+        text-align: center;
+    }
+
+    .offer_button button {
+        width: 100%;
+        max-width: 200px;
+    }
+
+    #input_search input, select {
+        width: 100%;
+    }
+}
+
+@media (max-width: 576px) {
+    #label2, #label {
+        font-size: large;
+    }
+
+    button {
+        font-size: medium;
+    }
+
+    .offer_button button {
+        font-size: medium;
+    }
+
+    .desc_offre, .container_val {
+        margin-left: 10px;
+        margin-right: 10px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}

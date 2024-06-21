@@ -1,0 +1,111 @@
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <title>Modifier Fiche</title>
+        <link rel="stylesheet" href="/stylesheets/connexion.css">
+    </head>
+    <body>
+        <div id="container">
+            <div id="titre">
+                <h1>Modifier Fiche</h1>
+            </div>
+            
+            <div id="case">
+                <div id="column_g">
+                    <div id="formulaire">
+                        <form action="/recruteur/confirm_modif_fiche/<%=id_fiche%>" method="post">
+                            <div id="label_form">
+                                <label for="intitule">Intitulé</label> <br>
+                            </div>
+                            <div id="input_form">
+                                <input type="text" id="intitule" name="intitule" value="<%=fiche.intitule%>" required>
+                            </div>
+                            <div id="label_form">
+                                <label for="resp">Responsable Hierarchique</label> <br>
+                            </div>
+                            <div id="input_form">
+                                <input type="text" id="resp" name="resp" value="<%=fiche.resp_hierarchique%>" required>
+                            </div>
+                            <div id="label_form">
+                                <label for="rythme">Rythme de travail</label> <br>
+                            </div>
+                            <div id="input_form">
+                                <input type="number" id="rythme" name="rythme" value="<%=fiche.rythme_travail%>" required>
+                            </div>
+                            <div id="label_form">
+                                <label for="teletravail">Télétravail</label> <br>
+                            </div>
+                            <div id="input_form">
+                                <input type="number" id="teletravail" name="teletravail" value="<%=fiche.teletravail%>" required>
+                            </div>
+                            <div id="label_form">
+                                <label for="sal_min">Salaire minimum</label> <br>
+                            </div>
+                            <div id="input_form">
+                                <input type="number" step="0.01" id="sal_min" name="sal_min" value="<%=fiche.salaire_min%>" required>
+                            </div>
+                            <div id="label_form">
+                                <label for="sal_max">Salaire maximum</label> <br>
+                            </div>
+                            <div id="input_form">
+                                <input type="number" step="0.01" id="sal_max" name="sal_max" value="<%=fiche.salaire_max%>" required>
+                            </div>
+                            <div id="label_form">
+                                <label for="desc">Description</label> <br>
+                            </div>
+                            <div id="input_form">
+                                <input type="text" id="desc" name="desc" value="<%=fiche.description%>" required>
+                            </div>
+                            <div id="label_form">
+                                <label for="type">Type de poste</label> <br>
+                            </div>
+                            <div id="input_form">
+                                <input type="text" id="type" name="type" value="<%=fiche.type%>" required>
+                            </div>
+                            <div id="label_form">
+                                <label for="statut">Statut du poste</label> <br>
+                            </div>
+                            <div id="input_form">
+                                <input type="text" id="statut" name="statut" value="<%=fiche.statut%>" required>
+                            </div>
+                            <div id="label_form">
+                                <label for="adr">Numéro de l'adresse</label> <br>
+                            </div>
+                            <div id="input_form">
+                                <input type="number" id="num" name="num" value="<%=adresse.num%>" required>
+                            </div>
+                            <div id="label_form">
+                                <label for="adr">Rue de l'adresse</label> <br>
+                            </div>
+                            <div id="input_form">
+                                <input type="text" id="rue" name="rue" value="<%=adresse.rue%>" required>
+                            </div>
+                            <div id="label_form">
+                                <label for="adr">Ville</label> <br>
+                            </div>
+                            <div id="input_form">
+                                <input type="text" id="ville" name="ville" value="<%=adresse.ville%>" required>
+                            </div>
+                            <div id="label_form">
+                                <label for="adr">Code postal</label> <br>
+                            </div>
+                            <div id="input_form">
+                                <input type="text" id="code_postal" name="code_postal" value="<%=adresse.code_postal%>" required>
+                            </div>
+                            <div id="input_form">
+                                <input type="hidden" id="orga" name="orga" value="<%=fiche.organisation%>" required>
+                            </div>
+                            <div id="input_form">
+                                <input type="hidden" id="adresse" name="adresse" value="<%=fiche.lieu%>" required>
+                            </div>
+                            <button id="submit" type="submit">Modifier</button>
+                        </form>
+                    </div>
+                </div> 
+                <div id="column_d">
+                    <img src="/pictures/connexion.png" alt="Image d'illustration">
+                </div> 
+            </div>
+        </div>
+    </body>
+</html>

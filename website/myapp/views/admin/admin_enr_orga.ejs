@@ -1,0 +1,85 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Validation d'organisation</title>
+        <link rel="stylesheet" href="/stylesheets/main.css">
+    </head>
+    <body>
+        <div id="page">
+            <div id="top_bar">
+                <div id="home_button">
+                    <a href="/auth/login"><button id="menu">Menu</button></a>
+                </div>
+                <div id="input_search">
+                    <button>
+                        <input type="checkbox" id="notWaiting" name="notWaiting" onchange="toggleValidatedRefused()">
+                        <p>Afficher également les demandes validées/refusées</p>
+                    </button>
+                </div>
+                <div id="account">
+                    <a href="/users/mon_compte"><button id="account">Mon compte</button></a>
+                </div>
+            </div>
+    
+            <div id="container">
+                <div id="offers">
+                    <div id="label">
+                        <label>Espace Administrateur - Validation Organisations</label>
+                    </div>        
+                    <% orgas.forEach((orga)=> { %>
+                        <div id="off" data-etat="<%= orga.etat_demande %>">
+                            <div id="off_img">
+                                <img src="/uploads/<%=orga.logo%>" alt="Logo de l'entreprise">
+                            </div>
+                            <div class="entreprise">                                
+                                <h1><%= orga.nom%></h1>
+                                <p>Siren : <%= orga.siren%></p>
+                            </div>
+                            <div class="desc">
+                                <p>Type d'organisation : <%= orga.type%></p>
+                                <p><%= orga.etat_demande %></p>
+                            </div>
+                            <div class="offer_button">
+                                <button onclick="openDemandeOrga(this)">Plus de détails</button>
+                            </div>
+                        </div>
+                    <% }) %>
+                </div>
+            </div>
+        </div>
+        <script>
+            function openDemandeOrga(button) {
+                var offreDiv = button.closest('#off');
+                var idCandidatureElement = offreDiv.querySelector('.entreprise > p:last-child');
+                var siren = idCandidatureElement.textContent.trim().replace('Siren : ', '');
+                console.log(`/candidat/voir-offre/${siren}`);
+                window.location.href = `/admin/valide_orga/${siren}`;
+            }
+
+            function toggleValidatedRefused() {
+                var checkBox = document.getElementById('notWaiting').checked;
+                var offres = document.querySelectorAll('#off');
+
+                offres.forEach(offer => {
+                    var etat = offer.getAttribute('data-etat');
+                    var isVisible = true;
+
+                    if (!checkBox && (etat === 'acceptée' || etat === 'refusée')) {
+                        isVisible = false;
+                    }
+
+                    offer.style.display = isVisible ? '' : 'none';
+
+                    var buttons = offer.querySelectorAll('.offer_button > button');
+                    buttons.forEach(button => {
+                        button.style.display = (etat === 'acceptée' || etat === 'refusée') ? 'none' : '';
+                    });
+                });
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+                toggleValidatedRefused();
+            });
+        </script>
+    </body>
+</html>

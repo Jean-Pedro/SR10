@@ -1,0 +1,224 @@
+body {
+    background-color: white;
+    font-family: 'Inter';
+}
+
+#container, #container_2 {
+    padding: 20px;
+    background-color: #F9E6E6;
+    justify-content: center;
+    align-items: center;
+    margin: 50px;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    overflow: hidden; /* Prevent overflow */
+}
+
+#container {
+    margin-left: 200px;
+    margin-right: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 85vh;
+    box-sizing: border-box;
+}
+
+#container_2 {
+    margin-top: 0px;
+    height: 100%;
+}
+
+#case {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px;
+    background-color: #F9E6E6;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    margin: 0; /* Ensure no extra margin */
+    overflow: hidden; /* Prevent overflow */
+}
+
+#case > * {
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+#titre {
+    flex: none;
+    text-align: center;
+}
+
+#column_g, #column_d {
+    flex: 1;
+    text-align: left;
+    margin: 20px;
+}
+
+#column_d img {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+}
+
+#formulaire {
+    padding: 10px;
+    margin: 50px;
+}
+
+#label_form {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-weight: bold;
+}
+
+#input_form {
+    padding-top: 10px;
+    padding-bottom: 30px;
+}
+
+#button_compte {
+    font-size: small;
+}
+
+#formulaire h1 {
+    color: #474BCA;
+    font-size: xx-large;
+}
+
+#formulaire p {
+    font-size: large;
+}
+
+#input_form input {
+    background-color: #b9b9b9;
+    width: 100%;
+    max-width: 545px;
+    height: 47px;
+    border: none;
+    border-radius: 5px;
+    font-family: 'Inter';
+    padding: 10px;
+}
+
+#submit {
+    margin-top: 20px;
+    background-color: #474BCA;
+    color: white;
+    width: 100%;
+    max-width: 545px;
+    height: 47px;
+    border: none;
+    border-radius: 5px;
+    font-family: 'Inter';
+    font-size: large;
+    font-weight: bold;
+}
+
+#inscription, .entreprise, .desc {
+    text-align: center;
+    margin-right: 0px;
+    margin: 20px;
+}
+
+input[type=file]::file-selector-button {
+    margin-right: 8px;
+    background: #b9b9b9;
+    color: #fff;
+    cursor: pointer;
+}
+
+input[type=file]:focus {
+    outline: 5px dashed #000;
+    outline-offset: 2px;
+}
+
+input[type=file]::file-selector-button:hover {
+    background: #0d45a5;
+}
+
+button {
+    background-color: #474BCA;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-family: 'Inter';
+    font-size: large;
+    font-weight: bold;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.content {
+    text-align: center;
+    align-items: center;
+    height: 100%;
+    padding-top: 150px;
+}
+
+.error p {
+    color: red;
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+}
+
+/* Responsive Styles */
+@media (max-width: 1200px) {
+    #container, #container_2 {
+        margin-left: 100px;
+        margin-right: 100px;
+    }
+}
+
+@media (max-width: 992px) {
+    #container, #container_2 {
+        margin-left: 50px;
+        margin-right: 50px;
+    }
+
+    #case {
+        flex-direction: column;
+    }
+
+    #column_d {
+        margin-left: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    #container, #container_2 {
+        margin: 20px;
+    }
+
+    #input_form input, #submit, #input_form input[type="radio"] {
+        width: 100%;
+    }
+}
+
+@media (max-width: 576px) {
+    #container, #container_2 {
+        margin: 10px;
+    }
+
+    #formulaire h1 {
+        font-size: large;
+    }
+
+    #formulaire p {
+        font-size: medium;
+    }
+
+    button {
+        font-size: medium;
+    }
+}

@@ -1,0 +1,97 @@
+@startuml usecase
+
+left to right direction
+rectangle use_case_g_gestion{
+"gestion des offres" as (f1)
+"gestion des candidatures" as (f2)
+"gestion des utilisateurs" as (f3)
+"gestion des connexions" as (f4.5)
+}
+
+
+rectangle use_case_gestion_utilisateurs{
+"visualisation des demandes validées ou refusées" as (f8)
+"visualisation des comptes" as (f9)
+"modification et suppression des comptes" as (f10)
+"attribution du rôle d'administrateur" as (f11)
+}
+
+
+rectangle use_case_gestion_offre{
+"visualisation des offres valides de l'organisation" as (f15)
+"visualisation des offres expirées de l'organisation" as (f15.5)
+"poster une offre" as (f16)
+"modifier ou supprimer une offre" as (f17)
+"visualiser les offres" as (f18)
+"trier les offres" as (f19)
+"filtrer les offres" as (f20)
+}
+
+
+rectangle use_case_gestion_candidatures{
+"valider les demandes" as (f6)
+"refuser les demandes" as (f7)
+"visualiser les candidatures à une offre" as (f21)
+"accepter la candidature" as (f22)
+"refuser la candidature" as (f23)
+"télécharger le dossier" as (f24)
+"candidater à une offre" as (f25)
+"visualiser ses candidatures" as (f26)
+"modifier ses candidatures" as (f27)
+"supprimer ses candidatures" as (f28)
+"demander à rejoindre une organisation en tant que recruteur" as (f29)
+"demander à créer une organisation" as (f33)
+}
+
+
+rectangle use_case_gestion_connexions{
+"se connecter" as (f30)
+"s'inscrire" as (f31)
+"vérifier que le mot de passe est conforme" as (f32)
+}
+
+
+(f29) ..> (f6) : include
+(f29) ..> (f7) : include
+(f9) ..> (f10) : extends
+(f33) ..> (f6) : include
+(f33) ..> (f7) : include
+(f15) ..> (f17) : extends
+(f18) ..> (f19) : extends
+(f18) ..> (f20) : extends
+(f26) ..> (f27) : extends
+(f26) ..> (f28) : extends
+(f21) ..> (f22) : include
+(f21) ..> (f23) : include
+(f31) ..> (f32) : include
+(f9) ..> (f11) : extends
+
+:Recruteur: -> :Candidat:
+:Candidat: --> (f1)
+:Candidat: --> (f2)
+:Recruteur: --> (f1)
+:Recruteur: --> (f2)
+:Administrateur: --> (f3)
+:Utilisateur non connecté: --> (f4.5)
+:Administrateur : --> (f6)
+:Administrateur : --> (f7)
+:Administrateur  : --> (f8)
+:Administrateur  : --> (f9)
+:Candidat : --> (f18)
+:Recruteur : -> :Candidat :
+:Recruteur : --> (f15)
+:Recruteur : --> (f15.5)
+:Recruteur : --> (f16)
+:Recruteur  : -> :Candidat  :
+:Candidat  : --> (f25)
+:Candidat  : --> (f26)
+:Candidat  : --> (f29)
+:Candidat  : --> (f33)
+:Recruteur  : --> (f21)
+:Recruteur  : --> (f24)
+:Utilisateur non connecté : --> (f30)
+:Utilisateur non connecté : --> (f31)
+
+
+
+@enduml

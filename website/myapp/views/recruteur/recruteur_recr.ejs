@@ -1,0 +1,177 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Recruter</title>
+        <link rel="stylesheet" href="/stylesheets/main.css">
+        <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/min/moment.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/locale/fr.js"></script>
+    </head>
+    <body>
+        <div id="page">
+            <div id="top_bar">
+                <div id="home_button">
+                    <a href="/auth/login"><button id="menu">Menu</button></a>
+                </div>
+                <div id="recr">
+                    <a href="/recruteur/recruteur_menu_offres"><button>Gérer les Offres/Fiches de Poste</button></a>    
+                </div>
+                <div id="account">
+                    <a href="/users/mon_compte"><button id="account">Mon compte</button></a>
+                </div>
+            </div>
+    
+            <div id="container">
+                <div id="offres">
+                    <div id="label">
+                        <p>Liste des offres</p>
+                        <div id="input_search">
+                            <button>
+                                <input type="checkbox" id="notValide" name="notValide">
+                                <p>Afficher également les offres expirées</p>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <% offres.forEach((offre)=> { %>
+                    <div id="off">
+                        <div id="off_img">
+                            <img src="/uploads/<%=offre.logo%>" alt="Logo de l'entreprise">
+                        </div>
+                        <div class="entreprise">
+                            <h1><%= offre.nom%></h1>
+                                <p>Siren : <%= offre.siren%></p>
+                                <p>Numéro de fiche de poste : <%= offre.id_fiche %></p>
+                                <p>Numéro de l'offre : <%= offre.num %></p>
+                        </div>
+                        <div class="desc">
+                            <p><%= offre.type + ' - ' + offre.intitule%></p>
+                            <p><%= offre.description%></p>
+                            <p class="datetime">Date limite de l'offre : <%= offre.date_validite%></p>
+                            <p class="date_hidden" style="display: none;"><%= offre.date_validite%></p>
+                        </div>
+                        <div class="offer_button">
+                            <button onclick="openCandidatures(this)">Voir les candidatures</button>
+                            <button onclick="modifOffre(this)">Modifier l'offre</button>
+                            <button onclick="supprOffre(this)">Supprimer l'offre</button>
+                        </div>
+                         
+                    </div>
+                    <% }) %>
+                </div>
+                <div id="fiches">
+                    <div id="label">
+                        <p>Liste des fiches de poste</p>
+                    </div>
+                    <% fiches.forEach((fiche)=> { %>
+                    <div id="off">
+                        <div class="entreprise">
+                            <h1><%=fiche.organisation%></h1>
+                            <p><%= fiche.intitule%></p>
+                            <p>Id fiche : <%= fiche.id_fiche%></p>
+                        </div>
+                        <div class="desc">
+                            <p>Type de métier : <%=fiche.type%></p>
+                            <p>Statut du poste : <%=fiche.statut%></p>
+                            <p>Responsable : <%=fiche.resp_hierarchique%></p>
+                            <p>Rythme : <%=fiche.rythme_travail%></p>
+                            <p>Teletravail : <%=fiche.teletravail%></p>
+                            <p>Salaire : <%=fiche.salaire_min%> - <%=fiche.salaire_max%></p>
+                            <p>Description : <%=fiche.description%></p>
+                        </div>
+                        <div class="offer_button">
+                            <button onclick="modifFiche(this)">Modifier</button>
+                            <button onclick="supprFiche(this)">Supprimer</button>
+                        </div>
+                            
+                    </div>
+                    <% }) %>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                formatDates();
+                filterOffers();
+                document.getElementById('notValide').addEventListener('change', filterOffers);
+            });
+
+
+            function formatDates() {
+                moment.locale('fr');
+                const dateElements = document.querySelectorAll('.datetime');
+                dateElements.forEach(element => {
+                    const datetimeString = element.textContent.trim().replace("Date limite de l'offre : ", '');
+                    const formattedDate = moment(datetimeString).format('LLLL');
+                    element.textContent = `Date limite de l'offre : ${formattedDate}`;
+                });
+            }
+
+            function openCandidatures(button) {
+                var offreDiv = button.closest('#off');
+                var idCandidatureElement = offreDiv.querySelector('.entreprise > p:last-child');
+                var idCandidatureText = idCandidatureElement.textContent.trim();
+                var num_offre = idCandidatureText.split("Numéro de l'offre : ")[1];
+                window.location.href = `/recruteur/voir-candidatures/${num_offre}`;
+            };
+
+            function modifOffre(button) {
+                var offreDiv = button.closest('#off');
+                var idCandidatureElement = offreDiv.querySelector('.entreprise > p:last-child');
+                var idCandidatureText = idCandidatureElement.textContent.trim();
+                var num_offre = idCandidatureText.split("Numéro de l'offre : ")[1];
+                window.location.href = `/recruteur/modif-offre/${num_offre}`;
+            };
+
+            function modifFiche(button) {
+                var offreDiv = button.closest('#off');
+                var idFicheElement = offreDiv.querySelector('.entreprise > p:last-child');
+                var idFicheText = idFicheElement.textContent.trim();
+                var id_fiche = idFicheText.split("Id fiche : ")[1];
+                window.location.href = `/recruteur/modif-fiche/${id_fiche}`;
+            };
+
+            function supprFiche(button) {
+                var offreDiv = button.closest('#off');
+                var idFicheElement = offreDiv.querySelector('.entreprise > p:last-child');
+                var idFicheText = idFicheElement.textContent.trim();
+                var id_fiche = idFicheText.split("Id fiche : ")[1];
+                window.location.href = `/recruteur/suppr-fiche/${id_fiche}`;
+            };
+
+            function supprOffre(button) {
+                var offreDiv = button.closest('#off');
+                var idCandidatureElement = offreDiv.querySelector('.entreprise > p:last-child');
+                var idCandidatureText = idCandidatureElement.textContent.trim();
+                var num_offre = idCandidatureText.split("Numéro de l'offre : ")[1];
+                window.location.href = `/recruteur/suppr-offre/${num_offre}`;
+            };
+
+            function filterOffers() {
+                const notValide = document.getElementById('notValide').checked;
+                const currentDate = moment();
+
+                const offers = document.querySelectorAll('#offres > #off');
+
+                offers.forEach(offer => {
+                    const dateValiditeElement = offer.querySelector('.date_hidden');
+                    const dateValidite = moment(dateValiditeElement.textContent.trim());
+                    const isExpired = dateValidite.isBefore(currentDate, 'day');
+
+                    let isVisible = true;
+
+                    if (!notValide && isExpired) {
+                        isVisible = false;
+                    }
+
+                    offer.style.display = isVisible ? '' : 'none';
+
+                    const buttons = offer.querySelectorAll('.offer_button > button');
+                    buttons.forEach(button => {
+                        button.style.display = isExpired ? 'none' : '';
+                    });
+                });
+            }
+        </script>
+    </body>
+</html>

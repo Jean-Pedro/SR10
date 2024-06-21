@@ -1,0 +1,96 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Details Utilisateurs</title>
+        <link rel="stylesheet" href="/stylesheets/main.css">
+        <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/min/moment.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/locale/fr.js"></script>
+    </head>
+    <body>
+        <div id="page">
+            <div id="top_bar">
+                <div id="home_button">
+                    <a href="/auth/login"><button id="menu">Menu</button></a>
+                </div>
+                <div id="account">
+                    <a href="/users/mon_compte"><button id="account">Mon compte</button></a>
+                </div>
+            </div>
+            <div class="container_val">
+                <div class="desc_offre">
+                    <div class="entreprise">
+                        <h1 id="user-role"><%= user.nom %> <%= user.prenom%> - <span id="role"><%= user.role %></span></h1>
+                        <p>Numéro de Téléphone : <%= user.num_tel %></p>
+                    </div>
+                    <div class="siege_social">
+                        <p class="datetime">Date de création : <%= user.date_creation %></p>
+                        <p class="datetime">Dernière connexion : <%= user.last_login %></p>
+                        <p class="statut">Statut du compte : <%= user.statut %></p>
+                    </div>
+                    <div class="offer_button" id="admin-button">
+                        <button id="accepter">Passer en administrateur</button>
+                        <button id="suppr">Supprimer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var userRole = document.getElementById('role').textContent.trim();
+                if (userRole === 'Administrateur') {
+                    var adminButton = document.getElementById('admin-button');
+                    adminButton.style.display = 'none';
+                }
+
+                var accepterButton = document.getElementById('accepter');
+                accepterButton.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    var confirmation = confirm('Êtes-vous sûr de vouloir passer cet utilisateur en administrateur ? Toutes les informations liées à cet utilisateur seront supprimées.');
+                    if (confirmation) {
+                        window.location.href = '/admin/confirmation_passage_admin/<%=user.id_utilisateur%>';
+                    }
+                });
+
+                var supprButton = document.getElementById('suppr');
+                supprButton.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    var confirmation = confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ? Toutes les informations liées à cet utilisateur seront supprimées.');
+                    if (confirmation) {
+                        window.location.href = '/users/redirect';
+                    }
+                });
+
+
+                function formatDates() {
+                    moment.locale('fr');
+                    const dateElements = document.querySelectorAll('.datetime');
+                    dateElements.forEach(element => {
+                        const datetimeString = element.textContent.trim().replace('Date de création : ', '').replace('Dernière connexion : ', '');
+                        const formattedDate = moment(datetimeString).format('LLLL');
+                        if (element.textContent.includes('Date de création')) {
+                            element.textContent = 'Date de création : ' + formattedDate;
+                        } else if (element.textContent.includes('Dernière connexion')) {
+                            element.textContent = 'Dernière connexion : ' + formattedDate;
+                        }
+                    });
+                }
+
+                function formatStatut() {
+                    const statutElement = document.querySelector('.statut');
+                    const statutString = statutElement.textContent.trim().replace('Statut du compte : ', '');
+                    if (statutString === '1') {
+                        statutElement.textContent = 'Statut du compte : Actif';
+                    } else if (statutString === '0') {
+                        statutElement.textContent = 'Statut du compte : Inactif';
+                    }
+                }
+
+                formatDates();
+                formatStatut();
+
+            });
+
+        </script>
+    </body>
+</html>

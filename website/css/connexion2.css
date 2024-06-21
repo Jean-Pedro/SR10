@@ -1,0 +1,180 @@
+body{
+
+    background-color: white;
+    font-family: 'Inter';
+}
+
+#container{
+    padding: 10px;
+    background-color: #F9E6E6;
+    justify-content: center;
+    align-items: center;
+    height: 85vh;
+    margin: 50px;
+    margin-left: 200px;
+    margin-right : 200px;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#container_2{
+    padding: 10px;
+    background-color: #F9E6E6;
+    justify-content: center;
+    align-items: center;
+    margin: 50px;
+    margin-left: 200px;
+    margin-right : 200px;
+    margin-top: 0px;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#input_form input[type="radio"]{
+    background-color: #FFA3BE;
+    width: 545px;
+    height: 47px;
+    border: none;
+    border-radius: 5px;
+    font-family: 'Inter';
+    padding: 10px;
+    text-align: left;
+    align-items: start;
+}
+
+
+
+
+#case{
+    display: flex;
+    padding: 10px;
+    background-color: #F9E6E6;
+    justify-content: center;
+    align-items: center;
+}
+
+#titre{
+    flex: none;
+    text-align: center;
+}
+
+#column_g{
+    flex: 1;
+    text-align: left;
+}
+
+#column_d{
+    flex: 1;
+    text-align: left;
+    margin-left: 200px;
+}
+
+#formulaire{
+    padding: 10px;
+    margin: 50px;
+}
+
+#label_form{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-weight: bold;
+}
+
+#input_form{
+    padding-top: 10px;
+    padding-bottom: 30px;
+}
+
+#button_compte{
+    font-size: small;
+}
+
+#formulaire h1{
+    color: #474BCA;
+    font-size: xx-large;
+}
+
+#formulaire p{
+    font-size: large;
+}
+
+#input_form input{
+    background-color: #FFA3BE;
+    width: 545px;
+    height: 47px;
+    border: none;
+    border-radius: 5px;
+    font-family: 'Inter';
+    padding: 10px;
+}
+
+#submit{
+    margin-top: 20px;
+    background-color: #474BCA;
+    color: white;
+    width: 545px;
+    height: 47px;
+    border: none;
+    border-radius: 5px;
+    font-family: 'Inter';
+    font-size: large;
+    font-weight: bold;
+}
+
+#inscription{
+    text-align: center;
+    margin-right: 40px;
+}
+
+#column_d img{
+    width: 500px;
+    height: auto;
+}
+
+input[type=file]::file-selector-button {
+    margin-right: 8px;
+  background: #ffa3be;
+  color: #fff;
+  cursor: pointer;
+}
+
+input[type=file]:focus {
+    outline: 5px dashed #000;
+    outline-offset: 2px;
+}
+
+input[type=file]::file-selector-button:hover {
+    background: #0d45a5;
+}
+
+.entreprise{
+    text-align: center;
+    margin-right: 50px;
+}
+
+.desc{
+    text-align: center;
+    margin-right: 50px;
+}
+
+button{
+    background-color: #474BCA;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-family: 'Inter';
+    font-size: large;
+    font-weight: bold;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.content{
+    text-align: center;
+    align-items: center;
+    height: 100%;
+    padding-top: 150px;
+}

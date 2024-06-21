@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Envoi de mail</title>
+</head>
+<body>
+    <p>Envoi de l'email en cours, veuillez patienter...</p>
+    <script>
+        const mailtoLink = "<%= mailtoLink %>";
+        window.location.href = mailtoLink;
+        setTimeout(() => {
+            window.location.href = "/users/redirect";
+        }, 1000);
+    </script>
+</body>
+</html>
